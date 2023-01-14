@@ -9,12 +9,14 @@ namespace Crisp::Core {
     public:
         PackageManager();
         ~PackageManager();
-
+        
         void LoadFeature(std::shared_ptr<Feature> feature);
         void LoadPackage(std::shared_ptr<Package> package);
-        void Cleanup();
+        Feature& GetFeature(int packageId);
     private:
         std::map<int, std::shared_ptr<Feature>> features;
         std::map<int, std::shared_ptr<Package>> packages;
+        
+        void Cleanup();
     };
 }

@@ -2,12 +2,10 @@
 #include <iostream>
 
 namespace Crisp::Core {
-    PackageManager::PackageManager() {
-
-    }
+    PackageManager::PackageManager() {}
 
     PackageManager::~PackageManager() {
-
+        Cleanup();
     }
 
     void PackageManager::LoadFeature(std::shared_ptr<Feature> feature) {
