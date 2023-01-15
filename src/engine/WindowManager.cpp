@@ -25,6 +25,7 @@ namespace Crisp::Core {
 
         // If succeed add to vector and return true
         windows.push_back(window);
+        std::cout << "Window Created" << std::endl;
         return true;
     }
 
