@@ -14,14 +14,23 @@ int main() {
     PackageManager packageManager;
 
     // Load sdl2
-    std::shared_ptr<SDL2> sdl = std::make_shared<SDL2>();
-    packageManager.LoadFeature(sdl);
+    std::shared_ptr<SDL2> sdlSptr = std::make_shared<SDL2>();
+    packageManager.LoadFeature(sdlSptr);
+    SDL2* sdl2 = dynamic_cast<SDL2*>(sdlSptr.get());
     // Load window manager
-    std::shared_ptr<Feature> windowManager = std::make_shared<WindowManager>();
-    packageManager.LoadFeature(windowManager);
+    std::shared_ptr<Feature> windowManagerSptr = std::make_shared<WindowManager>();
+    packageManager.LoadFeature(windowManagerSptr);
     // Create window
-    WindowManager* wm = dynamic_cast<WindowManager*>(windowManager.get());
-    wm->CreateWindow("Test", 0, 0, 100, 100, 0);
+    WindowManager* wm = dynamic_cast<WindowManager*>(windowManagerSptr.get());
+    wm->CreateWindow("Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 300, 100, 0);
+
+    bool running = true;
+    while (running) {
+        while (sdl2->PollEvent() != 0) {
+            if (sdl2->HandleEvent() != 0)
+                running = false;
+        }
+    }
 
     return 0;
 }
