@@ -17,6 +17,10 @@ namespace Crisp::Core {
         packages[(*package).GetPackageID()] = package;
     }
 
+    Feature* PackageManager::GetFeature(int featureID) {
+        return features[featureID].get();
+    }
+
     void PackageManager::Cleanup() {
         // Clear packages
         packages.clear();
