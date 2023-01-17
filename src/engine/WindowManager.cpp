@@ -6,7 +6,7 @@ namespace Crisp::Core {
     WindowManager::WindowManager() {}
     WindowManager::~WindowManager() {}
 
-    bool WindowManager::CreateWindow(const char* title, int x, int y, int width, int height, uint32_t flags) {
+    bool WindowManager::NewWindow(const char* title, int x, int y, int width, int height, uint32_t flags) {
         // Attempt to create window
         SDL_Window* window = SDL_CreateWindow(
             title,
@@ -27,6 +27,14 @@ namespace Crisp::Core {
         windows.push_back(window);
         std::cout << "Window Created" << std::endl;
         return true;
+    }
+
+    int WindowManager::GetWindowCount() {
+        return windows.size();
+    }
+
+    SDL_Window* WindowManager::GetWindow(int index) {
+        return windows[index];
     }
 
     void WindowManager::Cleanup() {

@@ -9,10 +9,12 @@ namespace Crisp::Core {
         WindowManager();
         ~WindowManager();
 
-        bool CreateWindow(const char* title, int x, int y, int width, int height, uint32_t flags);
+        bool NewWindow(const char* title, int x, int y, int width, int height, uint32_t flags);
+        int GetWindowCount();
+        SDL_Window* GetWindow(int index);
+        
         void Cleanup();
         int GetFeatureID();
-    
     private:
         std::vector<SDL_Window*> windows;
     };
