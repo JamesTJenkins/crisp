@@ -37,7 +37,7 @@ LIB_FILES.linux := vulkan SDL2 GLEW
 
 INC_PATHS.win32 := C:\Dev\SDL2\include C:\Dev\VulkanSDK\include C:\Dev\glew\include C:\Dev\glm\include C:\Dev\nlohmannJson\include C:\Dev\stb\include C:\Dev\tinyobjloader\include C:\Dev\tinygltf C:\Dev\entt-master\single_include\entt C:\Dev\volk
 LIB_PATHS.win32 := C:\Dev\SDL2\lib\$(ARCH) C:\Dev\VulkanSDK\lib\$(ARCH) C:\Dev\glew\lib\$(ARCH)
-LIB_FILES.win32 := SDL2 glew32
+LIB_FILES.win32 := SDL2 glew32 opengl32
 
 INC_PATHS := ${INC_PATHS.${SYS}}
 LIB_PATHS := ${LIB_PATHS.${SYS}}
@@ -129,6 +129,7 @@ win32: $(TARGET) dlls
 
 dlls:
 	$(CP) "C:\Dev\SDL2\lib\$(ARCH)\SDL2.dll" $(BIN)
+	$(CP) "C:\Dev\glew\bin\$(ARCH)\glew32.dll" $(BIN)
 
 run: 
 	$(TARGET)
