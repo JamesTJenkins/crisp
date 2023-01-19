@@ -23,7 +23,7 @@
                 "${workspaceFolder}/src/**",
                 "C:/Dev/VulkanSDK/include",
                 "C:/Dev/SDL2/include",
-                "C:/Dev/glm/glm",
+                "C:/Dev/glm/include",
                 "C:/Dev/glew/include",
                 "C:/Dev/VulkanMemoryAllocator/include",
                 "C:/Dev/nlohmann/include",
