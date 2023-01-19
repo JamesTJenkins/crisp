@@ -33,9 +33,9 @@ TARGET := $(BIN)/Crisp
 
 INC_PATHS.linux := 
 LIB_PATHS.linux := 
-LIB_FILES.linux := vulkan SDL2 GLEW
+LIB_FILES.linux := SDL2 GLEW
 
-INC_PATHS.win32 := C:\Dev\SDL2\include C:\Dev\VulkanSDK\include C:\Dev\glew\include C:\Dev\glm\include C:\Dev\nlohmannJson\include C:\Dev\stb\include C:\Dev\tinyobjloader\include C:\Dev\tinygltf C:\Dev\entt-master\single_include\entt C:\Dev\volk
+INC_PATHS.win32 := C:\Dev\SDL2\include C:\Dev\VulkanSDK\include C:\Dev\glew\include C:\Dev\glm\include C:\Dev\nlohmannJson\include C:\Dev\stb\include C:\Dev\tinyobjloader\include C:\Dev\tinygltf C:\Dev\entt\single_include\entt C:\Dev\volk
 LIB_PATHS.win32 := C:\Dev\SDL2\lib\$(ARCH) C:\Dev\VulkanSDK\lib\$(ARCH) C:\Dev\glew\lib\$(ARCH)
 LIB_FILES.win32 := SDL2 glew32 opengl32
 
@@ -137,6 +137,6 @@ run:
 clean:
 	$(RM) gmon.out
 	$(RMDIR) $(BIN) $(OBJ)
-	$(MKDIR) $(OBJ)/engine/packages $(OBJ)/engine/vulkan $(OBJ)/engine/opengl $(OBJ)/game
+	$(MKDIR) $(OBJ)/engine/components $(OBJ)/engine/vulkan $(OBJ)/engine/opengl $(OBJ)/game
 
 .PHONY: run clean default linux win32 dlls
