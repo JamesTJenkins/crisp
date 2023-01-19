@@ -1,9 +1,8 @@
 #pragma once
-#include "Feature.hpp"
 #include <SDL.h>
 
 namespace Crisp::Core {
-    class SDL2 : public Feature {
+    class SDL2 {
     public:
         SDL2();
         ~SDL2();
@@ -13,7 +12,6 @@ namespace Crisp::Core {
         SDL_Event GetEvent();
         int HandleEvent();
         void Cleanup();
-        int GetFeatureID();
     private:
         SDL_Event event;
     };

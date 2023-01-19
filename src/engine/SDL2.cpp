@@ -1,5 +1,5 @@
 #include "SDL2.hpp"
-#include "Helper.hpp"
+#include <iostream>
 
 namespace Crisp::Core {
     SDL2::SDL2() {
@@ -36,9 +36,5 @@ namespace Crisp::Core {
         SDL_Quit();
 
         std::cout << "SDL2 cleaned up." << std::endl;
-    }
-
-    int SDL2::GetFeatureID() {
-        return GetStringHash("SDL2");
     }
 }

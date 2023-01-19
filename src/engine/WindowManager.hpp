@@ -1,10 +1,9 @@
 #pragma once
 #include <vector>
 #include <SDL.h>
-#include "Feature.hpp"
 
 namespace Crisp::Core {
-    class WindowManager : public Feature {
+    class WindowManager {
     public:
         WindowManager();
         ~WindowManager();
@@ -14,7 +13,6 @@ namespace Crisp::Core {
         SDL_Window* GetWindow(int index);
         
         void Cleanup();
-        int GetFeatureID();
     private:
         std::vector<SDL_Window*> windows;
     };

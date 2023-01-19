@@ -1,7 +1,7 @@
 #define SDL_MAIN_HANDLED
 #include "Crisp.hpp"
-#include "PackageManager.hpp"
-// Packages
+
+#include "FeatureManager.hpp"
 #include "SDL2.hpp"
 #include "WindowManager.hpp"
 #include "opengl/OpenGLApi.hpp"
@@ -12,18 +12,13 @@ int main() {
     std::cout << "Initializing Crisp..." << std::endl;
 
     // Load sdl2
-    std::shared_ptr<SDL2> sdlSptr = std::make_shared<SDL2>();
-    PackageManager::Get().LoadFeature(sdlSptr);
-    SDL2* sdl2 = dynamic_cast<SDL2*>(sdlSptr.get());
+    SDL2* sdl2 = FeatureManager::Get().AddFeature<SDL2>();
     // Load OpenGL
-    std::shared_ptr<OpenGLApi> openglSptr = std::make_shared<OpenGLApi>();
-    PackageManager::Get().LoadFeature(openglSptr);
+    OpenGLApi* openGLApi = FeatureManager::Get().AddFeature<OpenGLApi>();
     // Load window manager
-    std::shared_ptr<Feature> windowManagerSptr = std::make_shared<WindowManager>();
-    PackageManager::Get().LoadFeature(windowManagerSptr);
+    WindowManager* windowManager = FeatureManager::Get().AddFeature<WindowManager>();
 
     // Create window
-    OpenGLApi* openGLApi = dynamic_cast<OpenGLApi*>(openglSptr.get());
     openGLApi->NewWindow("OpenGLTest", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 400, 400);
 
     bool running = true;
@@ -33,9 +28,13 @@ int main() {
                 running = false;
         }
 
-        //openGLApi->ClearScreen();
-        //openGLApi->Draw();
+        openGLApi->Draw();
     }
+
+    // Cleanup (automate in package manager eventually)
+    windowManager->Cleanup();
+    openGLApi->Cleanup();
+    sdl2->Cleanup();
 
     return 0;
 }

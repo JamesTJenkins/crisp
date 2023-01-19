@@ -1,31 +1,32 @@
 #include "OpenGLApi.hpp"
+
 #include <gl/glu.h>
 #include <stdio.h>
-#include "../Helper.hpp"
-#include "../PackageManager.hpp"
-#include "../WindowManager.hpp"
+#include <iostream>
 
-namespace Crisp::Core
-{
+#include "../FeatureManager.hpp"
+#include "../WindowManager.hpp"
+#include "../components/Camera.hpp"
+
+namespace Crisp::Core {
     OpenGLApi::OpenGLApi() {}
+    OpenGLApi::~OpenGLApi() {}
 
     // OpenGL initializes on window creation
     void OpenGLApi::Initialize() {}
 
-    bool OpenGLApi::NewWindow(const char *title, int x, int y, int width, int height)
-    {
+    bool OpenGLApi::NewWindow(const char *title, int x, int y, int width, int height) {
         bool success = true;
 
         // Create window in window manager
-        WindowManager *wm = dynamic_cast<WindowManager *>(PackageManager::Get().GetFeature(GetStringHash("WindowManager")));
-        if (wm->NewWindow(title, x, y, width, height, SDL_WINDOW_OPENGL))
-        {
+        WindowManager *wm = FeatureManager::Get().GetFeature<WindowManager>();
+        if (wm->NewWindow(title, x, y, width, height, SDL_WINDOW_OPENGL)) {
             // Get window
             SDL_Window *window = wm->GetWindow(wm->GetWindowCount() - 1);
             // Link to context
             OpenGLWindow openGLWindow(window);
             openGLWindows.push_back(openGLWindow);
-
+        
             // OpenGL 3.1 core
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
@@ -33,13 +34,10 @@ namespace Crisp::Core
 
             // Init glew
             openGLWindow.gContext = SDL_GL_CreateContext(openGLWindow.window);
-            if (openGLWindow.gContext == NULL)
-            {
+            if (openGLWindow.gContext == NULL) {
                 std::cout << "OpenGL context cound not be created. SDL Error: " << SDL_GetError() << std::endl;
                 success = false;
-            }
-            else
-            {
+            } else {
                 glewExperimental = GL_TRUE;
                 GLenum glewError = glewInit();
                 if (glewError != GLEW_OK)
@@ -51,27 +49,39 @@ namespace Crisp::Core
             }
 
             std::cout << "Initialized opengl" << std::endl;
-        }
-        else
-        {
+        } else {
             success = false;
         }
 
         return success;
     }
 
-    void OpenGLApi::ClearScreen()
-    {
+    void OpenGLApi::ClearScreen() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     }
 
-    void OpenGLApi::Draw()
-    {
+    void OpenGLApi::Draw() {
+        ClearScreen();
+        
+        // Get current camera rendering to screen
+        Camera* mainCamera = Camera::GetMainCamera();
+        // Check camera was successfully got
+        if (mainCamera == nullptr) {
+            //std::cout << "No camera is set to render" << std::endl;
+            return;
+        }
 
+        // TEST
+        glBegin(GL_QUADS);
+        glVertex2f(-0.5f, -0.5f);
+        glVertex2f(0.5f, -0.5f);
+        glVertex2f(0.5f, 0.5f);
+        glVertex2f(-0.5f, 0.5f);
+        glEnd();
+        // ENDTEST
     }
 
-    bool OpenGLApi::InitializeShader(ShaderImport &shader)
-    {
+    bool OpenGLApi::InitializeShader(ShaderImport &shader) {
         GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
         // Set vertex source code
         glShaderSource(vertex, 1, (char const *const *)shader.vertexShader.ReadBinaryData(), NULL);
@@ -80,8 +90,7 @@ namespace Crisp::Core
         // Error checks
         GLint vShaderCompiled = GL_FALSE;
         glGetShaderiv(vertex, GL_COMPILE_STATUS, &vShaderCompiled);
-        if (vShaderCompiled != GL_TRUE)
-        {
+        if (vShaderCompiled != GL_TRUE) {
             std::cout << "Unable to compile vertex shader: " << vertex << std::endl;
             PrintShaderLog(vertex);
             return false;
@@ -103,8 +112,7 @@ namespace Crisp::Core
         // Error checks
         GLint fShaderCompiled = GL_FALSE;
         glGetShaderiv(fragment, GL_COMPILE_STATUS, &fShaderCompiled);
-        if (fShaderCompiled != GL_TRUE)
-        {
+        if (fShaderCompiled != GL_TRUE) {
             std::cout << "Unable to compile fragment shader: " << fragment << std::endl;
             PrintShaderLog(fragment);
             // Cleanup
@@ -121,8 +129,7 @@ namespace Crisp::Core
         // Error check
         GLint programSuccess = GL_TRUE;
         glGetProgramiv(openGLShader.gProgramID, GL_LINK_STATUS, &programSuccess);
-        if (programSuccess != GL_TRUE)
-        {
+        if (programSuccess != GL_TRUE) {
             std::cout << "Error linking to program: " << openGLShader.gProgramID << std::endl;
             PrintProgramLog(openGLShader.gProgramID);
             // Cleanup
@@ -140,8 +147,7 @@ namespace Crisp::Core
         return true;
     }
 
-    void OpenGLApi::Cleanup()
-    {
+    void OpenGLApi::Cleanup() {
         // Clear shaders
         for (OpenGLShader shader : openGLShaders) {
             glDeleteProgram(shader.gProgramID);
@@ -155,17 +161,10 @@ namespace Crisp::Core
         std::cout << "Opengl cleaned up" << std::endl;
     }
 
-    int OpenGLApi::GetFeatureID()
-    {
-        return GetStringHash("OpenGLApi");
-    }
-
     // DEBUG
 
-    void OpenGLApi::PrintProgramLog(GLuint program)
-    {
-        if (glIsProgram(program))
-        {
+    void OpenGLApi::PrintProgramLog(GLuint program) {
+        if (glIsProgram(program)) {
             // Log length
             int infoLogLength = 0;
             int maxLength = infoLogLength;
@@ -184,17 +183,13 @@ namespace Crisp::Core
 
             // Deallocate string
             delete[] infoLog;
-        }
-        else
-        {
+        } else {
             std::cout << "Name " << program << " is not a program" << std::endl;
         }
     }
 
-    void OpenGLApi::PrintShaderLog(GLuint shader)
-    {
-        if (glIsShader(shader))
-        {
+    void OpenGLApi::PrintShaderLog(GLuint shader) {
+        if (glIsShader(shader)) {
             // Log length
             int infoLogLength = 0;
             int maxLength = infoLogLength;
@@ -213,10 +208,8 @@ namespace Crisp::Core
 
             // Deallocate string
             delete[] infoLog;
-        }
-        else
-        {
+        } else {
             std::cout << "Name " << shader << " is not a shader" << std::endl;
         }
     }
-}
+}  // namespace Crisp::Core

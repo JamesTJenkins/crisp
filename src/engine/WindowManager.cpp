@@ -1,9 +1,9 @@
 #include "WindowManager.hpp"
-#include "Helper.hpp"
-#include "PackageManager.hpp"
+#include <iostream>
 
 namespace Crisp::Core {
     WindowManager::WindowManager() {}
+    
     WindowManager::~WindowManager() {}
 
     bool WindowManager::NewWindow(const char* title, int x, int y, int width, int height, uint32_t flags) {
@@ -43,9 +43,5 @@ namespace Crisp::Core {
         }
         
         std::cout << "All windows cleaned up" << std::endl;
-    }
-
-    int WindowManager::GetFeatureID() {
-        return GetStringHash("WindowManager");
     }
 }

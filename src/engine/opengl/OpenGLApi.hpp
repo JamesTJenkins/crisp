@@ -2,7 +2,9 @@
 #include <SDL.h>
 #include <gl/glew.h>
 #include <SDL_opengl.h>
+
 #include <vector>
+
 #include "../IGraphicsApi.hpp"
 
 namespace Crisp::Core {
@@ -21,26 +23,24 @@ namespace Crisp::Core {
     };
 
     class OpenGLApi : public IGraphicsApi {
-    public:
+       public:
         OpenGLApi();
+        ~OpenGLApi();
 
         void Initialize();
         bool NewWindow(const char* title, int x, int y, int width, int height);
 
         void ClearScreen();
         void Draw();
-        
+
         bool InitializeShader(ShaderImport& shader);
 
         void Cleanup();
-        int GetFeatureID();
-    private:
+       private:
         void PrintShaderLog(GLuint shader);
         void PrintProgramLog(GLuint program);
 
-        std::vector<OpenGLWindow> openGLWindows; 
+        std::vector<OpenGLWindow> openGLWindows;
         std::vector<OpenGLShader> openGLShaders;
-        // Attribute for reflection i think
-        GLint gVertexPos2DLocation = -1;
     };
-}
+}  // namespace Crisp::Core
