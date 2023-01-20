@@ -5,6 +5,10 @@
 #include "SDL2.hpp"
 #include "WindowManager.hpp"
 #include "opengl/OpenGLApi.hpp"
+// Testing
+#include "ECS.hpp"
+#include "components/Transform.hpp"
+#include "components/Camera.hpp"
 
 using namespace Crisp::Core;
 
@@ -20,7 +24,12 @@ int main() {
 
     // Create window
     openGLApi->NewWindow("OpenGLTest", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 400, 400);
-
+    ShaderImport testShader("assets/shaders/test.vert", "assets/shaders/test.frag");
+    openGLApi->AddShader(testShader);
+    ECS* ecs = FeatureManager::Get().AddFeature<ECS>();
+    entt::entity e = ecs->registry.create();
+    ecs->registry.emplace<Transform>(e, glm::vec3(0, 0, -10));
+    ecs->registry.emplace<Camera>(e, e, (float)16/9);
     bool running = true;
     while (running) {
         while (sdl2->PollEvent() != 0) {

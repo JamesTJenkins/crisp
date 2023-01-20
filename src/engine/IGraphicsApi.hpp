@@ -10,8 +10,7 @@ namespace Crisp::Core {
         virtual void ClearScreen() = 0;
         virtual void Draw() = 0;
 
-        virtual bool InitializeShader(ShaderImport& shader) = 0;
-
+        virtual void AddShader(ShaderImport& shader) = 0;
         virtual void Cleanup() = 0;
     };
 }

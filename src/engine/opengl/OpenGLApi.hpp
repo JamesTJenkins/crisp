@@ -1,11 +1,10 @@
 #pragma once
 #include <SDL.h>
-#include <gl/glew.h>
-#include <SDL_opengl.h>
 
 #include <vector>
 
 #include "../IGraphicsApi.hpp"
+#include "OpenGLShader.hpp"
 
 namespace Crisp::Core {
     struct OpenGLWindow {
@@ -17,11 +16,6 @@ namespace Crisp::Core {
         }
     };
 
-    struct OpenGLShader {
-        GLuint gProgramID;
-        GLint gVertexPositionLocation;
-    };
-
     class OpenGLApi : public IGraphicsApi {
        public:
         OpenGLApi();
@@ -30,16 +24,12 @@ namespace Crisp::Core {
         void Initialize();
         bool NewWindow(const char* title, int x, int y, int width, int height);
 
+        void AddShader(ShaderImport& shader);
         void ClearScreen();
         void Draw();
 
-        bool InitializeShader(ShaderImport& shader);
-
         void Cleanup();
        private:
-        void PrintShaderLog(GLuint shader);
-        void PrintProgramLog(GLuint program);
-
         std::vector<OpenGLWindow> openGLWindows;
         std::vector<OpenGLShader> openGLShaders;
     };

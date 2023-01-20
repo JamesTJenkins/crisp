@@ -1,5 +1,6 @@
 #include "Crisp_common.hpp"
 #include <fstream>
+#include <iostream>
 
 namespace Crisp::Core {
     const char* BinaryDataImport::ReadBinaryData() {
