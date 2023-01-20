@@ -15,8 +15,9 @@ namespace Crisp::Core {
         template<typename Type>
         Type* AddFeature() {
             // Check if already exists and if so returns it
-            if (registry.view<Type>().size() > 0)
-                return GetFeature<Type>();
+            auto feature = GetFeature<Type>();
+            if (feature != nullptr)
+                return feature;
             // Create new entity and assign our feature to it
             return &registry.emplace<Type>(registry.create());
         }
