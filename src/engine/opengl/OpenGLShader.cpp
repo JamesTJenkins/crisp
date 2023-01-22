@@ -71,27 +71,38 @@ namespace Crisp::Core {
         glDeleteProgram(programID);
     }
 
-    void OpenGLShader::Use() {
+    void OpenGLShader::Bind() {
         glUseProgram(programID);
     }
 
+    void OpenGLShader::Unbind() {
+        glUseProgram(0);
+    }
+
     void OpenGLShader::SetBool(const std::string &name, bool value) const {
-        glUniform1i(glGetUniformLocation(programID, name.c_str()), (int)value);
+        glUniform1i(GetUniformLocation(name)), (int)value);
     }
     
     void OpenGLShader::SetInt(const std::string &name, int value) const {
-        glUniform1i(glGetUniformLocation(programID, name.c_str()), value);
+        glUniform1i(GetUniformLocation(name)), value);
     }
     
     void OpenGLShader::SetFloat(const std::string &name, float value) const {
-        glUniform1i(glGetUniformLocation(programID, name.c_str()), value);
+        glUniform1i(GetUniformLocation(name)), value);
     }
 
     void OpenGLShader::SetVec3(const std::string &name, glm::vec3 value) const {
-        glUniform3fv(glGetUniformLocation(programID, name.c_str()), 1, glm::value_ptr(value));
+        glUniform3fv(GetUniformLocation(name)), 1, glm::value_ptr(value));
     }
 
     void OpenGLShader::SetMat4(const std::string &name, glm::mat4 value) const {
-        glUniformMatrix4fv(glGetUniformLocation(programID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+        glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
+    }
+
+    int GetUniformLocation(const std::string& name) {
+        // Check if it does NOT exist in cache. If not finds and stores in cache
+        if (uniformLocationCache.find(name) == uniformLocationCache.end())
+            uniformLocationCache[name] = glGetUniformLocation(programID, name.c_str());
+        return uniformLocationCache[name];
     }
 }

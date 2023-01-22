@@ -1,9 +1,8 @@
 #pragma once
 #include <string>
-#include <SDL.h>
 #include <GL/glew.h>
-#include <SDL_opengl.h>
 #include <glm.hpp>
+#include <unordered_map>
 #include "../Import.hpp"
 
 namespace Crisp::Core {
@@ -14,7 +13,8 @@ namespace Crisp::Core {
         // Make this cleanup
         ~OpenGLShader();
       
-        void Use();
+        void Bind() const;
+        void Unbind() const;
         // Util
         void SetBool(const std::string &name, bool value) const;
         void SetInt(const std::string &name, int value) const;
@@ -22,6 +22,9 @@ namespace Crisp::Core {
         void SetVec3(const std::string &name, glm::vec3 value) const;
         void SetMat4(const std::string &name, glm::mat4 value) const;
         
-        GLuint programID;
+        unsigned int programID;
+    private:
+        int GetUniformLocation(const std::string& name);
+        std::unordered_map<std::string, int> uniformLocationCache;
     };
 }  // namespace Crisp::Core
