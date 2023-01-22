@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "../IGraphicsApi.hpp"
-#include "OpenGLShader.hpp"
+#include "OpenGLMaterial.hpp"
 
 namespace Crisp::Core {
     struct OpenGLWindow {
@@ -17,20 +17,23 @@ namespace Crisp::Core {
     };
 
     class OpenGLApi : public IGraphicsApi {
-       public:
+    public:
         OpenGLApi();
         ~OpenGLApi();
 
         void Initialize();
         bool NewWindow(const char* title, int x, int y, int width, int height);
 
-        void AddShader(ShaderImport& shader);
+        OpenGLShader& AddShader(ShaderImport& shader);
+        OpenGLMaterial& AddMaterial(OpenGLShader* shader);
         void ClearScreen();
         void Draw();
 
         void Cleanup();
-       private:
-        std::vector<OpenGLWindow> openGLWindows;
+
         std::vector<OpenGLShader> openGLShaders;
+        std::vector<OpenGLMaterial> openGLMaterials;
+    private:
+        std::vector<OpenGLWindow> openGLWindows;
     };
 }  // namespace Crisp::Core

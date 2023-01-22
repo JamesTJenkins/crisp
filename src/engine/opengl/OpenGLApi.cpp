@@ -57,9 +57,16 @@ namespace Crisp::Core {
         return success;
     }
 
-    void OpenGLApi::AddShader(ShaderImport& shader) {
+    OpenGLShader& OpenGLApi::AddShader(ShaderImport& shader) {
         OpenGLShader newShader(shader);
         openGLShaders.push_back(newShader);
+        return openGLShaders[openGLShaders.size() - 1];
+    }
+
+    OpenGLMaterial& OpenGLApi::AddMaterial(OpenGLShader* shader) {
+        OpenGLMaterial newMat(shader);
+        openGLMaterials.push_back(newMat);
+        return openGLMaterials[openGLMaterials.size() - 1];
     }
 
     void OpenGLApi::ClearScreen() {
