@@ -27,8 +27,8 @@ namespace Crisp::Core {
         glm::vec3 Forward() const;
         glm::vec3 Backward() const;
 
-        const glm::mat4& LocalToWorldMatrix();
-        const glm::mat4& WorldToLocalMatrix();
+        const glm::mat4& GetLocalToWorldMatrix();
+        const glm::mat4& GetWorldToLocalMatrix();
        private:
         glm::vec3 position;
         glm::quat rotation;
