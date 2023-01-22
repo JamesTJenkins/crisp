@@ -1,5 +1,5 @@
 #pragma once
-#include "Material.hpp"
+#include "Import.hpp"
 
 namespace Crisp::Core {
     class IGraphicsApi {
@@ -10,7 +10,6 @@ namespace Crisp::Core {
         virtual void ClearScreen() = 0;
         virtual void Draw() = 0;
 
-        virtual void AddShader(ShaderImport& shader) = 0;
         virtual void Cleanup() = 0;
     };
 }
