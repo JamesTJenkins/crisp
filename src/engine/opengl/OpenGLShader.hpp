@@ -3,8 +3,8 @@
 #include <SDL.h>
 #include <GL/glew.h>
 #include <SDL_opengl.h>
-#include <../glm_common.hpp>
-#include "../Material.hpp"
+#include <glm.hpp>
+#include "../Import.hpp"
 
 namespace Crisp::Core {
     class OpenGLShader {
