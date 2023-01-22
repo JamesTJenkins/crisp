@@ -5,10 +5,11 @@
 namespace Crisp::Core {
     class MeshRenderer {
     public:
-        MeshRenderer(Mesh* mesh, OpenGLMaterial* material);
+        MeshRenderer(Mesh* mesh, OpenGLMaterial* material, bool isStatic = false);
         ~MeshRenderer();
 
         Mesh* mesh;
         OpenGLMaterial* material;
+        bool staticMesh;
     };
 }
