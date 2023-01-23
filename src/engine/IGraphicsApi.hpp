@@ -4,6 +4,8 @@
 namespace Crisp::Core {
     class IGraphicsApi {
     public:
+        virtual ~IGraphicsApi() {};
+
         virtual void Initialize() = 0;
         virtual bool NewWindow(const char* title, int x, int y, int width, int height) = 0;
 

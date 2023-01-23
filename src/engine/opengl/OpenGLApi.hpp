@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "../IGraphicsApi.hpp"
+#include "OpenGLRenderer.hpp"
 #include "OpenGLMaterial.hpp"
 
 namespace Crisp::Core {
@@ -35,5 +36,8 @@ namespace Crisp::Core {
         std::vector<OpenGLMaterial> openGLMaterials;
     private:
         std::vector<OpenGLWindow> openGLWindows;
+
+        // Just doing 1 for now could do multiple later if want to do fancy
+        OpenGLRenderer renderer;
     };
 }  // namespace Crisp::Core

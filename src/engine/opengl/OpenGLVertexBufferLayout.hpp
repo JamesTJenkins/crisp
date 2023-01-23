@@ -1,7 +1,6 @@
 #pragma once
 #include <GL/glew.h>
 
-#include <type_traits>
 #include <vector>
 
 namespace Crisp::Core {
@@ -34,28 +33,25 @@ namespace Crisp::Core {
         template <typename T>
         void Push(unsigned int count) {}
 
+        template <>
+        void Push<float>(unsigned int count) {
+            elements.push_back({GL_FLOAT, count, GL_FALSE});
+            stride += count * VertexBufferElement::GetTypeSize(GL_FLOAT);
+        }
+
+        template <>
+        void Push<unsigned int>(unsigned int count) {
+            elements.push_back({GL_UNSIGNED_INT, count, GL_FALSE});
+            stride += count * VertexBufferElement::GetTypeSize(GL_UNSIGNED_INT);
+        }
+
+        template <>
+        void Push<unsigned char>(unsigned int count) {
+            elements.push_back({GL_UNSIGNED_BYTE, count, GL_TRUE});
+            stride += count * VertexBufferElement::GetTypeSize(GL_UNSIGNED_BYTE);
+        }
+
         inline const std::vector<VertexBufferElement>& GetElements() const { return elements; }
         inline unsigned int GetStride() const { return stride; }
     };
-
-    // Must be outside class cause C++ standards are an ass
-
-    template <>
-    void OpenGLVertexBufferLayout::Push<float>(unsigned int count) {
-        elements.push_back({GL_FLOAT, count, GL_FALSE});
-        stride += count * VertexBufferElement::GetTypeSize(GL_FLOAT);
-    }
-
-    template <>
-    void OpenGLVertexBufferLayout::Push<unsigned int>(unsigned int count) {
-        elements.push_back({GL_UNSIGNED_INT, count, GL_FALSE});
-        stride += count * VertexBufferElement::GetTypeSize(GL_UNSIGNED_INT);
-    }
-
-    template <>
-    void OpenGLVertexBufferLayout::Push<unsigned char>(unsigned int count) {
-        elements.push_back({GL_UNSIGNED_BYTE, count, GL_TRUE});
-        stride += count * VertexBufferElement::GetTypeSize(GL_UNSIGNED_BYTE);
-    }
-
 }  // namespace Crisp::Core

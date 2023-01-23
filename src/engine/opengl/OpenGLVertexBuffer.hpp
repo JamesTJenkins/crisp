@@ -1,4 +1,5 @@
 #pragma once
+#include "OpenGLDebug.hpp"
 
 namespace Crisp::Core {
     class OpenGLVertexBuffer {

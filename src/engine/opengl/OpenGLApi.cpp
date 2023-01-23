@@ -6,8 +6,10 @@
 #include <string>
 
 #include "../FeatureManager.hpp"
+#include "../ECS.hpp"
 #include "../WindowManager.hpp"
 #include "../components/Camera.hpp"
+#include "../components/MeshRenderer.hpp"
 
 namespace Crisp::Core {
     OpenGLApi::OpenGLApi() {}
@@ -49,7 +51,7 @@ namespace Crisp::Core {
                     std::cout << "Unable to set vsync. SDL Error: " << SDL_GetError() << std::endl;
             }
 
-            std::cout << "Initialized opengl" << std::endl;
+            std::cout << "Initialized openGL" << std::endl;
         } else {
             success = false;
         }
@@ -70,7 +72,7 @@ namespace Crisp::Core {
     }
 
     void OpenGLApi::ClearScreen() {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+        renderer.Clear();
     }
 
     void OpenGLApi::Draw() {
@@ -84,34 +86,22 @@ namespace Crisp::Core {
             return;
         }
 
-        // TEST
-        glBegin(GL_QUADS);
-        glVertex2f(-0.5f, -0.5f);
-        glVertex2f(0.5f, -0.5f);
-        glVertex2f(0.5f, 0.5f);
-        glVertex2f(-0.5f, 0.5f);
-        glEnd();
-        // ENDTEST
-
-        // SHADER REFLECTION
-
-        for (OpenGLShader shader : openGLShaders) {
-            int maxLength;
-            glGetProgramiv(shader.programID, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxLength);
-            char* name = new char[maxLength + 1]; // Size should be allocated to be maxLength + 1
-
-            int uniformCount;
-            glGetProgramiv(shader.programID, GL_ACTIVE_UNIFORMS, &uniformCount);
-
-            for (int i = 0; i < uniformCount; i++) {
-                GLint size;
-                GLenum type;
-                glGetActiveUniform(shader.programID, i, maxLength, NULL, &size, &type, name);
-                std::cout << name << std::endl;
-                // Skip over any default opengl variables
-                //if (name.find("gl_") != std::string::npos)
-                //    continue;
-            }
+        // Get all mesh renderers
+        ECS* ecs = FeatureManager::Get().GetFeature<ECS>();
+        auto view = ecs->registry.view<Transform, MeshRenderer>();
+        // Cycle through all mesh renderers
+        for (auto entity : view) {
+            // Get renderer and transform
+            Transform& transform = view.get<Transform>(entity);
+            MeshRenderer& meshRenderer = view.get<MeshRenderer>(entity);
+            // Bind shader
+            meshRenderer.material->shader->Bind();
+            // MVP
+            meshRenderer.material->shader->SetMat4("MVP", mainCamera->GetProjectionMatrix() * mainCamera->GetViewMatrix() * transform.GetLocalToWorldMatrix());
+            // Draw
+            OpenGLVertexArray va;
+            //OpenGLIndexBuffer ib;
+            //renderer.Draw(va, ib, *meshRenderer.material->shader);
         }
     }
 
@@ -124,6 +114,6 @@ namespace Crisp::Core {
             SDL_GL_DeleteContext(window.gContext);
         }
 
-        std::cout << "Opengl cleaned up" << std::endl;
+        std::cout << "OpenGL cleaned up" << std::endl;
     }
 }  // namespace Crisp::Core

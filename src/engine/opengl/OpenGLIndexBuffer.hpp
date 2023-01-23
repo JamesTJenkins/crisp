@@ -1,4 +1,5 @@
 #pragma once
+#include "OpenGLDebug.hpp"
 
 namespace Crisp::Core {
     class OpenGLIndexBuffer {
@@ -9,7 +10,7 @@ namespace Crisp::Core {
         void Bind() const;
         void Unbind() const;
 
-        inline unsigned int GetCount() { return count; }
+        inline unsigned int GetCount() const { return count; }
     private:
         unsigned int rendererID;
         unsigned int count;
