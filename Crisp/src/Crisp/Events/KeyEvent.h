@@ -1,8 +1,6 @@
 #pragma once
 #include "Event.h"
 
-#include <sstream>
-
 namespace Crisp {
 	class CRISP_API KeyEvent : public Event {
 	public:

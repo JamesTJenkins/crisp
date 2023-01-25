@@ -6,7 +6,7 @@ workspace "Crisp"
 	configurations {
 		"Debug",
 		"Release",
-		"Distribution"	-- Distribution is release but more heavily stripped --
+		"Distribution"	-- Distribution is alike release but more heavily stripped --
 	}
 	
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"	
@@ -19,6 +19,10 @@ project "Crisp"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("build/" .. outputdir .. "/%{prj.name}")
 	
+	pchheader "CrispPCH.h"
+	-- PCH source is needed for vs studio, will be ingnored by other platforms --
+	pchsource "Crisp/src/CrispPCH.cpp"
+
 	files {
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.hpp",

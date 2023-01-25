@@ -1,4 +1,6 @@
+#include "CrispPCH.h"
 #include "Application.h"
+
 #include "Crisp/Events/ApplicationEvent.h"
 #include "Log.h"
 

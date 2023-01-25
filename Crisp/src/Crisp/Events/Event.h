@@ -1,9 +1,6 @@
 #pragma once
 #include "Crisp/Core.h"
 
-#include <string>
-#include <functional>
-
 namespace Crisp {
 	// Events are currently blocking, upon an event occuring it gets dispatched and dealt with immediately
 	// TODO: Add event buffer and process events upon an update call
