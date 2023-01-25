@@ -9,3 +9,6 @@
 #else
 	#error Crisp only support windows
 #endif
+
+// Bitfields
+#define BIT(x) (1 << x)

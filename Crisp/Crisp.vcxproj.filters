@@ -4,6 +4,9 @@
     <Filter Include="Crisp">
       <UniqueIdentifier>{06BBFB0C-72CF-23BE-3B51-C71DA72420EF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Crisp\Events">
+      <UniqueIdentifier>{2A041CB0-1667-AB54-BFEC-E30AAB2E77D7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Crisp.h" />
@@ -15,6 +18,18 @@
     </ClInclude>
     <ClInclude Include="src\Crisp\EntryPoint.h">
       <Filter>Crisp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Events\ApplicationEvent.h">
+      <Filter>Crisp\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Events\Event.h">
+      <Filter>Crisp\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Events\KeyEvent.h">
+      <Filter>Crisp\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Events\MouseEvent.h">
+      <Filter>Crisp\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\Log.h">
       <Filter>Crisp</Filter>
