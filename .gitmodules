@@ -1,6 +1,6 @@
 [submodule "Crisp/vendor/spdlog"]
 	path = Crisp/vendor/spdlog
 	url = https://github.com/gabime/spdlog
-[submodule "SDL"]
+[submodule "Crisp/vendor/SDL2"]
 	path = Crisp/vendor/SDL2
 	url = https://github.com/libsdl-org/SDL

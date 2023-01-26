@@ -11,6 +11,9 @@ workspace "Crisp"
 	
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"	
 
+include "premake5-SDL.lua"
+include "premake5-SDLmain.lua"
+
 project "Crisp"
 	location "Crisp"
 	kind "SharedLib"
@@ -32,7 +35,13 @@ project "Crisp"
 	
 	includedirs {
 		"%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/vendor/SDL2/include"
+	}
+
+	links {
+		"SDL",
+		"SDLmain"
 	}
 	
 	-- Window Build Settings --

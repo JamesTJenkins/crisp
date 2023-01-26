@@ -7,6 +7,9 @@
     <Filter Include="Crisp\Events">
       <UniqueIdentifier>{2A041CB0-1667-AB54-BFEC-E30AAB2E77D7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Crisp.h" />
@@ -34,7 +37,13 @@
     <ClInclude Include="src\Crisp\Log.h">
       <Filter>Crisp</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crisp\Window.h">
+      <Filter>Crisp</Filter>
+    </ClInclude>
     <ClInclude Include="src\CrispPCH.h" />
+    <ClInclude Include="src\Platform\WindowsWindow.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crisp\Application.cpp">
@@ -44,5 +53,8 @@
       <Filter>Crisp</Filter>
     </ClCompile>
     <ClCompile Include="src\CrispPCH.cpp" />
+    <ClCompile Include="src\Platform\WindowsWindow.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

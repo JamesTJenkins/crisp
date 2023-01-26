@@ -2,21 +2,18 @@
 #include "Application.h"
 
 #include "Crisp/Events/ApplicationEvent.h"
-#include "Log.h"
 
 namespace Crisp {
 	Application::Application() {
+		window = std::unique_ptr<Window>(Window::Create());
 	}
 
 	Application::~Application() {
 	}
 
 	void Application::Run() {
-		// EVENT TEST
-		WindowResizeEvent e(1280, 720);
-		CRISP_TRACE(e);
-		// EVENT TEST
-
-		while (true) {}
+		while (running) {
+			window->OnUpdate();
+		}
 	}
 }
