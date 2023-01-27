@@ -17,10 +17,10 @@ namespace Crisp {
 	}
 
 	void WindowsWindow::OnUpdate() {
+		
 	}
 
 	// TODO: add adaptive sync (-1)?
-	// TODO: if adding vulkan fix this
 	void WindowsWindow::SetVSync(bool enabled) {
 		if (enabled) 
 			SDL_GL_SetSwapInterval(1);

@@ -15,7 +15,6 @@ namespace Crisp {
 		inline unsigned int GetHeight() const override { return data.height; }
 	
 		// Window attributes
-		inline void SetEventCallback(const EventCallbackFunction& callback) override { data.eventCallback = callback; }
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 	private:
@@ -28,8 +27,6 @@ namespace Crisp {
 			std::string title;
 			unsigned int width, height;
 			bool vSync;
-
-			EventCallbackFunction eventCallback;
 		};
 
 		WindowData data;

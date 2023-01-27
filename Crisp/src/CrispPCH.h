@@ -14,3 +14,5 @@
 #ifdef CRISP_PLATFORM_WINDOWS
 	#include <Windows.h>
 #endif
+
+#include "Crisp/Log.h"

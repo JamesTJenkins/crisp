@@ -1,8 +1,6 @@
 #pragma once
 #include "CrispPCH.h"
-
 #include "Crisp/Core.h"
-#include "Crisp/Events/Event.h"
 
 namespace Crisp {
 	struct WindowProperties {
@@ -17,8 +15,6 @@ namespace Crisp {
 
 	class CRISP_API Window {
 	public:
-		using EventCallbackFunction = std::function<void(Event&)>;
-
 		virtual ~Window() {};
 
 		virtual void OnUpdate() = 0;
@@ -27,7 +23,6 @@ namespace Crisp {
 		virtual unsigned int GetHeight() const = 0;
 
 		// Window Attributes
-		virtual void SetEventCallback(const EventCallbackFunction& callback) = 0;
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 

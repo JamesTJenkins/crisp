@@ -20,5 +20,3 @@
 
 // Bitfields
 #define BIT(x) (1 << x)
-
-#include "Crisp/Log.h"
