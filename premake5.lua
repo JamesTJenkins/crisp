@@ -64,14 +64,17 @@ project "Crisp"
 		
 	filter "configurations:Debug"
 		defines "CRISP_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 		
 	filter "configurations:Release"
 		defines "CRISP_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 		
 	filter "configurations:Distribution"
 		defines "CRISP_DISTRIBUTION"
+		buildoptions "/MD"
 		optimize "On"
 
 project "Game"
@@ -91,11 +94,14 @@ project "Game"
 	
 	includedirs {
 		"Crisp/vendor/spdlog/include",
+		"Crisp/vendor/SDL2/include",
 		"Crisp/src"
 	}
 	
 	links {
-		"Crisp"
+		"Crisp",
+		"SDL",
+		"SDLmain"
 	}
 	
 	-- Window Build Settings --
@@ -113,12 +119,15 @@ project "Game"
 		
 	filter "configurations:Debug"
 		defines "CRISP_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 		
 	filter "configurations:Release"
 		defines "CRISP_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 		
 	filter "configurations:Distribution"
 		defines "CRISP_DISTRIBUTION"
+		buildoptions "/MD"
 		optimize "On"
