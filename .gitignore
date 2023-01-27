@@ -1,5 +1,7 @@
 .vs/*
 build/*
 bin/*
+old/*
+Crisp/vendor/SDL2/*
 
 *.user
