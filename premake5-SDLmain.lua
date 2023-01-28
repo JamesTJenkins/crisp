@@ -3,7 +3,6 @@ project "SDLmain"
 	language "C"
 
 	location "Crisp/vendor/SDL2/VisualC/SDLmain"
-	-- ../ spam is so it will build with rest of engine rather than hunting through folders
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("build/" .. outputdir .. "/%{prj.name}")
 

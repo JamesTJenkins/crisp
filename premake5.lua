@@ -13,6 +13,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 include "premake5-SDL.lua"
 include "premake5-SDLmain.lua"
+include "premake5-GLAD.lua"
 
 project "Crisp"
 	location "Crisp"
@@ -36,12 +37,14 @@ project "Crisp"
 	includedirs {
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
-		"%{prj.name}/vendor/SDL2/include"
+		"%{prj.name}/vendor/SDL2/include",
+		"%{prj.name}/vendor/GLAD/include",
 	}
 
 	links {
 		"SDL",
-		"SDLmain"
+		"SDLmain",
+		"GLAD"
 	}
 	
 	-- Window Build Settings --
