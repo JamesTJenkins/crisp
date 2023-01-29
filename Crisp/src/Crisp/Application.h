@@ -13,10 +13,16 @@ namespace Crisp {
 
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* overlay);
+
+		inline static Application& Get() { return *instance; }
+
+		inline Window& GetWindow() { return *window; }
 	private:
 		std::unique_ptr<Window> window;
 		bool running = true;
 		LayerStack layerStack;
+	private:
+		static Application* instance;
 	};
 
 	// Defined in Crisp application

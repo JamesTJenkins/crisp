@@ -14,6 +14,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 include "premake5-SDL.lua"
 include "premake5-SDLmain.lua"
 include "premake5-GLAD.lua"
+include "premake5-imgui.lua"
 
 project "Crisp"
 	location "Crisp"
@@ -39,12 +40,14 @@ project "Crisp"
 		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/vendor/SDL2/include",
 		"%{prj.name}/vendor/GLAD/include",
+		"%{prj.name}/vendor/imgui",
 	}
 
 	links {
 		"SDL",
 		"SDLmain",
-		"GLAD"
+		"GLAD",
+		"imgui"
 	}
 	
 	-- Window Build Settings --
@@ -56,7 +59,8 @@ project "Crisp"
 		
 		defines {
 			"CRISP_PLATFORM_WINDOWS",
-			"CRISP_BUILD_DLL"
+			"CRISP_BUILD_DLL",
+			"IMGUI_IMPL_OPENGL_LOADER_CUSTOM"
 		}
 		
 		postbuildcommands {

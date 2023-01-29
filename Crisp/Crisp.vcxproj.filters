@@ -4,8 +4,20 @@
     <Filter Include="Crisp">
       <UniqueIdentifier>{06BBFB0C-72CF-23BE-3B51-C71DA72420EF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Crisp\imgui">
+      <UniqueIdentifier>{F074C5AA-5C2A-3EA0-E51E-387751D334A4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\OpenGL">
+      <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\SDL">
+      <UniqueIdentifier>{1C7CA7CC-08DF-3671-B164-6F279DA602F4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -28,12 +40,24 @@
     <ClInclude Include="src\Crisp\Log.h">
       <Filter>Crisp</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crisp\Time.h">
+      <Filter>Crisp</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crisp\Window.h">
       <Filter>Crisp</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crisp\imgui\imguiLayer.h">
+      <Filter>Crisp\imgui</Filter>
+    </ClInclude>
     <ClInclude Include="src\CrispPCH.h" />
-    <ClInclude Include="src\Platform\WindowsWindow.h">
-      <Filter>Platform</Filter>
+    <ClInclude Include="src\Platform\OpenGL\imguiOpenGLRenderer.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\SDL\imguiSDLRenderer.h">
+      <Filter>Platform\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>Platform\Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -49,9 +73,21 @@
     <ClCompile Include="src\Crisp\Log.cpp">
       <Filter>Crisp</Filter>
     </ClCompile>
+    <ClCompile Include="src\Crisp\Time.cpp">
+      <Filter>Crisp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crisp\imgui\imguiLayer.cpp">
+      <Filter>Crisp\imgui</Filter>
+    </ClCompile>
     <ClCompile Include="src\CrispPCH.cpp" />
-    <ClCompile Include="src\Platform\WindowsWindow.cpp">
-      <Filter>Platform</Filter>
+    <ClCompile Include="src\Platform\OpenGL\imguiOpenGLRenderer.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\SDL\imguiSDLRenderer.cpp">
+      <Filter>Platform\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Platform\Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
