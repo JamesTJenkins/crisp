@@ -19,9 +19,6 @@ namespace Crisp {
 	}
 
 	void WindowsWindow::OnUpdate() {
-		// Set pink for testing
-		glClearColor(1, 0, 1, 1);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		SDL_GL_SwapWindow(window);
 	}
 
@@ -45,9 +42,10 @@ namespace Crisp {
 
 		CRISP_CORE_INFO("Creating window {0} ({1}, {2})", properties.title, properties.width, properties.height);
 
-		if (sdlInitialized) {
-			int success = SDL_Init(SDL_INIT_VIDEO);
+		if (!sdlInitialized) {
+			int success = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER);
 			CRISP_CORE_ASSERT(success, "Could not initialize SDL");
+			sdlInitialized = true;
 		}
 
 		// Initialize openGL
@@ -57,6 +55,7 @@ namespace Crisp {
 		
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
 		// Create SDL window
 		window = SDL_CreateWindow(
@@ -65,16 +64,19 @@ namespace Crisp {
 			SDL_WINDOWPOS_CENTERED,
 			data.width,
 			data.height,
-			SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL
+			SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI
 		);
 
 		// openGL context creation
 		SDL_GLContext context = SDL_GL_CreateContext(window);
+		SDL_GL_MakeCurrent(window, context);
 		// Set window vsync
 		SetVSync(true);
 		// Load GLAD
 		int status = gladLoadGLLoader(SDL_GL_GetProcAddress);
 		CRISP_CORE_ASSERT(status, "Failed to initialize glad");
+		// Set viewport
+		glViewport(0, 0, properties.width, properties.height);
 	}
 
 	void WindowsWindow::Shutdown() {
