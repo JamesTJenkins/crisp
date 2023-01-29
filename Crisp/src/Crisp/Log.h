@@ -1,7 +1,11 @@
 #pragma once
 #include "Core.h"
+
+// ingore warnings in external headers
+#pragma warning(push, 0)
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
+#pragma warning(pop)
 
 namespace Crisp {
 	class CRISP_API Log {
