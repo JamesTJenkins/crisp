@@ -10,6 +10,10 @@
 	#error Crisp only support windows
 #endif
 
+#ifndef CRISP_DEBUG
+	#define CRISP_ENABLE_ASSERTS
+#endif
+
 #ifdef CRISP_ENABLE_ASSERTS
 	#define CRISP_ASSERT(x, ...) { if(!(x)) { CRISP_ERROR("Assertion Failed: {0}", __VA__ARGS__); __debugbreak(); } }
 	#define CRISP_CORE_ASSERT(x, ...) { if(!(x)) { CRISP_CORE_ERROR("Assertion Failed: {0}", __VA__ARGS__); __debugbreak(); } }

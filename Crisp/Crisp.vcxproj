@@ -153,9 +153,12 @@
     <ClInclude Include="src\Crisp\Application.h" />
     <ClInclude Include="src\Crisp\Core.h" />
     <ClInclude Include="src\Crisp\EntryPoint.h" />
+    <ClInclude Include="src\Crisp\Input.h" />
+    <ClInclude Include="src\Crisp\Keycodes.h" />
     <ClInclude Include="src\Crisp\Layer.h" />
     <ClInclude Include="src\Crisp\LayerStack.h" />
     <ClInclude Include="src\Crisp\Log.h" />
+    <ClInclude Include="src\Crisp\MouseButtonCodes.h" />
     <ClInclude Include="src\Crisp\Time.h" />
     <ClInclude Include="src\Crisp\Window.h" />
     <ClInclude Include="src\Crisp\imgui\imguiLayer.h" />
@@ -163,6 +166,7 @@
     <ClInclude Include="src\Platform\OpenGL\imguiOpenGLRenderer.h" />
     <ClInclude Include="src\Platform\SDL\imguiSDLRenderer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crisp\Application.cpp" />
@@ -177,6 +181,7 @@
     <ClCompile Include="src\Platform\OpenGL\imguiOpenGLRenderer.cpp" />
     <ClCompile Include="src\Platform\SDL\imguiSDLRenderer.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\SDL2\VisualC\SDL\SDL.vcxproj">

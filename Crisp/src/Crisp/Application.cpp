@@ -4,6 +4,8 @@
 #include <SDL.h>
 #include <glad/glad.h>
 
+#include "Input.h"
+
 namespace Crisp {
 	Application* Application::instance = nullptr; 
 
@@ -33,7 +35,7 @@ namespace Crisp {
 				// Handle layer events
 				for (Layer* layer : layerStack)
 					layer->OnEvent(&e);
-
+				
 				// Handle window events
 				switch (e.type) {
 				case SDL_QUIT:
@@ -41,6 +43,9 @@ namespace Crisp {
 					break;
 				}
 			}
+
+			// Update input
+			Input::OnUpdate();
 
 			// Update layers
 			for (Layer* layer : layerStack)

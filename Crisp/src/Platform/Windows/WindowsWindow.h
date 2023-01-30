@@ -17,6 +17,8 @@ namespace Crisp {
 		// Window attributes
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
+
+		inline virtual void* GetNativeWindow() const { return window; }
 	private:
 		virtual void Initialize(const WindowProperties& properties);
 		virtual void Shutdown();
