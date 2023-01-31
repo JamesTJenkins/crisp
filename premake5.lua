@@ -68,10 +68,6 @@ workspace "Crisp"
 				"CRISP_BUILD_DLL",
 			}
 			
-			postbuildcommands {
-				("{COPY} %{cfg.buildtarget.relpath} \"../bin/" .. outputdir .. "/Game/\"")
-			}
-			
 		-- Configuration Settings --
 			
 		filter "configurations:Debug"
