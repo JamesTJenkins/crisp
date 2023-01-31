@@ -20,10 +20,6 @@ project "imgui"
 		"Crisp/vendor/imgui/imstb_truetype.h",
 	}
 
-	defines {
-		"IMGUI_IMPL_OPENGL_LOADER_CUSTOM"
-	}
-
 	-- Windows -- 
 	filter "system:windows"
 		systemversion "latest"

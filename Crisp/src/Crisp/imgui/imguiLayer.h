@@ -2,18 +2,20 @@
 #include "Crisp/Layer.h"
 
 namespace Crisp {
-	class CRISP_API imguiLayer : public Layer {
+	class CRISP_API ImGuiLayer : public Layer {
 	public:
-		imguiLayer();
-		~imguiLayer();
+		ImGuiLayer();
+		~ImGuiLayer();
 
-		void OnAttach();
-		void OnDetach();
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
 
-		void OnUpdate();
-		void OnEvent(const SDL_Event* e);
-	private:
+		virtual void OnUpdate() override;
+		virtual void OnImGuiRender() override;
+		virtual void OnEvent(const SDL_Event* e) override;
 
+		void Begin();
+		void End();
 	};
 }
 

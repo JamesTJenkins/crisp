@@ -1,6 +1,7 @@
 project "GLAD"
 	kind "StaticLib"
 	language "C"
+	staticruntime "On"
 
 	location "Crisp/vendor/GLAD"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
@@ -19,7 +20,15 @@ project "GLAD"
 	-- Windows -- 
 	filter "system:windows"
 		systemversion "latest"
-		staticruntime "On"
 
-	filter { "system:windows", "configurations:Release" }
-		buildoptions "/MT"
+	filter "configurations:Debug"
+		runtime "Debug"
+		symbols "on"
+
+	filter "configurations:Release"
+		runtime "Release"
+		optimize "on"
+
+	filter "configurations:Distribution"
+		runtime "Release"
+		optimize "on"

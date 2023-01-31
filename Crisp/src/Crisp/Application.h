@@ -2,6 +2,7 @@
 #include "Core.h"
 #include "Window.h"
 #include "LayerStack.h"
+#include "imgui/ImGuiLayer.h"
 
 namespace Crisp {
 	class CRISP_API Application {
@@ -19,6 +20,7 @@ namespace Crisp {
 		inline Window& GetWindow() { return *window; }
 	private:
 		std::unique_ptr<Window> window;
+		ImGuiLayer* imguiLayer;
 		bool running = true;
 		LayerStack layerStack;
 	private:

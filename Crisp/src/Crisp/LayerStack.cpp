@@ -2,9 +2,7 @@
 #include "LayerStack.h"
 
 namespace Crisp {
-	LayerStack::LayerStack() {
-		layerInsert = layers.begin();
-	}
+	LayerStack::LayerStack() {}
 
 	LayerStack::~LayerStack() {
 		for (Layer* layer : layers)
@@ -12,7 +10,8 @@ namespace Crisp {
 	}
 
 	void LayerStack::PushLayer(Layer* layer) {
-		layerInsert = layers.emplace(layerInsert, layer);
+		layers.emplace(layers.begin() + layerInsert, layer);
+		layerInsert++;
 	}
 
 	void LayerStack::PushOverlay(Layer* overlay) {

@@ -13,6 +13,8 @@ namespace Crisp {
 		CRISP_CORE_ASSERT(!instance, "Application already exists")
 		instance = this;
 		window = std::unique_ptr<Window>(Window::Create());
+		imguiLayer = new ImGuiLayer();
+		PushOverlay(imguiLayer);
 	}
 
 	Application::~Application() {
@@ -32,16 +34,16 @@ namespace Crisp {
 			// SDL Polling
 			SDL_Event e;
 			while (SDL_PollEvent(&e)) {
-				// Handle layer events
-				for (Layer* layer : layerStack)
-					layer->OnEvent(&e);
-				
 				// Handle window events
 				switch (e.type) {
 				case SDL_QUIT:
 					running = false;
 					break;
 				}
+
+				// Handle layer events
+				for (Layer* layer : layerStack)
+					layer->OnEvent(&e);
 			}
 
 			// Update input
@@ -50,6 +52,11 @@ namespace Crisp {
 			// Update layers
 			for (Layer* layer : layerStack)
 				layer->OnUpdate();
+
+			imguiLayer->Begin();
+			for (Layer* layer : layerStack)
+				layer->OnImGuiRender();
+			imguiLayer->End();
 
 			// Update window
 			window->OnUpdate();

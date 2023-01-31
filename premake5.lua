@@ -19,9 +19,10 @@ workspace "Crisp"
 	
 	project "Crisp"
 		location "Crisp"
-		kind "SharedLib"
+		kind "StaticLib"
 		language "C++"
-		staticruntime "Off"
+		cppdialect "C++20"
+		staticruntime "on"
 		
 		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 		objdir ("build/" .. outputdir .. "/%{prj.name}")
@@ -43,8 +44,13 @@ workspace "Crisp"
 			"%{prj.name}/vendor/SDL2/include",
 			"%{prj.name}/vendor/GLAD/include",
 			"%{prj.name}/vendor/imgui",
+			"%{prj.name}/vendor/glm",
 		}
 	
+		defines {
+			"_CRT_SECURE_NO_WARNINGS",
+		}
+
 		links {
 			"SDL",
 			"SDLmain",
@@ -55,13 +61,11 @@ workspace "Crisp"
 		-- Window Build Settings --
 		
 		filter "system:windows"
-			cppdialect "C++20"
 			systemversion "latest"
 			
 			defines {
 				"CRISP_PLATFORM_WINDOWS",
 				"CRISP_BUILD_DLL",
-				"IMGUI_IMPL_OPENGL_LOADER_CUSTOM"
 			}
 			
 			postbuildcommands {
@@ -89,7 +93,8 @@ workspace "Crisp"
 		location "Game"
 		kind "ConsoleApp"
 		language "C++"
-		staticruntime "Off"
+		cppdialect "C++20"
+		staticruntime "on"
 		
 		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 		objdir ("build/" .. outputdir .. "/%{prj.name}")
@@ -104,7 +109,9 @@ workspace "Crisp"
 		includedirs {
 			"Crisp/vendor/spdlog/include",
 			"Crisp/vendor/SDL2/include",
-			"Crisp/src"
+			"Crisp/vendor/glm",
+			"Crisp/src",
+			"Crisp/vendor",
 		}
 		
 		links {
@@ -116,7 +123,6 @@ workspace "Crisp"
 		-- Window Build Settings --
 		
 		filter "system:windows"
-			cppdialect "C++20"
 			systemversion "latest"
 			
 			defines {

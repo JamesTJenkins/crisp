@@ -1,10 +1,14 @@
 #pragma once
 
 #ifdef CRISP_PLATFORM_WINDOWS
-	#ifdef CRISP_BUILD_DLL
-		#define CRISP_API __declspec(dllexport)
+	#if CRISP_DYNAMIC_LINK
+		#ifdef CRISP_BUILD_DLL
+			#define CRISP_API __declspec(dllexport)
+		#else
+			#define CRISP_API __declspec(dllimport)
+		#endif
 	#else
-		#define CRISP_API __declspec(dllimport)
+		#define CRISP_API
 	#endif
 #else
 	#error Crisp only support windows
