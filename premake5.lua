@@ -46,7 +46,7 @@ workspace "Crisp"
 			"%{prj.name}/vendor/imgui",
 			"%{prj.name}/vendor/glm",
 		}
-	
+
 		defines {
 			"_CRT_SECURE_NO_WARNINGS",
 		}

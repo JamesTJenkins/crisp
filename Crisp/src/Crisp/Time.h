@@ -9,7 +9,7 @@ namespace Crisp {
 
 		void OnUpdate();
 
-		inline static float deltaTime;
+		inline static double deltaTime;
 	private:
 		UINT64 now;
 		UINT64 last;

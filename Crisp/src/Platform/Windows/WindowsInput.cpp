@@ -8,7 +8,7 @@
 namespace Crisp {
 	Input* Input::instance = new WindowsInput();
 
-	WindowsInput::WindowsInput() : keystate(0), mouseState(0), lastMouseState(0), x(0), y(0) {}
+	WindowsInput::WindowsInput() : keystate(0), mouseState(0), mouseDownState(0), mouseHeldState(0), mouseUpState(0), lastMouseState(0), x(0), y(0) {}
 
 	WindowsInput::~WindowsInput() {}
 
@@ -39,15 +39,15 @@ namespace Crisp {
 		return mouseUpState & SDL_BUTTON(button);
 	}
 
-	std::pair<float, float> WindowsInput::GetMousePositionImpl() {
-		return { (float)x , (float)y };
+	std::pair<int, int> WindowsInput::GetMousePositionImpl() {
+		return { x, y };
 	}
 
-	float WindowsInput::GetMouseXImpl() {
+	int WindowsInput::GetMouseXImpl() {
 		return x;
 	}
 
-	float WindowsInput::GetMouseYImpl() {
+	int WindowsInput::GetMouseYImpl() {
 		return y;
 	}
 }

@@ -16,9 +16,9 @@ namespace Crisp {
 		virtual bool IsMouseButtonDownImpl(int button) override;
 		virtual bool IsMouseButtonHeldImpl(int button) override;
 		virtual bool IsMouseButtonUpImpl(int button) override;
-		virtual std::pair<float, float> GetMousePositionImpl() override;
-		virtual float GetMouseXImpl() override;
-		virtual float GetMouseYImpl() override;
+		virtual std::pair<int, int> GetMousePositionImpl() override;
+		virtual int GetMouseXImpl() override;
+		virtual int GetMouseYImpl() override;
 	private:
 		int x, y;
 		const Uint8* keystate;

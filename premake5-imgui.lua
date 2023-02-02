@@ -1,6 +1,8 @@
 project "imgui"
 	kind "StaticLib"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "On"
 
 	location "Crisp/vendor/imgui"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
@@ -23,8 +25,15 @@ project "imgui"
 	-- Windows -- 
 	filter "system:windows"
 		systemversion "latest"
-		cppdialect "C++17"
-		staticruntime "On"
+		
+	filter "configurations:Debug"
+		runtime "Debug"
+		symbols "on"
 
-	filter { "system:windows", "configurations:Release" }
-		buildoptions "/MT"
+	filter "configurations:Release"
+		runtime "Release"
+		optimize "on"
+
+	filter "configurations:Distribution"
+		runtime "Release"
+		optimize "on"
