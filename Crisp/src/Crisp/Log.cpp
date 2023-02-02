@@ -1,7 +1,7 @@
 #include "CrispPCH.h"
-#include "Log.h"
+#include "Crisp/Log.h"
 
-#include "spdlog/sinks/stdout_color_sinks.h"
+#include <spdlog/sinks/stdout_sinks.h>
 
 namespace Crisp {
 	std::shared_ptr<spdlog::logger> Log::coreLogger;
