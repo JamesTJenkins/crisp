@@ -9,6 +9,10 @@ project "SDL"
 	includedirs {
 		"Crisp/vendor/SDL2/include"
 	}
+
+    flags {
+		"MultiProcessorCompile"
+	}
     
 	vectorextensions "SSE"
 	inlining "Explicit"
@@ -40,7 +44,7 @@ project "SDL"
 		}
 
         postbuildcommands {
-		    ("{COPY} %{cfg.buildtarget.relpath} %{cfg.buildtarget.relpath}/../../Game")
+		    ("{COPY} %{cfg.buildtarget.relpath} \"%{cfg.buildtarget.relpath}/../../Game/\"")
 		}
 
 		files {

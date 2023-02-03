@@ -12,11 +12,13 @@ workspace "Crisp"
 		
 	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"	
 	
-	include "premake5-SDL.lua"
-	include "premake5-SDLmain.lua"
-	include "premake5-GLAD.lua"
-	include "premake5-imgui.lua"
-	
+	group "Dependencies"
+		include "premake5-SDL.lua"
+		include "premake5-SDLmain.lua"
+		include "premake5-GLAD.lua"
+		include "premake5-imgui.lua"
+	group ""
+
 	project "Crisp"
 		location "Crisp"
 		kind "StaticLib"
@@ -35,7 +37,9 @@ workspace "Crisp"
 			"%{prj.name}/src/**.h",
 			"%{prj.name}/src/**.hpp",
 			"%{prj.name}/src/**.c",
-			"%{prj.name}/src/**.cpp"
+			"%{prj.name}/src/**.cpp",
+			"%{prj.name}/vendor/glm/glm/**.hpp",
+			"%{prj.name}/vendor/glm/glm/**.inl",
 		}
 		
 		includedirs {
@@ -56,6 +60,10 @@ workspace "Crisp"
 			"SDLmain",
 			"GLAD",
 			"imgui"
+		}
+
+		flags {
+			"MultiProcessorCompile"
 		}
 		
 		-- Window Build Settings --
@@ -115,7 +123,9 @@ workspace "Crisp"
 			"SDL",
 			"SDLmain"
 		}
-		
+
+		ignoredefaultlibraries { "msvcrtd.lib" }
+
 		-- Window Build Settings --
 		
 		filter "system:windows"

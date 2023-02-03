@@ -12,7 +12,8 @@ project "SDLmain"
 
 	flags {
 		"NoRuntimeChecks",
-		"NoBufferSecurityCheck"
+		"NoBufferSecurityCheck",
+		"MultiProcessorCompile"
 	}
 
 	vectorextensions "SSE"
