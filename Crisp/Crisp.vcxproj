@@ -140,8 +140,11 @@
   <ItemGroup>
     <ClInclude Include="src\Crisp.h" />
     <ClInclude Include="src\Crisp\Application.h" />
+    <ClInclude Include="src\Crisp\Components\Camera.h" />
+    <ClInclude Include="src\Crisp\Components\Transform.h" />
     <ClInclude Include="src\Crisp\Core.h" />
     <ClInclude Include="src\Crisp\EntryPoint.h" />
+    <ClInclude Include="src\Crisp\glm_common.h" />
     <ClInclude Include="src\Crisp\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Crisp\Input.h" />
     <ClInclude Include="src\Crisp\Keycodes.h" />
@@ -576,6 +579,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crisp\Application.cpp" />
+    <ClCompile Include="src\Crisp\Components\Camera.cpp" />
+    <ClCompile Include="src\Crisp\Components\Transform.cpp" />
     <ClCompile Include="src\Crisp\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Crisp\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Crisp\Layer.cpp" />

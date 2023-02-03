@@ -9,7 +9,7 @@
 namespace Crisp {
 	Application* Application::instance = nullptr; 
 
-	Application::Application() {
+	Application::Application() : camTransform(glm::vec3(0, 0, -1)), cam(&camTransform, 16 / 9) {
 		CRISP_CORE_ASSERT(!instance, "Application already exists")
 			instance = this;
 		window = std::unique_ptr<Window>(Window::Create());
@@ -50,11 +50,13 @@ namespace Crisp {
 			
 			layout(location = 0) in vec3 position;
 
+			uniform mat4 vp;
+
 			out vec3 pos;
 
 			void main() {
 				pos = position;
-				gl_Position = vec4(position, 1);
+				gl_Position = vp * vec4(position, 1);
 			}
 		)";
 
@@ -96,8 +98,7 @@ namespace Crisp {
 
 			Renderer::BeginScene();
 			// TESTING
-			shader->Bind();
-			Renderer::Submit(vertexArray);
+			Renderer::Submit(shader, vertexArray);
 			// TESTING
 			Renderer::EndScene();
 

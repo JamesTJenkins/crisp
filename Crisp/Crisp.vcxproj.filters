@@ -1350,6 +1350,9 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crisp\Components\Camera.h" />
+    <ClInclude Include="src\Crisp\Components\Transform.h" />
+    <ClInclude Include="src\Crisp\glm_common.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crisp\Application.cpp">
@@ -1412,5 +1415,7 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="src\Crisp\Components\Camera.cpp" />
+    <ClCompile Include="src\Crisp\Components\Transform.cpp" />
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@
 // TESTING
 #include "Crisp/Renderer/Shader.h"
 #include "Crisp/Renderer/VertexArray.h"
+#include "Crisp/Components/Camera.h"
 // TESTING
 
 namespace Crisp {
@@ -32,6 +33,8 @@ namespace Crisp {
 		// TESTING
 		std::shared_ptr<Shader> shader;
 		std::shared_ptr<VertexArray> vertexArray;
+		Transform camTransform;
+		Camera cam;
 		// TESTING
 	private:
 		static Application* instance;

@@ -3,6 +3,8 @@
 
 #include <glad/glad.h>
 
+#include <glm/gtc/type_ptr.hpp>
+
 namespace Crisp {
 	Shader::Shader(const std::string& vertex, const std::string& fragment) {
 		// Create an empty vertex shader handle
@@ -125,5 +127,10 @@ namespace Crisp {
 
 	void Shader::Unbind() const {
 		glUseProgram(0);
+	}
+
+	void Shader::UploadUniformMat4(const std::string& name, const glm::mat4& matrix) {
+		GLint loc = glGetUniformLocation(rendererID, name.c_str());
+		glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 }
