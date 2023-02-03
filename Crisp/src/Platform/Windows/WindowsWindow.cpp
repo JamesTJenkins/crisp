@@ -1,7 +1,7 @@
 #include "CrispPCH.h"
 #include "WindowsWindow.h"
 
-#include <glad/glad.h>
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Crisp {
 	static bool sdlInitialized = false;
@@ -19,7 +19,7 @@ namespace Crisp {
 	}
 
 	void WindowsWindow::OnUpdate() {
-		SDL_GL_SwapWindow(window);
+		graphicsContext->SwapBuffers();
 	}
 
 	// TODO: add adaptive sync (-1)?
@@ -48,7 +48,7 @@ namespace Crisp {
 			sdlInitialized = true;
 		}
 
-		// Initialize openGL
+		// Initialize openGL (abstract this and window gen (or just flags))
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -66,17 +66,11 @@ namespace Crisp {
 			data.height,
 			SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI
 		);
-
-		// openGL context creation
-		SDL_GLContext context = SDL_GL_CreateContext(window);
-		SDL_GL_MakeCurrent(window, context);
+		// Create graphics context
+		graphicsContext = new OpenGLContext(window);
+		graphicsContext->Initialize();
 		// Set window vsync
 		SetVSync(true);
-		// Load GLAD
-		int status = gladLoadGLLoader(SDL_GL_GetProcAddress);
-		CRISP_CORE_ASSERT(status, "Failed to initialize glad");
-		// Set viewport
-		glViewport(0, 0, properties.width, properties.height);
 	}
 
 	void WindowsWindow::Shutdown() {

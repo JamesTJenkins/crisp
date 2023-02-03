@@ -1,23 +1,87 @@
 #include "CrispPCH.h"
 #include "Application.h"
-#include "Crisp/Time.h"
 #include <SDL.h>
-#include <glad/glad.h>
 
-#include "Input.h"
+#include "Crisp/Time.h"
+#include "Crisp/Input.h"
+#include "Crisp/Renderer/Renderer.h"
 
 namespace Crisp {
 	Application* Application::instance = nullptr; 
 
 	Application::Application() {
 		CRISP_CORE_ASSERT(!instance, "Application already exists")
-		instance = this;
+			instance = this;
 		window = std::unique_ptr<Window>(Window::Create());
 		imguiLayer = new ImGuiLayer();
 		PushOverlay(imguiLayer);
+
+		// TESTING
+		vertexArray.reset(VertexArray::Create());
+
+		float verts[3 * 3] = {
+			-0.5f, -0.5f, 0.0f,
+			0.5f, -0.5f, 0.0f,
+			0.0f, 0.5f, 0.0f
+		};
+
+		std::shared_ptr<VertexBuffer> vertexBuffer;
+		vertexBuffer.reset(VertexBuffer::Create(verts, sizeof(verts)));
+
+		{
+			BufferLayout layout = {
+				{ ShaderDataType::Vec3, "Position" }
+			};
+			vertexBuffer->SetLayout(layout);
+		}
+
+		vertexArray->AddVertexBuffer(vertexBuffer);
+
+		unsigned int ind[3] = {
+			0,1,2
+		};
+
+		std::shared_ptr<IndexBuffer> indexBuffer;
+		indexBuffer.reset(IndexBuffer::Create(ind, sizeof(ind) / sizeof(uint32_t)));
+		vertexArray->SetIndexBuffer(indexBuffer);
+
+		std::string vert = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 position;
+
+			out vec3 pos;
+
+			void main() {
+				pos = position;
+				gl_Position = vec4(position, 1);
+			}
+		)";
+
+		std::string frag = R"(
+			#version 330 core
+			
+			layout(location = 0) out vec4 color;
+
+			in vec3 pos;
+
+			vec3 hsv2rgb (vec3 c) {
+				vec4 k = vec4 (1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+				vec3 p = abs (fract (c.xxx + k.xyz) * 6.0 - k.www);
+				return c.z * mix (k.xxx, clamp (p - k.xxx, 0.0, 1.0), c.y);
+			}
+
+			void main() {
+				color = vec4(hsv2rgb (vec3 (sin (pos.x), 1, 1)), 1);
+			}
+		)";
+
+		shader.reset(new Shader(vert, frag));
+		// TESTING
 	}
 
 	Application::~Application() {
+		SDL_Quit();
 	}
 
 	void Application::Run() {
@@ -27,9 +91,17 @@ namespace Crisp {
 			// Update time
 			time.OnUpdate();
 
-			// Set pink for testing
-			glClearColor(1, 0, 1, 1);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			RenderCommand::SetClearColor({ 1, 0, 1, 1 });
+			RenderCommand::Clear();
+
+			Renderer::BeginScene();
+			// TESTING
+			shader->Bind();
+			Renderer::Submit(vertexArray);
+			// TESTING
+			Renderer::EndScene();
+
+			//Renderer::Flush();
 
 			// SDL Polling
 			SDL_Event e;

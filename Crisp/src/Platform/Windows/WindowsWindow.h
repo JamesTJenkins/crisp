@@ -3,6 +3,8 @@
 
 #include <SDL.h>
 
+#include "Crisp/Renderer/GraphicsContext.h"
+
 namespace Crisp {
 	class WindowsWindow : public Window {
 	public:
@@ -24,6 +26,7 @@ namespace Crisp {
 		virtual void Shutdown();
 	private:
 		SDL_Window* window;
+		GraphicsContext* graphicsContext;
 
 		struct WindowData {
 			std::string title;

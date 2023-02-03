@@ -4,6 +4,11 @@
 #include "LayerStack.h"
 #include "imgui/ImGuiLayer.h"
 
+// TESTING
+#include "Crisp/Renderer/Shader.h"
+#include "Crisp/Renderer/VertexArray.h"
+// TESTING
+
 namespace Crisp {
 	class CRISP_API Application {
 	public:
@@ -23,6 +28,11 @@ namespace Crisp {
 		ImGuiLayer* imguiLayer;
 		bool running = true;
 		LayerStack layerStack;
+
+		// TESTING
+		std::shared_ptr<Shader> shader;
+		std::shared_ptr<VertexArray> vertexArray;
+		// TESTING
 	private:
 		static Application* instance;
 	};
