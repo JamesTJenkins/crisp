@@ -1,5 +1,5 @@
 #pragma once
-#include "Crisp/Core.h"
+#include "Crisp/Core/Core.h"
 
 // ingore warnings in external headers
 #pragma warning(push, 0)

@@ -1,5 +1,5 @@
 #pragma once
-#include "Crisp/Core.h"
+#include "Crisp/Core/Core.h"
 #include <SDL.h>
 
 namespace Crisp {

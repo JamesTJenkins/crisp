@@ -1,5 +1,5 @@
 #pragma once
-#include "Crisp/glm_common.h"
+#include "Crisp/Core/glm_common.h"
 
 namespace Crisp {
     class Transform {

@@ -1,8 +1,8 @@
 #include "CrispPCH.h"
 #include "ImGuiLayer.h"
 
-#include "Crisp/Time.h"
-#include "Crisp/Application.h"
+#include "Crisp/Core/Time.h"
+#include "Crisp/Core/Application.h"
 #include "backends/imgui_impl_opengl3.h"
 #include "backends/imgui_impl_sdl.h"
 

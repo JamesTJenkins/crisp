@@ -14,7 +14,7 @@ namespace Crisp {
 	void Time::OnUpdate() {
 		last = now;
 		now = SDL_GetPerformanceCounter();
-
-		deltaTime = (double)((now - last) * 1000 / (double)SDL_GetPerformanceFrequency());
+		// Sets delta time in milliseconds
+		deltaTime = (double)((now - last) * 1000 / (double)SDL_GetPerformanceFrequency()); 
 	}
 }

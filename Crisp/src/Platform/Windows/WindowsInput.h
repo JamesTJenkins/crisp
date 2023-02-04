@@ -1,5 +1,5 @@
 #pragma once
-#include "Crisp/Input.h"
+#include "Crisp/Core/Input.h"
 
 #include <SDL_stdinc.h>
 

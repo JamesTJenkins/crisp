@@ -1,5 +1,5 @@
 #pragma once
-#include "Crisp/Window.h"
+#include "Crisp/Core/Window.h"
 
 #include <SDL.h>
 

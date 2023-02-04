@@ -129,6 +129,11 @@ namespace Crisp {
 		glUseProgram(0);
 	}
 
+	void Shader::UploadUniformVec4(const std::string& name, const glm::vec4& vec4) {
+		GLint loc = glGetUniformLocation(rendererID, name.c_str());
+		glUniform4f(loc, vec4.x, vec4.y, vec4.z, vec4.w);
+	}
+
 	void Shader::UploadUniformMat4(const std::string& name, const glm::mat4& matrix) {
 		GLint loc = glGetUniformLocation(rendererID, name.c_str());
 		glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(matrix));

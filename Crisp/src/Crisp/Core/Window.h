@@ -1,6 +1,6 @@
 #pragma once
 #include "CrispPCH.h"
-#include "Crisp/Core.h"
+#include "Crisp/Core/Core.h"
 
 namespace Crisp {
 	struct WindowProperties {

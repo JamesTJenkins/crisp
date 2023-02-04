@@ -1,5 +1,5 @@
 #include "CrispPCH.h"
-#include "Crisp/Log.h"
+#include "Crisp/Core/Log.h"
 
 #include <spdlog/sinks/stdout_sinks.h>
 
