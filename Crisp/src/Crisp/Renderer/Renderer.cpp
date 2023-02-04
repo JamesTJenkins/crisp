@@ -3,6 +3,8 @@
 
 #include "Crisp/Components/Camera.h"
 
+#include "Platform/OpenGL/OpenGLShader.h"
+
 namespace Crisp {
     Renderer::SceneData* Renderer::sceneData = new Renderer::SceneData;
 
@@ -15,8 +17,10 @@ namespace Crisp {
 
     void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const glm::mat4& transform) {
         shader->Bind();
-        shader->UploadUniformMat4("vp", sceneData->viewProjectionMatrix);
-        shader->UploadUniformMat4("transform", transform);
+        // TEMP
+        std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("vp", sceneData->viewProjectionMatrix);
+        std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("transform", transform);
+        // TEMP
         vertexArray->Bind();
         RenderCommand::DrawIndexed(vertexArray);
     }

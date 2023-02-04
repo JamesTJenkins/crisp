@@ -1353,6 +1353,7 @@
     <ClInclude Include="src\Crisp\Components\Camera.h" />
     <ClInclude Include="src\Crisp\Components\Transform.h" />
     <ClInclude Include="src\Crisp\Core\glm_common.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crisp\Core\Application.cpp">
@@ -1417,5 +1418,6 @@
     </ClCompile>
     <ClCompile Include="src\Crisp\Components\Camera.cpp" />
     <ClCompile Include="src\Crisp\Components\Transform.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
   </ItemGroup>
 </Project>

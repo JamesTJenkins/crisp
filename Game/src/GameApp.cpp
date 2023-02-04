@@ -1,6 +1,8 @@
 #include <Crisp.h>
 
 #include <imgui/imgui.h>
+#include <glm/gtc/type_ptr.hpp>
+#include <Platform/OpenGL/OpenGLShader.h>
 
 class ExampleLayer : public Crisp::Layer {
 public:
@@ -40,11 +42,14 @@ public:
 
 			uniform mat4 vp;
 			uniform mat4 transform;
+			uniform vec3 color;
 
 			out vec3 pos;
+			out vec3 col;
 
 			void main() {
 				pos = position;
+				col = color;
 				gl_Position = vp * transform * vec4(position, 1);
 			}
 		)";
@@ -55,19 +60,14 @@ public:
 			layout(location = 0) out vec4 color;
 
 			in vec3 pos;
-
-			vec3 hsv2rgb (vec3 c) {
-				vec4 k = vec4 (1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-				vec3 p = abs (fract (c.xxx + k.xyz) * 6.0 - k.www);
-				return c.z * mix (k.xxx, clamp (p - k.xxx, 0.0, 1.0), c.y);
-			}
+			in vec3 col;
 
 			void main() {
-				color = vec4(hsv2rgb (vec3 (sin (pos.x), 1, 1)), 1);
+				color = vec4(col, 1);
 			}
 		)";
 
-		shader.reset(new Crisp::Shader(vert, frag));
+		shader.reset(Crisp::Shader::Create(vert, frag));
 	}
 
 	void OnUpdate() override {
@@ -89,6 +89,8 @@ public:
 		Crisp::RenderCommand::Clear();
 
 		Crisp::Renderer::BeginScene();
+		shader->Bind();
+		std::dynamic_pointer_cast<Crisp::OpenGLShader>(shader)->UploadUniformVec3("color", col);
 		Crisp::Renderer::Submit(shader, vertexArray);
 		Crisp::Renderer::EndScene();
 
@@ -96,13 +98,16 @@ public:
 	}
 
 	virtual void OnImGuiRender() override {
-		
+		ImGui::Begin("Settings");
+		ImGui::ColorEdit3("Color", glm::value_ptr(col));
+		ImGui::End();
 	}
 private:
 	std::shared_ptr<Crisp::Shader> shader;
 	std::shared_ptr<Crisp::VertexArray> vertexArray;
 	Crisp::Transform camTransform;
 	Crisp::Camera cam;
+	glm::vec3 col;
 };
 
 class Game : public Crisp::Application {

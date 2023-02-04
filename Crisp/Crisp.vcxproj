@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Crisp.h" />
     <ClInclude Include="src\Crisp\Core\Application.h" />
     <ClInclude Include="src\Crisp\Components\Camera.h" />
@@ -578,6 +579,7 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Crisp\Core\Application.cpp" />
     <ClCompile Include="src\Crisp\Components\Camera.cpp" />
     <ClCompile Include="src\Crisp\Components\Transform.cpp" />
