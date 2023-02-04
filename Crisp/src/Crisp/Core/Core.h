@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 
 #ifdef CRISP_PLATFORM_WINDOWS
 	#if CRISP_DYNAMIC_LINK
@@ -28,3 +29,11 @@
 
 // Bitfields
 #define BIT(x) (1 << x)
+
+namespace Crisp {
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+
+	template<typename T>
+	using Ref = std::shared_ptr<T>;
+}

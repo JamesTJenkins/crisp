@@ -6,7 +6,7 @@
 
 class ExampleLayer : public Crisp::Layer {
 public:
-	ExampleLayer() : Layer("Example"), camTransform(glm::vec3(0, 0, -1)), cam(&camTransform, 16 / 9) {
+	ExampleLayer() : Layer("Example"), camTransform(glm::vec3(0, 0, -1)), cam(&camTransform, 16 / 9), col(1) {
 		vertexArray.reset(Crisp::VertexArray::Create());
 
 		float verts[3 * 3] = {
@@ -15,7 +15,7 @@ public:
 			0.0f, 0.5f, 0.0f
 		};
 
-		std::shared_ptr<Crisp::VertexBuffer> vertexBuffer;
+		Crisp::Ref<Crisp::VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(Crisp::VertexBuffer::Create(verts, sizeof(verts)));
 
 		{
@@ -31,7 +31,7 @@ public:
 			0,1,2
 		};
 
-		std::shared_ptr<Crisp::IndexBuffer> indexBuffer;
+		Crisp::Ref<Crisp::IndexBuffer> indexBuffer;
 		indexBuffer.reset(Crisp::IndexBuffer::Create(ind, sizeof(ind) / sizeof(uint32_t)));
 		vertexArray->SetIndexBuffer(indexBuffer);
 
@@ -103,8 +103,9 @@ public:
 		ImGui::End();
 	}
 private:
-	std::shared_ptr<Crisp::Shader> shader;
-	std::shared_ptr<Crisp::VertexArray> vertexArray;
+	Crisp::Ref<Crisp::Shader> shader;
+	Crisp::Ref<Crisp::VertexArray> vertexArray;
+
 	Crisp::Transform camTransform;
 	Crisp::Camera cam;
 	glm::vec3 col;
