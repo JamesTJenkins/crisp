@@ -7,6 +7,12 @@
     <Filter Include="src\Crisp">
       <UniqueIdentifier>{5DC9B8B2-C933-6D29-1272-1ECF7E1B4B7E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Crisp\Components">
+      <UniqueIdentifier>{52FA9EC9-3E89-2893-E7A7-3C8ED3153939}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Crisp\Core">
+      <UniqueIdentifier>{D54F07DF-C11D-FBE4-AAB1-6B0B961ED749}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Crisp\ImGui">
       <UniqueIdentifier>{47105CC0-B39B-C984-BCAC-4C7928B72585}</UniqueIdentifier>
     </Filter>
@@ -43,48 +49,69 @@
     <Filter Include="vendor\glm\glm\gtx">
       <UniqueIdentifier>{B3A6A76B-9F8A-68C1-08EB-6214F4ED5243}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\stb_image">
+      <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Crisp.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crisp\Components\Camera.h">
+      <Filter>src\Crisp\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Components\OrthographicCamera.h">
+      <Filter>src\Crisp\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Components\PerspectiveCamera.h">
+      <Filter>src\Crisp\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Components\Transform.h">
+      <Filter>src\Crisp\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crisp\Core\Application.h">
-      <Filter>src\Crisp</Filter>
+      <Filter>src\Crisp\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\Core\Core.h">
-      <Filter>src\Crisp</Filter>
+      <Filter>src\Crisp\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\Core\EntryPoint.h">
-      <Filter>src\Crisp</Filter>
+      <Filter>src\Crisp\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Core\Input.h">
+      <Filter>src\Crisp\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Core\Keycodes.h">
+      <Filter>src\Crisp\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Core\Layer.h">
+      <Filter>src\Crisp\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Core\LayerStack.h">
+      <Filter>src\Crisp\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Core\Log.h">
+      <Filter>src\Crisp\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Core\MouseButtonCodes.h">
+      <Filter>src\Crisp\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Core\Time.h">
+      <Filter>src\Crisp\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Core\Window.h">
+      <Filter>src\Crisp\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Core\glm_common.h">
+      <Filter>src\Crisp\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\ImGui\ImGuiLayer.h">
       <Filter>src\Crisp\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crisp\Core\Input.h">
-      <Filter>src\Crisp</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crisp\Core\Keycodes.h">
-      <Filter>src\Crisp</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crisp\Core\Layer.h">
-      <Filter>src\Crisp</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crisp\Core\LayerStack.h">
-      <Filter>src\Crisp</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crisp\Core\Log.h">
-      <Filter>src\Crisp</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crisp\Core\MouseButtonCodes.h">
-      <Filter>src\Crisp</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\Renderer\Buffer.h">
       <Filter>src\Crisp\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\Renderer\GraphicsContext.h">
-      <Filter>src\Crisp\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crisp\Renderer\RendererAPI.h">
       <Filter>src\Crisp\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\Renderer\RenderCommand.h">
@@ -93,17 +120,17 @@
     <ClInclude Include="src\Crisp\Renderer\Renderer.h">
       <Filter>src\Crisp\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crisp\Renderer\RendererAPI.h">
+      <Filter>src\Crisp\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crisp\Renderer\Shader.h">
+      <Filter>src\Crisp\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Renderer\Texture.h">
       <Filter>src\Crisp\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\Renderer\VertexArray.h">
       <Filter>src\Crisp\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crisp\Core\Time.h">
-      <Filter>src\Crisp</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crisp\Core\Window.h">
-      <Filter>src\Crisp</Filter>
     </ClInclude>
     <ClInclude Include="src\CrispPCH.h">
       <Filter>src</Filter>
@@ -115,6 +142,12 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLRenderAPI.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
@@ -1350,14 +1383,37 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crisp\Components\Camera.h" />
-    <ClInclude Include="src\Crisp\Components\Transform.h" />
-    <ClInclude Include="src\Crisp\Core\glm_common.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="vendor\stb_image\stb_image.h">
+      <Filter>vendor\stb_image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Crisp\Components\Camera.cpp">
+      <Filter>src\Crisp\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crisp\Components\OrthographicCamera.cpp">
+      <Filter>src\Crisp\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crisp\Components\PerspectiveCamera.cpp">
+      <Filter>src\Crisp\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crisp\Components\Transform.cpp">
+      <Filter>src\Crisp\Components</Filter>
+    </ClCompile>
     <ClCompile Include="src\Crisp\Core\Application.cpp">
-      <Filter>src\Crisp</Filter>
+      <Filter>src\Crisp\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crisp\Core\Layer.cpp">
+      <Filter>src\Crisp\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crisp\Core\LayerStack.cpp">
+      <Filter>src\Crisp\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crisp\Core\Log.cpp">
+      <Filter>src\Crisp\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crisp\Core\Time.cpp">
+      <Filter>src\Crisp\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Crisp\ImGui\ImGuiBuild.cpp">
       <Filter>src\Crisp\ImGui</Filter>
@@ -1365,19 +1421,7 @@
     <ClCompile Include="src\Crisp\ImGui\ImGuiLayer.cpp">
       <Filter>src\Crisp\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Crisp\Core\Layer.cpp">
-      <Filter>src\Crisp</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Crisp\Core\LayerStack.cpp">
-      <Filter>src\Crisp</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Crisp\Core\Log.cpp">
-      <Filter>src\Crisp</Filter>
-    </ClCompile>
     <ClCompile Include="src\Crisp\Renderer\Buffer.cpp">
-      <Filter>src\Crisp\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Crisp\Renderer\RendererAPI.cpp">
       <Filter>src\Crisp\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crisp\Renderer\RenderCommand.cpp">
@@ -1386,14 +1430,17 @@
     <ClCompile Include="src\Crisp\Renderer\Renderer.cpp">
       <Filter>src\Crisp\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Crisp\Renderer\RendererAPI.cpp">
+      <Filter>src\Crisp\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Crisp\Renderer\Shader.cpp">
+      <Filter>src\Crisp\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crisp\Renderer\Texture.cpp">
       <Filter>src\Crisp\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Crisp\Renderer\VertexArray.cpp">
       <Filter>src\Crisp\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Crisp\Core\Time.cpp">
-      <Filter>src\Crisp</Filter>
     </ClCompile>
     <ClCompile Include="src\CrispPCH.cpp">
       <Filter>src</Filter>
@@ -1407,6 +1454,12 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLRenderAPI.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
@@ -1416,8 +1469,8 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\Crisp\Components\Camera.cpp" />
-    <ClCompile Include="src\Crisp\Components\Transform.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="vendor\stb_image\stb_image.cpp">
+      <Filter>vendor\stb_image</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

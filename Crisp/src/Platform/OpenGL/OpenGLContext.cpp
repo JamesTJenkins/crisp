@@ -13,7 +13,7 @@ namespace Crisp {
 		SDL_GLContext context = SDL_GL_CreateContext(windowHandle);
 		SDL_GL_MakeCurrent(windowHandle, context);
 		// Load GLAD
-		int status = gladLoadGLLoader(SDL_GL_GetProcAddress);
+		int status = gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
 		CRISP_CORE_ASSERT(status, "Failed to initialize glad");
 		// Set viewport size
 		int w, h;

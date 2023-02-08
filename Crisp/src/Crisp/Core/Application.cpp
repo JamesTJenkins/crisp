@@ -2,6 +2,7 @@
 #include "Application.h"
 #include <SDL.h>
 
+#include "Crisp/Renderer/Renderer.h"
 #include "Crisp/Core/Time.h"
 #include "Crisp/Core/Input.h"
 
@@ -9,9 +10,12 @@ namespace Crisp {
 	Application* Application::instance = nullptr; 
 
 	Application::Application() {
-		CRISP_CORE_ASSERT(!instance, "Application already exists")
-			instance = this;
+		CRISP_CORE_ASSERT(!instance, "Application already exists");
+		instance = this;
 		window = std::unique_ptr<Window>(Window::Create());
+
+		Renderer::Initialize();
+
 		imguiLayer = new ImGuiLayer();
 		PushOverlay(imguiLayer);
 	}
@@ -30,10 +34,13 @@ namespace Crisp {
 			// SDL Polling
 			SDL_Event e;
 			while (SDL_PollEvent(&e)) {
-				// Handle window events
+				// Handle quitting
 				switch (e.type) {
 				case SDL_QUIT:
 					running = false;
+					break;
+				case SDL_WINDOWEVENT_RESIZED:
+					Renderer::OnWindowResize(window->GetWidth(), window->GetHeight());
 					break;
 				}
 

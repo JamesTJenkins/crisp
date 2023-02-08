@@ -4,8 +4,6 @@
 #include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Crisp {
-	static bool sdlInitialized = false;
-
 	Window* Window::Create(const WindowProperties& properties) {
 		return new WindowsWindow(properties);
 	}
@@ -42,21 +40,6 @@ namespace Crisp {
 
 		CRISP_CORE_INFO("Creating window {0} ({1}, {2})", properties.title, properties.width, properties.height);
 
-		if (!sdlInitialized) {
-			int success = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER);
-			CRISP_CORE_ASSERT(success, "Could not initialize SDL");
-			sdlInitialized = true;
-		}
-
-		// Initialize openGL (abstract this and window gen (or just flags))
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-		
-		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-		SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-
 		// Create SDL window
 		window = SDL_CreateWindow(
 			data.title.c_str(),
@@ -64,7 +47,7 @@ namespace Crisp {
 			SDL_WINDOWPOS_CENTERED,
 			data.width,
 			data.height,
-			SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI
+			SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI
 		);
 		// Create graphics context
 		graphicsContext = new OpenGLContext(window);

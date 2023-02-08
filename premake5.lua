@@ -38,6 +38,8 @@ workspace "Crisp"
 			"%{prj.name}/src/**.hpp",
 			"%{prj.name}/src/**.c",
 			"%{prj.name}/src/**.cpp",
+			"%{prj.name}/vendor/stb_image/**.h",
+			"%{prj.name}/vendor/stb_image/**.cpp",
 			"%{prj.name}/vendor/glm/glm/**.hpp",
 			"%{prj.name}/vendor/glm/glm/**.inl",
 		}
@@ -48,6 +50,7 @@ workspace "Crisp"
 			"%{prj.name}/vendor/SDL2/include",
 			"%{prj.name}/vendor/GLAD/include",
 			"%{prj.name}/vendor/imgui",
+			"%{prj.name}/vendor/stb_image",
 			"%{prj.name}/vendor/glm",
 		}
 

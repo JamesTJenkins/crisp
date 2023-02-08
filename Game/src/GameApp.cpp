@@ -6,68 +6,44 @@
 
 class ExampleLayer : public Crisp::Layer {
 public:
-	ExampleLayer() : Layer("Example"), camTransform(glm::vec3(0, 0, -1)), cam(&camTransform, 16 / 9), col(1) {
+	ExampleLayer() : Layer("Example"), camTransform(glm::vec3(0, 0, 0)), cam(Crisp::Camera::CreateOrthographicCamera(&camTransform, -(1280/720), 1280/720, -1, 1)), col(1) {
+	//ExampleLayer() : Layer("Example"), camTransform(glm::vec3(0, 0, -1)), cam(Crisp::Camera::CreatePerspectiveCamera(&camTransform, 1280/720)), col(1) {
+		Crisp::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 0.1f });
+
 		vertexArray.reset(Crisp::VertexArray::Create());
 
-		float verts[3 * 3] = {
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			0.0f, 0.5f, 0.0f
+		float verts[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
 		Crisp::Ref<Crisp::VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(Crisp::VertexBuffer::Create(verts, sizeof(verts)));
 
-		{
-			Crisp::BufferLayout layout = {
-				{ Crisp::ShaderDataType::Vec3, "Position" }
-			};
-			vertexBuffer->SetLayout(layout);
-		}
-
+		Crisp::BufferLayout layout = {
+			{ Crisp::ShaderDataType::Vec3, "Position" },
+			{ Crisp::ShaderDataType::Vec2, "Texcoord" }
+		};
+		vertexBuffer->SetLayout(layout);
 		vertexArray->AddVertexBuffer(vertexBuffer);
 
-		unsigned int ind[3] = {
-			0,1,2
+		unsigned int ind[6] = {
+			0,1,2,
+			2,3,0
 		};
 
 		Crisp::Ref<Crisp::IndexBuffer> indexBuffer;
 		indexBuffer.reset(Crisp::IndexBuffer::Create(ind, sizeof(ind) / sizeof(uint32_t)));
 		vertexArray->SetIndexBuffer(indexBuffer);
 
-		std::string vert = R"(
-			#version 330 core
-			
-			layout(location = 0) in vec3 position;
+		auto texShader = lib.Load("textureShader", "assets/shaders/texture.glsl");
 
-			uniform mat4 vp;
-			uniform mat4 transform;
-			uniform vec3 color;
+		texture = Crisp::Texture2D::Create("assets/textures/bacon.png");
 
-			out vec3 pos;
-			out vec3 col;
-
-			void main() {
-				pos = position;
-				col = color;
-				gl_Position = vp * transform * vec4(position, 1);
-			}
-		)";
-
-		std::string frag = R"(
-			#version 330 core
-			
-			layout(location = 0) out vec4 color;
-
-			in vec3 pos;
-			in vec3 col;
-
-			void main() {
-				color = vec4(col, 1);
-			}
-		)";
-
-		shader.reset(Crisp::Shader::Create(vert, frag));
+		std::dynamic_pointer_cast<Crisp::OpenGLShader>(texShader)->Bind();
+		std::dynamic_pointer_cast<Crisp::OpenGLShader>(texShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate() override {
@@ -78,36 +54,38 @@ public:
 		if (Crisp::Input::IsKeyPressed(CRISP_RIGHT))
 			moveDir.x -= 1;
 		if (Crisp::Input::IsKeyPressed(CRISP_UP))
-			moveDir.z += 1;
+			moveDir.y += 1;
 		if (Crisp::Input::IsKeyPressed(CRISP_DOWN))
-			moveDir.z -= 1;
+			moveDir.y -= 1;
 
-		cam.transformComponent->SetPosition(cam.transformComponent->GetPosition() + (moveDir * (float)(Crisp::Time::deltaTime * 0.001)));
+		cam->GetTransform()->SetPosition(cam->GetTransform()->GetPosition() + -(moveDir * (float)(Crisp::Time::deltaTime * 0.001)));
 
 		// Rendering
-		Crisp::RenderCommand::SetClearColor({ 1, 0, 1, 1 });
 		Crisp::RenderCommand::Clear();
-
+		
 		Crisp::Renderer::BeginScene();
-		shader->Bind();
-		std::dynamic_pointer_cast<Crisp::OpenGLShader>(shader)->UploadUniformVec3("color", col);
-		Crisp::Renderer::Submit(shader, vertexArray);
+		auto texShader = lib.Get("textureShader");
+		texShader->Bind();
+		texture->Bind();
+		Crisp::Renderer::Submit(texShader, vertexArray);
 		Crisp::Renderer::EndScene();
 
 		//Renderer::Flush();
 	}
 
 	virtual void OnImGuiRender() override {
-		ImGui::Begin("Settings");
-		ImGui::ColorEdit3("Color", glm::value_ptr(col));
-		ImGui::End();
+		//ImGui::Begin("Settings");
+		//ImGui::ColorEdit3("Color", glm::value_ptr(col));
+		//ImGui::End();
 	}
 private:
-	Crisp::Ref<Crisp::Shader> shader;
+	Crisp::ShaderLibrary lib;
 	Crisp::Ref<Crisp::VertexArray> vertexArray;
 
+	Crisp::Ref<Crisp::Texture2D> texture;
+
 	Crisp::Transform camTransform;
-	Crisp::Camera cam;
+	Crisp::Camera* cam;
 	glm::vec3 col;
 };
 
