@@ -5,8 +5,8 @@
 #ifndef GLM_FORCE_DEPTH_ZERO_TO_ONE
     #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #endif
-#ifndef GLM_RIGHT_HANDED
-    #define GLM_RIGHT_HANDED
+#ifndef GLM_LEFT_HANDED
+    #define GLM_LEFT_HANDED
 #endif
 #include <glm/glm.hpp>
 #include <glm/gtx/rotate_vector.hpp>
