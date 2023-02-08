@@ -17,4 +17,17 @@ namespace Crisp {
 		CRISP_CORE_ASSERT(false, "Unknown renderer API.");
 		return nullptr;
 	}
+
+	Ref<Sampler> Sampler::Create(){
+		switch (Renderer::GetAPI()) {
+		case RendererAPI::API::None:
+			CRISP_CORE_ASSERT(false, "RendererAPI::None isnt supported.");
+			return nullptr;
+		case RendererAPI::API::OpenGL:
+			return std::make_shared<OpenGLSampler>();
+		}
+
+		CRISP_CORE_ASSERT(false, "Unknown renderer API.");
+		return nullptr;
+	}
 }

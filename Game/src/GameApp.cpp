@@ -41,6 +41,7 @@ public:
 		auto texShader = lib.Load("textureShader", "assets/shaders/texture.glsl");
 
 		texture = Crisp::Texture2D::Create("assets/textures/bacon.png");
+		sampler = Crisp::Sampler::Create();
 
 		std::dynamic_pointer_cast<Crisp::OpenGLShader>(texShader)->Bind();
 		std::dynamic_pointer_cast<Crisp::OpenGLShader>(texShader)->UploadUniformInt("u_Texture", 0);
@@ -66,6 +67,7 @@ public:
 		Crisp::Renderer::BeginScene();
 		auto texShader = lib.Get("textureShader");
 		texShader->Bind();
+		sampler->Bind();
 		texture->Bind();
 		Crisp::Renderer::Submit(texShader, vertexArray);
 		Crisp::Renderer::EndScene();
@@ -82,6 +84,7 @@ private:
 	Crisp::ShaderLibrary lib;
 	Crisp::Ref<Crisp::VertexArray> vertexArray;
 
+	Crisp::Ref<Crisp::Sampler> sampler;
 	Crisp::Ref<Crisp::Texture2D> texture;
 
 	Crisp::Transform camTransform;

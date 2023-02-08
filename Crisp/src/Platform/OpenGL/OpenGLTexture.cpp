@@ -33,7 +33,17 @@ namespace Crisp {
 		glGenerateTextureMipmap(textureID);
 
 		stbi_image_free(data);
+	}
 
+	OpenGLTexture2D::~OpenGLTexture2D() {
+		glDeleteTextures(1, &textureID);
+	}
+
+	void OpenGLTexture2D::Bind(uint32_t slot) const {
+		glBindTextureUnit(slot, textureID);
+	}
+
+	OpenGLSampler::OpenGLSampler() {
 		glCreateSamplers(1, &samplerID);
 
 		glSamplerParameteri(samplerID, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -46,12 +56,11 @@ namespace Crisp {
 		glSamplerParameteri(samplerID, GL_TEXTURE_MAX_ANISOTROPY, maxAnisotropy);
 	}
 
-	OpenGLTexture2D::~OpenGLTexture2D() {
-		glDeleteTextures(1, &textureID);
+	OpenGLSampler::~OpenGLSampler() {
+		glDeleteSamplers(1, &samplerID);
 	}
 
-	void OpenGLTexture2D::Bind(uint32_t slot) const {
+	void OpenGLSampler::Bind(uint32_t slot) const {
 		glBindSampler(slot, samplerID);
-		glBindTextureUnit(slot, textureID);
 	}
 }

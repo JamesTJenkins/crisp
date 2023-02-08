@@ -18,5 +18,14 @@ namespace Crisp {
 
 		static Ref<Texture2D> Create(const std::string& path);
 	};
+
+	class Sampler {
+	public:
+		virtual ~Sampler() {}
+
+		virtual void Bind(uint32_t slot = 0) const = 0;
+
+		static Ref<Sampler> Create();
+	};
 }
 

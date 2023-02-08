@@ -17,7 +17,20 @@ namespace Crisp {
 	private:
 		std::string path;
 		uint32_t width, height;
-		uint32_t textureID, samplerID;
+		uint32_t textureID;
+	};
+
+	class OpenGLSampler : public Sampler {
+	public:
+		OpenGLSampler();
+		virtual ~OpenGLSampler() override;
+
+		OpenGLSampler(const OpenGLSampler& other) = delete;				// Copy construct
+		OpenGLSampler& operator=(const OpenGLSampler& other) = delete;	// Copy assign
+
+		virtual void Bind(uint32_t slot = 0) const override;
+	private:
+		uint32_t samplerID;
 	};
 }
 
