@@ -7,6 +7,9 @@ namespace Crisp {
 		OpenGLVertexBuffer(float* vertices, uint32_t size);
 		virtual ~OpenGLVertexBuffer() override;
 
+		OpenGLVertexBuffer(const OpenGLVertexBuffer& other) = delete;				// Copy construct
+		OpenGLVertexBuffer& operator=(const OpenGLVertexBuffer& other) = delete;	// Copy assign
+
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
 

@@ -7,6 +7,9 @@ namespace Crisp {
 		ImGuiLayer();
 		~ImGuiLayer();
 
+		ImGuiLayer(const ImGuiLayer& other) = delete;				// Copy construct
+		ImGuiLayer& operator=(const ImGuiLayer& other) = delete;	// Copy assign
+
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
 

@@ -9,7 +9,10 @@ namespace Crisp {
 	class WindowsWindow : public Window {
 	public:
 		WindowsWindow(const WindowProperties& properties);
-		virtual ~WindowsWindow();
+		virtual ~WindowsWindow() override;
+
+		WindowsWindow(const WindowsWindow& other) = delete;				// Copy construct
+		WindowsWindow& operator=(const WindowsWindow& other) = delete;	// Copy assign
 
 		void OnUpdate() override;
 

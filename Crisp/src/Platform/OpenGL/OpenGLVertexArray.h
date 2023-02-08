@@ -7,6 +7,9 @@ namespace Crisp {
 		OpenGLVertexArray();
 		virtual ~OpenGLVertexArray() override;
 
+		OpenGLVertexArray(const OpenGLVertexArray& other) = delete;				// Copy construct
+		OpenGLVertexArray& operator=(const OpenGLVertexArray& other) = delete;	// Copy assign
+
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
 
