@@ -46,6 +46,18 @@ namespace Crisp {
 		glUseProgram(0);
 	}
 
+	void OpenGLShader::SetUniformMat4(const std::string& name, const glm::mat4& value) {
+		UploadUniformMat4(name, value);
+	}
+
+	void OpenGLShader::SetUniformVec3(const std::string& name, const glm::vec3& value) {
+		UploadUniformVec3(name, value);
+	}
+
+	void OpenGLShader::SetUniformVec4(const std::string& name, const glm::vec4& value) {
+		UploadUniformVec4(name, value);
+	}
+
 	void OpenGLShader::UploadUniformBool(const std::string& name, bool value) {
 		glUniform1i(GetUniformLocation(name), (int)value);
 	}

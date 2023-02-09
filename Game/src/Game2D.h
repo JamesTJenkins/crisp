@@ -23,6 +23,7 @@ private:
 	glm::vec4 color;
 
 	Crisp::Transform camTransform;
+	Crisp::Transform quadTransform;
 	Crisp::Camera* cam;
 };
 

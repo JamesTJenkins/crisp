@@ -3,8 +3,6 @@
 
 #include <unordered_map>
 
-#include <glm/glm.hpp>
-
 // FIX
 typedef unsigned int GLenum;
 
@@ -20,6 +18,10 @@ namespace Crisp {
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
+
+		virtual void SetUniformMat4(const std::string& name, const glm::mat4& value) override;
+		virtual void SetUniformVec3(const std::string& name, const glm::vec3& value) override;
+		virtual void SetUniformVec4(const std::string& name, const glm::vec4& value) override;
 
 		virtual const std::string& GetName() const override { return name; }
 

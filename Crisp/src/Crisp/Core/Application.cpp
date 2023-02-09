@@ -21,6 +21,7 @@ namespace Crisp {
 	}
 
 	Application::~Application() {
+		Renderer::Shutdown();
 		SDL_Quit();
 	}
 

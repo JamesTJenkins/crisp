@@ -1,8 +1,7 @@
 #include "Game2D.h"
 #include <imgui/imgui.h>
-#include <Platform/OpenGL/OpenGLShader.h>
 
-Game2D::Game2D() : Layer("Game2D"), camTransform(glm::vec3(0, 0, 0)), cam(Crisp::Camera::CreateOrthographicCamera(&camTransform, -(1280 / 720), 1280 / 720, -1, 1)), color(0, 1, 1, 1) {
+Game2D::Game2D() : Layer("Game2D"), camTransform(glm::vec3(0, 0, 0)), quadTransform(glm::vec3(0,0,0), glm::quat(), glm::vec3(0.5f,0.5f,0.5f)), cam(Crisp::Camera::CreateOrthographicCamera(&camTransform, -(1280 / 720), 1280 / 720, -1, 1)), color(0, 1, 1, 1) {
 }
 
 Game2D::~Game2D() {
@@ -10,35 +9,6 @@ Game2D::~Game2D() {
 
 void Game2D::OnAttach() {
 	Crisp::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 0.1f });
-
-	vertexArray = Crisp::VertexArray::Create();
-
-	float verts[3 * 4] = {
-		-0.5f, -0.5f, 0.0f,
-		 0.5f, -0.5f, 0.0f,
-		 0.5f,  0.5f, 0.0f,
-		-0.5f,  0.5f, 0.0f
-	};
-
-	Crisp::Ref<Crisp::VertexBuffer> vertexBuffer;
-	vertexBuffer = Crisp::VertexBuffer::Create(verts, sizeof(verts));
-
-	Crisp::BufferLayout layout = {
-		{ Crisp::ShaderDataType::Vec3, "Position" }
-	};
-	vertexBuffer->SetLayout(layout);
-	vertexArray->AddVertexBuffer(vertexBuffer);
-
-	unsigned int ind[6] = {
-		0,1,2,
-		2,3,0
-	};
-
-	Crisp::Ref<Crisp::IndexBuffer> indexBuffer;
-	indexBuffer = Crisp::IndexBuffer::Create(ind, sizeof(ind) / sizeof(uint32_t));
-	vertexArray->SetIndexBuffer(indexBuffer);
-
-	colorShader = Crisp::Shader::Create("assets/shaders/FlatColor.glsl");
 }
 
 void Game2D::OnDetach() {
@@ -63,10 +33,11 @@ void Game2D::OnUpdate() {
 	Crisp::RenderCommand::Clear();
 
 	Crisp::Renderer::BeginScene();
+	Crisp::Renderer::DrawQuad(quadTransform.GetLocalToWorldMatrix());
 
-	colorShader->Bind();
-	std::dynamic_pointer_cast<Crisp::OpenGLShader>(colorShader)->UploadUniformVec4("u_Color", color);
-	Crisp::Renderer::Submit(colorShader, vertexArray);
+	//colorShader->Bind();
+	//std::dynamic_pointer_cast<Crisp::OpenGLShader>(colorShader)->UploadUniformVec4("u_Color", color);
+	//Crisp::Renderer::Submit(colorShader, vertexArray);
 
 	Crisp::Renderer::EndScene();
 }
