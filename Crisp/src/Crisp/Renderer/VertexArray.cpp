@@ -5,13 +5,13 @@
 #include "Platform/OpenGL/OpenGLVertexArray.h"
 
 namespace Crisp {
-	VertexArray* VertexArray::Create() {
+	Ref<VertexArray> VertexArray::Create() {
 		switch (Renderer::GetAPI()) {
 		case RendererAPI::API::None:
 			CRISP_CORE_ASSERT(false, "RendererAPI::None isnt supported.");
 			return nullptr;
 		case RendererAPI::API::OpenGL:
-			return new OpenGLVertexArray();
+			return std::make_shared<OpenGLVertexArray>();
 		}
 
 		CRISP_CORE_ASSERT(false, "Unknown renderer API.");
