@@ -13,7 +13,7 @@ namespace Crisp {
 
 	// Interface for a desktop window
 
-	class CRISP_API Window {
+	class Window {
 	public:
 		virtual ~Window() {};
 

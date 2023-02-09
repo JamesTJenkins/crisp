@@ -2,7 +2,7 @@
 #include <sdl.h>
 
 namespace Crisp {
-	class CRISP_API Time {
+	class Time {
 	public:
 		Time();
 		~Time();

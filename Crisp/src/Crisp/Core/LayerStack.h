@@ -5,7 +5,7 @@
 #include <vector>
 
 namespace Crisp {
-	class CRISP_API LayerStack {
+	class LayerStack {
 	public:
 		LayerStack();
 		~LayerStack();

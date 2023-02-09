@@ -8,7 +8,7 @@
 #pragma warning(pop)
 
 namespace Crisp {
-	class CRISP_API Log {
+	class Log {
 	public:
 		static void Init();
 

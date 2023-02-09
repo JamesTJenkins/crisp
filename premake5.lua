@@ -74,11 +74,6 @@ workspace "Crisp"
 		filter "system:windows"
 			systemversion "latest"
 			
-			defines {
-				"CRISP_PLATFORM_WINDOWS",
-				"CRISP_BUILD_DLL",
-			}
-			
 		-- Configuration Settings --
 			
 		filter "configurations:Debug"

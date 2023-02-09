@@ -2,7 +2,7 @@
 #include "Crisp/Core/Core.h"
 
 namespace Crisp {
-	class CRISP_API Input {
+	class Input {
 	public:
 		inline static void OnUpdate() { instance->OnUpdateImpl(); }
 

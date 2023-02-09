@@ -105,7 +105,7 @@
     <ClInclude Include="src\Crisp\Core\glm_common.h">
       <Filter>src\Crisp\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crisp\ImGui\ImGuiLayer.h">
+    <ClInclude Include="src\Crisp\ImGui\imguiLayer.h">
       <Filter>src\Crisp\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\Renderer\Buffer.h">

@@ -1,18 +1,16 @@
 #pragma once
 #include <memory>
 
-#ifdef CRISP_PLATFORM_WINDOWS
-	#if CRISP_DYNAMIC_LINK
-		#ifdef CRISP_BUILD_DLL
-			#define CRISP_API __declspec(dllexport)
-		#else
-			#define CRISP_API __declspec(dllimport)
-		#endif
-	#else
-		#define CRISP_API
-	#endif
+#ifdef _WIN32
+	#define CRISP_PLATFORM_WINDOWS
+#elif defined(__APPLE__) || defined(__MACH__)
+	#define CRISP_PLATFORM_MACOS
+	#error "MacOS is not supported"
+#elif defined(__linux__)
+	#define CRISP_PLATFORM_LINUX
+	#error "Linux is not supported"
 #else
-	#error Crisp only support windows
+	#error "Unsupported platform"
 #endif
 
 #ifndef CRISP_DEBUG
