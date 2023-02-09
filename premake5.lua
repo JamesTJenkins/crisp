@@ -129,10 +129,6 @@ workspace "Crisp"
 		filter "system:windows"
 			systemversion "latest"
 			
-			defines {
-				"CRISP_PLATFORM_WINDOWS"
-			}
-			
 		-- Configuration Settings --
 			
 		filter "configurations:Debug"

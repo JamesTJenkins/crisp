@@ -27,7 +27,3 @@
 // COMPONENTS
 #include "Crisp/Components/Transform.h"
 #include "Crisp/Components/Camera.h"
-
-// ENTRY POINT
-#include "Crisp/Core/EntryPoint.h"
-// ENTRY POINT
