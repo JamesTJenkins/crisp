@@ -11,8 +11,8 @@ namespace Crisp {
     // TEMP
     struct RendererStorage {
         Ref<VertexArray> vertexArray;
-        Ref<Shader> shader;
-        glm::vec4 color;
+        Ref<Shader> textureShader;
+        Ref<Texture2D> white;
     };
 
     static RendererStorage* storage;
@@ -22,22 +22,22 @@ namespace Crisp {
         RenderCommand::Initialize();
 
         storage = new RendererStorage();
-        storage->color = glm::vec4(1, 1, 1, 1);
 
         storage->vertexArray = VertexArray::Create();
 
-        float verts[3 * 4] = {
-            -0.5f, -0.5f, 0.0f,
-             0.5f, -0.5f, 0.0f,
-             0.5f,  0.5f, 0.0f,
-            -0.5f,  0.5f, 0.0f
+        float verts[5 * 4] = {
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+             0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+             0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+            -0.5f,  0.5f, 0.0f, 0.0f, 1.0f
         };
 
         Ref<VertexBuffer> vertexBuffer;
         vertexBuffer = VertexBuffer::Create(verts, sizeof(verts));
 
         BufferLayout layout = {
-            { ShaderDataType::Vec3, "Position" }
+            { ShaderDataType::Vec3, "Position" },
+            { ShaderDataType::Vec2, "Texcoords" }
         };
         vertexBuffer->SetLayout(layout);
         storage->vertexArray->AddVertexBuffer(vertexBuffer);
@@ -51,7 +51,14 @@ namespace Crisp {
         indexBuffer = IndexBuffer::Create(ind, sizeof(ind) / sizeof(uint32_t));
         storage->vertexArray->SetIndexBuffer(indexBuffer);
 
-        storage->shader = Shader::Create("assets/shaders/FlatColor.glsl");
+        storage->white = Texture2D::Create(1, 1);
+        uint32_t whiteData = 0xffffffff;
+        storage->white->SetData(&whiteData, sizeof(uint32_t));
+
+        storage->textureShader = Shader::Create("assets/shaders/texture.glsl");
+
+        storage->textureShader->Bind();
+        storage->textureShader->SetUniformInt("u_Texture", 0);
     }
 
     void Renderer::Shutdown() {
@@ -64,8 +71,8 @@ namespace Crisp {
 
     void Renderer::BeginScene() {
         sceneData->viewProjectionMatrix = Camera::GetMainCamera()->GetViewProjectionMatrix();
-        storage->shader->Bind();
-        storage->shader->SetUniformMat4("vp", sceneData->viewProjectionMatrix);
+        storage->textureShader->Bind();
+        storage->textureShader->SetUniformMat4("vp", sceneData->viewProjectionMatrix);
     }
 
     void Renderer::EndScene() {
@@ -81,12 +88,23 @@ namespace Crisp {
         RenderCommand::DrawIndexed(vertexArray);
     }
 
-    void Renderer::DrawQuad(const glm::mat4& transform) {
+    void Renderer::DrawQuad(const glm::mat4& transform, const glm::vec4& color) {
         // TEMP
-        storage->shader->Bind();
-        storage->shader->SetUniformVec4("u_Color", storage->color);
-        storage->shader->SetUniformMat4("transform", transform);
+        storage->textureShader->SetUniformVec4("u_Color", color);
+        storage->white->Bind();
 
+        storage->textureShader->SetUniformMat4("transform", transform);
+
+        storage->vertexArray->Bind();
+        RenderCommand::DrawIndexed(storage->vertexArray);
+        // TEMP
+    }
+
+    void Renderer::DrawQuad(const glm::mat4& transform, const Ref<Texture2D> texture) {
+        // TEMP
+        storage->textureShader->SetUniformMat4("transform", transform);
+        storage->textureShader->SetUniformVec4("u_Color", {1,1,1,1});
+        texture->Bind();
         storage->vertexArray->Bind();
         RenderCommand::DrawIndexed(storage->vertexArray);
         // TEMP

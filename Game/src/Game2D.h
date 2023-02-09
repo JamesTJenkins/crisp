@@ -20,10 +20,12 @@ public:
 private:
 	Crisp::Ref<Crisp::VertexArray> vertexArray;
 	Crisp::Ref<Crisp::Shader> colorShader;
+	Crisp::Ref<Crisp::Texture2D> texture;
 	glm::vec4 color;
 
 	Crisp::Transform camTransform;
 	Crisp::Transform quadTransform;
+	Crisp::Transform quad1Transform;
 	Crisp::Camera* cam;
 };
 
