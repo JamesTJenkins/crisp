@@ -3,6 +3,6 @@ build/*
 bin/*
 old/*
 Crisp/vendor/SDL2/*
-Game/assets/*
+Game/assets/textures/*
 
 *.user
