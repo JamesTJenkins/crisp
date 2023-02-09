@@ -11,7 +11,7 @@ namespace Crisp {
 			CRISP_CORE_ASSERT(false, "RendererAPI::None isnt supported.");
 			return nullptr;
 		case RendererAPI::API::OpenGL:
-			return std::make_shared<OpenGLTexture2D>(path);
+			return CreateRef<OpenGLTexture2D>(path);
 		}
 
 		CRISP_CORE_ASSERT(false, "Unknown renderer API.");
@@ -24,7 +24,7 @@ namespace Crisp {
 			CRISP_CORE_ASSERT(false, "RendererAPI::None isnt supported.");
 			return nullptr;
 		case RendererAPI::API::OpenGL:
-			return std::make_shared<OpenGLSampler>();
+			return CreateRef<OpenGLSampler>();
 		}
 
 		CRISP_CORE_ASSERT(false, "Unknown renderer API.");
