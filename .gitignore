@@ -4,5 +4,6 @@ bin/*
 old/*
 Crisp/vendor/SDL2/*
 Game/assets/textures/*
+Game/profiling/*
 
 *.user

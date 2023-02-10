@@ -22,6 +22,8 @@ namespace Crisp {
     }
 
     void PerspectiveCamera::RecreateCamera() {
+        CRISP_PROFILE_FUNCTION();
+
         projectionMatrix = glm::perspective(fov, aspect, nearPlane, farPlane);
     }
 }

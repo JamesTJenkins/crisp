@@ -10,6 +10,8 @@ namespace Crisp {
 	Application* Application::instance = nullptr; 
 
 	Application::Application() {
+		CRISP_PROFILE_FUNCTION();
+
 		CRISP_CORE_ASSERT(!instance, "Application already exists");
 		instance = this;
 		window = std::unique_ptr<Window>(Window::Create());
@@ -21,68 +23,94 @@ namespace Crisp {
 	}
 
 	Application::~Application() {
+		CRISP_PROFILE_FUNCTION();
+
 		Renderer::Shutdown();
 		SDL_Quit();
 	}
 
 	void Application::Run() {
+		CRISP_PROFILE_FUNCTION();
+
 		Time time;
 
 		while (running) {
-			// Update time
+			CRISP_PROFILE_SCOPE("Run loop");
+
 			time.OnUpdate();
 
-			// SDL Polling
 			SDL_Event e;
 			while (SDL_PollEvent(&e)) {
-				// Handle quitting
-				switch (e.type) {
-				case SDL_QUIT:
-					running = false;
-					break;
-				case SDL_WINDOWEVENT_RESIZED:
-					Renderer::OnWindowResize(window->GetWidth(), window->GetHeight());
-					break;
+				{
+					CRISP_PROFILE_SCOPE("Window Polling");
+
+					switch (e.type) {
+					case SDL_WINDOWEVENT:
+						switch (e.window.event) {
+						case SDL_WINDOWEVENT_CLOSE:
+							running = false;
+							break;
+						case SDL_WINDOWEVENT_RESIZED:
+							Renderer::OnWindowResize(window->GetWidth(), window->GetHeight());
+							break;
+						}
+						break;
+					}
 				}
 
-				// Handle layer events
-				for (Layer* layer : layerStack)
-					layer->OnEvent(&e);
+				{
+					CRISP_PROFILE_SCOPE("Layer::OnEvent");
+
+					for (Layer* layer : layerStack)
+						layer->OnEvent(&e);
+				}
 			}
 
-			// Update input
 			Input::OnUpdate();
 
-			// Update layers
-			for (Layer* layer : layerStack)
-				layer->OnUpdate();
+			{
+				CRISP_PROFILE_SCOPE("LayerStack OnUpdate");
+				for (Layer* layer : layerStack)
+					layer->OnUpdate();
+			}
 
-			imguiLayer->Begin();
-			for (Layer* layer : layerStack)
-				layer->OnImGuiRender();
-			imguiLayer->End();
+			{
+				CRISP_PROFILE_SCOPE("LayerStack OnImGuiRender");
 
-			// Update window
+				imguiLayer->Begin();
+				for (Layer* layer : layerStack)
+					layer->OnImGuiRender();
+				imguiLayer->End();
+			}
+
 			window->OnUpdate();
 		}
 	}
 
 	void Application::PushLayer(Layer* layer) {
+		CRISP_PROFILE_FUNCTION();
+
 		layerStack.PushLayer(layer);
 		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* overlay) {
+		CRISP_PROFILE_FUNCTION();
+
 		layerStack.PushOverlay(overlay);
 		overlay->OnAttach();
 	}
 
 	void Application::PopLayer(Layer* layer) {
+		CRISP_PROFILE_FUNCTION();
+
 		layer->OnDetach();
 		layerStack.PopLayer(layer);
 	}
 
 	void Application::PopOverlay(Layer* overlay) {
+		CRISP_PROFILE_FUNCTION();
+
 		overlay->OnDetach();
 		layerStack.PopLayer(overlay);
 	}

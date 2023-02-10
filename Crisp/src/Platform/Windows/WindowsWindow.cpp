@@ -9,19 +9,27 @@ namespace Crisp {
 	}
 
 	WindowsWindow::WindowsWindow(const WindowProperties& properties) {
+		CRISP_PROFILE_FUNCTION();
+
 		Initialize(properties);
 	}
 
 	WindowsWindow::~WindowsWindow() {
+		CRISP_PROFILE_FUNCTION();
+
 		Shutdown();
 	}
 
 	void WindowsWindow::OnUpdate() {
+		CRISP_PROFILE_FUNCTION();
+
 		graphicsContext->SwapBuffers();
 	}
 
 	// TODO: add adaptive sync (-1)?
 	void WindowsWindow::SetVSync(bool enabled) {
+		CRISP_PROFILE_FUNCTION();
+
 		if (enabled) 
 			SDL_GL_SetSwapInterval(1);
 		else
@@ -34,6 +42,8 @@ namespace Crisp {
 	}
 
 	void WindowsWindow::Initialize(const WindowProperties& properties) {
+		CRISP_PROFILE_FUNCTION();
+
 		data.title = properties.title;
 		data.width = properties.width;
 		data.height = properties.height;
@@ -57,6 +67,8 @@ namespace Crisp {
 	}
 
 	void WindowsWindow::Shutdown() {
+		CRISP_PROFILE_FUNCTION();
+
 		SDL_DestroyWindow(window);
 	}
 }

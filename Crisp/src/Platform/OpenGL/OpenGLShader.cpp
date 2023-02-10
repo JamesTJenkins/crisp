@@ -15,6 +15,8 @@ namespace Crisp {
 	}
 
 	OpenGLShader::OpenGLShader(const std::string& path) {
+		CRISP_PROFILE_FUNCTION();
+
 		std::string source = ReadFile(path);
 		auto shaderSources = PreProcess(source);
 		Compile(shaderSources);
@@ -28,6 +30,8 @@ namespace Crisp {
 	}
 
 	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource) : name(name) {
+		CRISP_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = vertexSource;
 		sources[GL_FRAGMENT_SHADER] = fragmentSource;
@@ -35,14 +39,20 @@ namespace Crisp {
 	}
 
 	OpenGLShader::~OpenGLShader() {
+		CRISP_PROFILE_FUNCTION();
+
 		glDeleteProgram(rendererID);
 	}
 
 	void OpenGLShader::Bind() const {
+		CRISP_PROFILE_FUNCTION();
+
 		glUseProgram(rendererID);
 	}
 
 	void OpenGLShader::Unbind() const {
+		CRISP_PROFILE_FUNCTION();
+
 		glUseProgram(0);
 	}
 
@@ -95,6 +105,8 @@ namespace Crisp {
 	}
 
 	std::string OpenGLShader::ReadFile(const std::string& path) {
+		CRISP_PROFILE_FUNCTION();
+
 		std::string result;
 		std::ifstream in(path, std::ios::in | std::ios::binary);
 		if (in) {
@@ -112,6 +124,8 @@ namespace Crisp {
 	}
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string& source) {
+		CRISP_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> shaderSources;
 
 		const char* typeToken = "#type";
@@ -133,6 +147,8 @@ namespace Crisp {
 	}
 
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources) {
+		CRISP_PROFILE_FUNCTION();
+
 		GLuint program = glCreateProgram();
 		CRISP_CORE_ASSERT(shaderSources.size() <= 2, "Only support upto 2 shaders currently");
 		std::array<GLenum, 2> glShaderIDS;

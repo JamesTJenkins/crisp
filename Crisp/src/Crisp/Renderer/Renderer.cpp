@@ -19,6 +19,8 @@ namespace Crisp {
     // TEMP
 
     void Renderer::Initialize() {
+        CRISP_PROFILE_FUNCTION();
+
         RenderCommand::Initialize();
 
         storage = new RendererStorage();
@@ -62,23 +64,32 @@ namespace Crisp {
     }
 
     void Renderer::Shutdown() {
+        CRISP_PROFILE_FUNCTION();
+
         delete storage;
     }
 
     void Renderer::OnWindowResize(uint32_t width, uint32_t height) {
+        CRISP_PROFILE_FUNCTION();
+
         RenderCommand::SetViewport(0, 0, width, height);
     }
 
     void Renderer::BeginScene() {
+        CRISP_PROFILE_FUNCTION();
+
         sceneData->viewProjectionMatrix = Camera::GetMainCamera()->GetViewProjectionMatrix();
         storage->textureShader->Bind();
         storage->textureShader->SetUniformMat4("vp", sceneData->viewProjectionMatrix);
     }
 
     void Renderer::EndScene() {
+        CRISP_PROFILE_FUNCTION();
     }
 
     void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform) {
+        CRISP_PROFILE_FUNCTION();
+
         shader->Bind();
         // TEMP
         shader->SetUniformMat4("vp", sceneData->viewProjectionMatrix);
@@ -89,6 +100,8 @@ namespace Crisp {
     }
 
     void Renderer::DrawQuad(const glm::mat4& transform, const glm::vec4& color) {
+        CRISP_PROFILE_FUNCTION();
+
         // TEMP
         storage->textureShader->SetUniformVec4("u_Color", color);
         storage->white->Bind();
@@ -101,6 +114,8 @@ namespace Crisp {
     }
 
     void Renderer::DrawQuad(const glm::mat4& transform, const Ref<Texture2D> texture) {
+        CRISP_PROFILE_FUNCTION();
+
         // TEMP
         storage->textureShader->SetUniformMat4("transform", transform);
         storage->textureShader->SetUniformVec4("u_Color", {1,1,1,1});

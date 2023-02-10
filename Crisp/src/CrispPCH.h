@@ -17,3 +17,4 @@
 #endif
 
 #include "Crisp/Core/Log.h"
+#include "Crisp/Debug/Instrumentor.h"

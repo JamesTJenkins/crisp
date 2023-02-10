@@ -9,6 +9,8 @@ namespace Crisp {
 	}
 
 	void OpenGLContext::Initialize() {
+		CRISP_PROFILE_FUNCTION();
+
 		// openGL context creation
 		SDL_GLContext context = SDL_GL_CreateContext(windowHandle);
 		SDL_GL_MakeCurrent(windowHandle, context);
@@ -26,6 +28,8 @@ namespace Crisp {
 	}
 
 	void OpenGLContext::SwapBuffers() {
+		CRISP_PROFILE_FUNCTION();
+
 		SDL_GL_SwapWindow(windowHandle);
 	}
 }

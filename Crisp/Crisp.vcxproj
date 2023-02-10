@@ -155,6 +155,7 @@
     <ClInclude Include="src\Crisp\Core\Time.h" />
     <ClInclude Include="src\Crisp\Core\Window.h" />
     <ClInclude Include="src\Crisp\Core\glm_common.h" />
+    <ClInclude Include="src\Crisp\Debug\Instrumentor.h" />
     <ClInclude Include="src\Crisp\ImGui\imguiLayer.h" />
     <ClInclude Include="src\Crisp\Renderer\Buffer.h" />
     <ClInclude Include="src\Crisp\Renderer\GraphicsContext.h" />

@@ -8,44 +8,55 @@ Game2D::~Game2D() {
 }
 
 void Game2D::OnAttach() {
+	CRISP_PROFILE_FUNCTION();
+
 	Crisp::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 0.1f });
 	texture = Crisp::Texture2D::Create("assets/textures/bacon.png");
 }
 
 void Game2D::OnDetach() {
-
+	CRISP_PROFILE_FUNCTION();
 }
 
 void Game2D::OnUpdate() {
-	// Camera movement
-	glm::vec3 moveDir(0, 0, 0);
-	if (Crisp::Input::IsKeyPressed(CRISP_LEFT))
-		moveDir.x += 1;
-	if (Crisp::Input::IsKeyPressed(CRISP_RIGHT))
-		moveDir.x -= 1;
-	if (Crisp::Input::IsKeyPressed(CRISP_UP))
-		moveDir.y += 1;
-	if (Crisp::Input::IsKeyPressed(CRISP_DOWN))
-		moveDir.y -= 1;
+	CRISP_PROFILE_FUNCTION();
 
-	cam->GetTransform()->SetPosition(cam->GetTransform()->GetPosition() + -(moveDir * (float)(Crisp::Time::deltaTime * 0.001)));
+	{
+		CRISP_PROFILE_SCOPE("CameraController-Update");
+		// Camera movement
+		glm::vec3 moveDir(0, 0, 0);
+		if (Crisp::Input::IsKeyPressed(CRISP_LEFT))
+			moveDir.x += 1;
+		if (Crisp::Input::IsKeyPressed(CRISP_RIGHT))
+			moveDir.x -= 1;
+		if (Crisp::Input::IsKeyPressed(CRISP_UP))
+			moveDir.y += 1;
+		if (Crisp::Input::IsKeyPressed(CRISP_DOWN))
+			moveDir.y -= 1;
 
-	// Rendering
-	Crisp::RenderCommand::Clear();
+		cam->GetTransform()->SetPosition(cam->GetTransform()->GetPosition() + -(moveDir * (float)(Crisp::Time::deltaTime * 0.001)));
+	}
+	{
+		CRISP_PROFILE_SCOPE("Renderer Draw");
+		// Rendering
+		Crisp::RenderCommand::Clear();
 
-	Crisp::Renderer::BeginScene();
-	Crisp::Renderer::DrawQuad(quadTransform.GetLocalToWorldMatrix(), texture);
-	Crisp::Renderer::DrawQuad(quad1Transform.GetLocalToWorldMatrix(), { 1,1,1,1 });
+		Crisp::Renderer::BeginScene();
+		Crisp::Renderer::DrawQuad(quadTransform.GetLocalToWorldMatrix(), texture);
+		Crisp::Renderer::DrawQuad(quad1Transform.GetLocalToWorldMatrix(), { 1,1,1,1 });
 
-	//colorShader->Bind();
-	//std::dynamic_pointer_cast<Crisp::OpenGLShader>(colorShader)->UploadUniformVec4("u_Color", color);
-	//Crisp::Renderer::Submit(colorShader, vertexArray);
+		//colorShader->Bind();
+		//std::dynamic_pointer_cast<Crisp::OpenGLShader>(colorShader)->UploadUniformVec4("u_Color", color);
+		//Crisp::Renderer::Submit(colorShader, vertexArray);
 
-	Crisp::Renderer::EndScene();
+		Crisp::Renderer::EndScene();
+	}
 }
 
 void Game2D::OnImGuiRender() {
-
+	ImGui::Begin("Test");
+	ImGui::Text("Testing box");
+	ImGui::End();
 }
 
 void Game2D::OnEvent(const SDL_Event* e) {

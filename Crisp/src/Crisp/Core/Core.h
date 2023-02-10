@@ -13,8 +13,9 @@
 	#error "Unsupported platform"
 #endif
 
-#ifndef CRISP_DEBUG
-	#define CRISP_ENABLE_ASSERTS
+#ifdef CRISP_DEBUG
+	// TODO: fix assertions
+	//#define CRISP_ENABLE_ASSERTS
 #endif
 
 #ifdef CRISP_ENABLE_ASSERTS

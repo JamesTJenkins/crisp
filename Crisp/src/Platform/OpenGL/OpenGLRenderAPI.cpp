@@ -49,6 +49,8 @@ namespace Crisp {
 	}
 
 	void OpenGLRendererAPI::Initialize() {
+		CRISP_PROFILE_FUNCTION();
+
 		int success = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER);
 		CRISP_CORE_ASSERT(success, "Could not initialize SDL");
 

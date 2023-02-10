@@ -14,7 +14,6 @@ namespace Crisp {
 		virtual void OnDetach() override;
 
 		virtual void OnUpdate() override;
-		virtual void OnImGuiRender() override;
 		virtual void OnEvent(const SDL_Event* e) override;
 
 		void Begin();
