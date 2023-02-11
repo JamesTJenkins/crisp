@@ -80,7 +80,7 @@ namespace Crisp {
 
         sceneData->viewProjectionMatrix = Camera::GetMainCamera()->GetViewProjectionMatrix();
         storage->textureShader->Bind();
-        storage->textureShader->SetUniformMat4("vp", sceneData->viewProjectionMatrix);
+        storage->textureShader->SetUniformMat4("u_ViewProjection", sceneData->viewProjectionMatrix);
     }
 
     void Renderer::EndScene() {
@@ -92,8 +92,8 @@ namespace Crisp {
 
         shader->Bind();
         // TEMP
-        shader->SetUniformMat4("vp", sceneData->viewProjectionMatrix);
-        shader->SetUniformMat4("transform", transform);
+        shader->SetUniformMat4("u_ViewProjection", sceneData->viewProjectionMatrix);
+        shader->SetUniformMat4("u_Transform", transform);
         // TEMP
         vertexArray->Bind();
         RenderCommand::DrawIndexed(vertexArray);
@@ -103,10 +103,9 @@ namespace Crisp {
         CRISP_PROFILE_FUNCTION();
 
         // TEMP
+        storage->textureShader->SetUniformMat4("u_Transform", transform);
         storage->textureShader->SetUniformVec4("u_Color", color);
-        storage->white->Bind();
-
-        storage->textureShader->SetUniformMat4("transform", transform);
+        storage->textureShader->SetUniformVec2("u_Tiling", { 1,1 });
 
         storage->vertexArray->Bind();
         RenderCommand::DrawIndexed(storage->vertexArray);
@@ -117,8 +116,9 @@ namespace Crisp {
         CRISP_PROFILE_FUNCTION();
 
         // TEMP
-        storage->textureShader->SetUniformMat4("transform", transform);
+        storage->textureShader->SetUniformMat4("u_Transform", transform);
         storage->textureShader->SetUniformVec4("u_Color", {1,1,1,1});
+        storage->textureShader->SetUniformVec2("u_Tiling", { 2,2 });
         texture->Bind();
         storage->vertexArray->Bind();
         RenderCommand::DrawIndexed(storage->vertexArray);

@@ -64,6 +64,10 @@ namespace Crisp {
 		UploadUniformMat4(name, value);
 	}
 
+	void OpenGLShader::SetUniformVec2(const std::string& name, const glm::vec2& value) {
+		UploadUniformVec2(name, value);
+	}
+
 	void OpenGLShader::SetUniformVec3(const std::string& name, const glm::vec3& value) {
 		UploadUniformVec3(name, value);
 	}
