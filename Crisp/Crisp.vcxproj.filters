@@ -1387,6 +1387,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\Debug\Instrumentor.h" />
+    <ClInclude Include="src\Crisp\Core\Random.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crisp\Components\Camera.cpp">

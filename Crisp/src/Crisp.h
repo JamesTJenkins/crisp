@@ -6,6 +6,7 @@
 #include "Crisp/Core/Application.h"
 #include "Crisp/Core/Log.h"
 #include "Crisp/Core/Time.h"
+#include "Crisp/Core/Random.h"
 
 // LAYERS
 #include "Crisp/Core/Layer.h"

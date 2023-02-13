@@ -152,6 +152,7 @@
     <ClInclude Include="src\Crisp\Core\LayerStack.h" />
     <ClInclude Include="src\Crisp\Core\Log.h" />
     <ClInclude Include="src\Crisp\Core\MouseButtonCodes.h" />
+    <ClInclude Include="src\Crisp\Core\Random.h" />
     <ClInclude Include="src\Crisp\Core\Time.h" />
     <ClInclude Include="src\Crisp\Core\Window.h" />
     <ClInclude Include="src\Crisp\Core\glm_common.h" />
