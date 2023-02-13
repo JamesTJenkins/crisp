@@ -1,7 +1,7 @@
 #include "Game2D.h"
 #include <imgui/imgui.h>
 
-Game2D::Game2D() : Layer("Game2D"), camTransform(glm::vec3(0, 0, 0)), quadTransform(glm::vec3(0,0,-1), glm::quat(), glm::vec3(0.5f,0.5f,0.5f)), quad1Transform(glm::vec3(0, 0, -1)), cam(Crisp::Camera::CreateOrthographicCamera(&camTransform, -(1280 / 720), 1280 / 720, -1, 1)), color(0, 1, 1, 1) {
+Game2D::Game2D() : Layer("Game2D"), camTransform(glm::vec3(0, 0, 0)), quadTransform(glm::vec3(0,0,-1), glm::quat(), glm::vec3(0.5f,0.5f,0.5f)), quad1Transform(glm::vec3(0, 0, -1)), cam(Crisp::Camera::CreateOrthographicCamera(&camTransform, 1280, 720, -1, 1)), color(0, 1, 1, 1) {
 }
 
 Game2D::~Game2D() {
@@ -34,7 +34,7 @@ void Game2D::OnUpdate() {
 		if (Crisp::Input::IsKeyPressed(CRISP_DOWN))
 			moveDir.y -= 1;
 
-		cam->GetTransform()->SetPosition(cam->GetTransform()->GetPosition() + -(moveDir * (float)(Crisp::Time::deltaTime * 0.001)));
+		cam->GetTransform()->SetPosition(cam->GetTransform()->GetPosition() + moveDir * (float)(Crisp::Time::deltaTime * 0.001));
 	}
 	{
 		CRISP_PROFILE_SCOPE("Renderer Draw");
@@ -54,9 +54,9 @@ void Game2D::OnUpdate() {
 }
 
 void Game2D::OnImGuiRender() {
-	ImGui::Begin("Test");
-	ImGui::Text("Testing box");
-	ImGui::End();
+	//ImGui::Begin("Test");
+	//ImGui::Text("Testing box");
+	//ImGui::End();
 }
 
 void Game2D::OnEvent(const SDL_Event* e) {

@@ -28,10 +28,10 @@ namespace Crisp {
         storage->vertexArray = VertexArray::Create();
 
         float verts[5 * 4] = {
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-             0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-             0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-            -0.5f,  0.5f, 0.0f, 0.0f, 1.0f
+            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+             0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+             0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+            -0.5f,  0.5f, 0.0f, 1.0f, 1.0f
         };
 
         Ref<VertexBuffer> vertexBuffer;

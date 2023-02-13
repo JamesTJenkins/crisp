@@ -24,8 +24,14 @@ namespace Crisp {
     void OrthographicCamera::RecreateCamera() {
         CRISP_PROFILE_FUNCTION();
 
-        float hw = width / 2;
-        float hh = height / 2;
-        projectionMatrix = glm::ortho(-hw, hw, hh, -hh, nearPlane, farPlane);
+        float aspect = width / height;
+
+        float camWidth = 1.0f;
+        float bottom = -camWidth;
+        float top = camWidth;
+        float left = bottom * aspect;
+        float right = top * aspect;
+
+        projectionMatrix = glm::ortho(left, right, bottom, top, nearPlane, farPlane);
     }
 }
