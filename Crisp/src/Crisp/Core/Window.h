@@ -5,10 +5,9 @@
 namespace Crisp {
 	struct WindowProperties {
 		std::string title;
-		unsigned int width;
-		unsigned int height;
+		uint32_t width, height;
 
-		WindowProperties(const std::string& _title = "Crisp", unsigned int _width = 1280, unsigned int _height = 720) : title(_title), width(_width), height(_height) {}
+		WindowProperties(const std::string& _title = "Crisp App", uint32_t _width = 1280, uint32_t _height = 720) : title(_title), width(_width), height(_height) {}
 	};
 
 	// Interface for a desktop window
@@ -19,8 +18,8 @@ namespace Crisp {
 
 		virtual void OnUpdate() = 0;
 
-		virtual unsigned int GetWidth() const = 0;
-		virtual unsigned int GetHeight() const = 0;
+		virtual uint32_t GetWidth() const = 0;
+		virtual uint32_t GetHeight() const = 0;
 
 		// Window Attributes
 		virtual void SetVSync(bool enabled) = 0;

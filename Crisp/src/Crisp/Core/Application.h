@@ -7,7 +7,7 @@
 namespace Crisp {
 	class Application {
 	public:
-		Application();
+		Application(const std::string& name = "Crisp App");
 		virtual ~Application();
 
 		void Run();

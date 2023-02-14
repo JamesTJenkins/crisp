@@ -9,12 +9,12 @@
 namespace Crisp {
 	Application* Application::instance = nullptr; 
 
-	Application::Application() {
+	Application::Application(const std::string& name) {
 		CRISP_PROFILE_FUNCTION();
 
 		CRISP_CORE_ASSERT(!instance, "Application already exists");
 		instance = this;
-		window = std::unique_ptr<Window>(Window::Create());
+		window = std::unique_ptr<Window>(Window::Create(WindowProperties(name)));
 
 		Renderer::Initialize();
 
