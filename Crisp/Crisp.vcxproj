@@ -138,6 +138,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h" />
+    <ClInclude Include="src\Crisp\Renderer\FrameBuffer.h" />
     <ClInclude Include="src\Crisp.h" />
     <ClInclude Include="src\Crisp\Components\Camera.h" />
     <ClInclude Include="src\Crisp\Components\OrthographicCamera.h" />
@@ -587,6 +589,8 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />
+    <ClCompile Include="src\Crisp\Renderer\FrameBuffer.cpp" />
     <ClCompile Include="src\Crisp\Components\Camera.cpp" />
     <ClCompile Include="src\Crisp\Components\OrthographicCamera.cpp" />
     <ClCompile Include="src\Crisp\Components\PerspectiveCamera.cpp" />

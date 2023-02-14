@@ -12,6 +12,11 @@ void Game2D::OnAttach() {
 
 	Crisp::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 0.1f });
 	texture = Crisp::Texture2D::Create("assets/textures/bacon.png");
+
+    Crisp::FrameBufferProperties props;
+    props.width = 1280;
+    props.height = 720;
+    framebuffer = Crisp::FrameBuffer::Create(props);
 }
 
 void Game2D::OnDetach() {
@@ -40,7 +45,7 @@ void Game2D::OnUpdate() {
 	}
 	{
 		CRISP_PROFILE_SCOPE("Renderer Draw");
-		// Rendering
+        framebuffer->Bind();
 		Crisp::RenderCommand::Clear();
 
 		Crisp::Renderer::BeginScene();
@@ -52,6 +57,7 @@ void Game2D::OnUpdate() {
 		//Crisp::Renderer::Submit(colorShader, vertexArray);
 
 		Crisp::Renderer::EndScene();
+        framebuffer->Unbind();
 	}
 }
 
@@ -112,6 +118,10 @@ void Game2D::OnImGuiRender() {
 
         ImGui::EndMenuBar();
     }
+
+    ImGui::Begin("Scene");
+    ImGui::Image((void*)framebuffer->GetColorAttachmentRendererID(), ImVec2{ 1280, 720 });
+    ImGui::End();
 
 	ImGui::Begin("Statistics");
 	ImGui::Text("Rendering Stats:");

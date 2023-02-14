@@ -22,6 +22,7 @@
 #include "Crisp/Renderer/RenderCommand.h"
 #include "Crisp/Renderer/Renderer.h"
 #include "Crisp/Renderer/Shader.h"
+#include "Crisp/Renderer/FrameBuffer.h"
 #include "Crisp/Renderer/Texture.h"
 #include "Crisp/Renderer/VertexArray.h"
 

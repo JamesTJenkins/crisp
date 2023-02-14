@@ -20,6 +20,7 @@ public:
 private:
 	Crisp::Ref<Crisp::VertexArray> vertexArray;
 	Crisp::Ref<Crisp::Shader> colorShader;
+	Crisp::Ref<Crisp::FrameBuffer> framebuffer;
 	Crisp::Ref<Crisp::Texture2D> texture;
 	glm::vec4 color;
 
