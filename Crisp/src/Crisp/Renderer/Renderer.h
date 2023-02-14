@@ -2,6 +2,7 @@
 #include "Crisp/Renderer/RenderCommand.h"
 #include "Crisp/Renderer/Shader.h"
 #include "Crisp/Renderer/Texture.h"
+#include "Crisp/Renderer/SubTexture.h"
 
 namespace Crisp {
 	class Renderer {
@@ -21,7 +22,8 @@ namespace Crisp {
 		// Primitives
 
 		static void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
-		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D> texture);
+		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture);
+		static void DrawQuad(const glm::mat4& transform, const Ref<SubTexture2D>& subTexture);
 		
 		// Stats
 		struct Statistics {

@@ -164,6 +164,7 @@
     <ClInclude Include="src\Crisp\Renderer\Renderer.h" />
     <ClInclude Include="src\Crisp\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Crisp\Renderer\Shader.h" />
+    <ClInclude Include="src\Crisp\Renderer\SubTexture.h" />
     <ClInclude Include="src\Crisp\Renderer\Texture.h" />
     <ClInclude Include="src\Crisp\Renderer\VertexArray.h" />
     <ClInclude Include="src\CrispPCH.h" />
@@ -602,6 +603,7 @@
     <ClCompile Include="src\Crisp\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Crisp\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Crisp\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Crisp\Renderer\SubTexture.cpp" />
     <ClCompile Include="src\Crisp\Renderer\Texture.cpp" />
     <ClCompile Include="src\Crisp\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\CrispPCH.cpp">

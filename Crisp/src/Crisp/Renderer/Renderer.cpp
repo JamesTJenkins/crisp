@@ -5,6 +5,8 @@
 
 #include "VertexArray.h"
 
+// TODO: CLEANUP THIS
+
 namespace Crisp {
     Scope<Renderer::SceneData> Renderer::sceneData = CreateScope<Renderer::SceneData>();
 
@@ -27,6 +29,7 @@ namespace Crisp {
         Ref<VertexBuffer> quadVertexBuffer;
         Ref<Shader> textureShader;
         Ref<Texture2D> white;
+        Ref<Sampler> textureSampler;
     
         uint32_t quadIndexCount = 0;
         QuadVertex* quadVertexBufferBase = nullptr;
@@ -84,6 +87,9 @@ namespace Crisp {
         storage.white = Texture2D::Create(1, 1);
         uint32_t whiteData = 0xffffffff;
         storage.white->SetData(&whiteData, sizeof(uint32_t));
+
+        storage.textureSampler = Sampler::Create();
+        storage.textureSampler->Bind();
 
         int32_t samplers[storage.maxTextureSlots];
         for (uint32_t i = 0; i < storage.maxTextureSlots; i++)
@@ -161,13 +167,6 @@ namespace Crisp {
 
         const float texture = 0.0f;
 
-        // TEMP
-
-        //    -0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-        //     0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-        //     0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
-        //    -0.5f,  0.5f, 0.0f, 1.0f, 1.0f
-
         storage.quadVertexBufferPtr->Position = transform * storage.QuadVertexPositions[0];
         storage.quadVertexBufferPtr->Color = color;
         storage.quadVertexBufferPtr->Texcoord = {  1.0f,  0.0f };
@@ -195,16 +194,14 @@ namespace Crisp {
         storage.quadIndexCount += 6;
     
         storage.stats.QuadCount++;
-        // TEMP
     }
 
-    void Renderer::DrawQuad(const glm::mat4& transform, const Ref<Texture2D> texture) {
+    void Renderer::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture) {
         CRISP_PROFILE_FUNCTION();
 
         if (storage.quadIndexCount >= storage.maxIndices)
             FlushAndReset();
 
-        // TEMP
         constexpr glm::vec4 color = { 1.0f,1.0f,1.0f,1.0f };
         float textureIndex = 0.0f;
 
@@ -249,7 +246,45 @@ namespace Crisp {
         storage.quadIndexCount += 6;
 
         storage.stats.QuadCount++;
-        // TEMP
+    }
+
+    void Renderer::DrawQuad(const glm::mat4& transform, const Ref<SubTexture2D>& subTexture) {
+        CRISP_PROFILE_FUNCTION();
+
+        if (storage.quadIndexCount >= storage.maxIndices)
+            FlushAndReset();
+
+        constexpr glm::vec4 color = { 1.0f,1.0f,1.0f,1.0f };
+        constexpr size_t quadVertexCount = 4;
+        float textureIndex = 0.0f;
+        const glm::vec2* textureCoords = subTexture->GetTexCoords();
+        const Ref<Texture2D> texture = subTexture->GetTexture();
+
+        for (uint32_t i = 1; i < storage.textureSlotIndex; i++) {
+            // TODO: Fix this mess
+            if (*storage.textureSlots[i].get() == *texture.get()) {
+                textureIndex = (float)i;
+                break;
+            }
+        }
+
+        if (textureIndex == 0.0f) {
+            textureIndex = (float)storage.textureSlotIndex;
+            storage.textureSlots[storage.textureSlotIndex] = texture;
+            storage.textureSlotIndex++;
+        }
+
+        for (size_t i = 0; i < quadVertexCount; i++) {
+            storage.quadVertexBufferPtr->Position = transform * storage.QuadVertexPositions[i];
+            storage.quadVertexBufferPtr->Color = color;
+            storage.quadVertexBufferPtr->Texcoord = textureCoords[i];
+            storage.quadVertexBufferPtr->TextureIndex = textureIndex;
+            storage.quadVertexBufferPtr++;
+        }
+
+        storage.quadIndexCount += 6;
+
+        storage.stats.QuadCount++;
     }
 
     Renderer::Statistics Renderer::GetStats() {
