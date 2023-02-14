@@ -4,6 +4,7 @@
 namespace Crisp {
 	class OpenGLVertexBuffer : public VertexBuffer {
 	public:
+		OpenGLVertexBuffer(uint32_t size);
 		OpenGLVertexBuffer(float* vertices, uint32_t size);
 		virtual ~OpenGLVertexBuffer() override;
 
@@ -15,6 +16,8 @@ namespace Crisp {
 
 		virtual const BufferLayout& GetLayout() const override { return layout; }
 		virtual void SetLayout(const BufferLayout& _layout) override { layout = _layout; }
+
+		virtual void SetData(const void* data, uint32_t size) override;
 	private:
 		uint32_t rendererID;
 		BufferLayout layout;

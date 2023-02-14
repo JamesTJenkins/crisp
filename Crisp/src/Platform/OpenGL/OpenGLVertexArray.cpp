@@ -6,6 +6,7 @@
 namespace Crisp {
 	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type) {
 		switch (type) {
+		case Crisp::ShaderDataType::Float:	return GL_FLOAT;
 		case Crisp::ShaderDataType::Vec2:	return GL_FLOAT;
 		case Crisp::ShaderDataType::Vec3:	return GL_FLOAT;
 		case Crisp::ShaderDataType::Vec4:	return GL_FLOAT;
@@ -54,18 +55,65 @@ namespace Crisp {
 		Bind();
 		vertexBuffer->Bind();
 
-		uint32_t index = 0;
-		for (const auto& element : vertexBuffer->GetLayout()) {
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(
-				index,
-				element.GetComponentCount(),
-				ShaderDataTypeToOpenGLBaseType(element.type),
-				element.normalized ? GL_TRUE : GL_FALSE,
-				vertexBuffer->GetLayout().GetStride(),
-				(const void*)element.offset
-			);
-			index++;
+		const BufferLayout layout = vertexBuffer->GetLayout();
+		for (const BufferElement& element : layout) {
+			switch (element.type) {
+			case ShaderDataType::Float:
+			case ShaderDataType::Vec2:
+			case ShaderDataType::Vec3:
+			case ShaderDataType::Vec4:
+			{
+				glEnableVertexAttribArray(vertexBufferIndex);
+				glVertexAttribPointer(
+					vertexBufferIndex,
+					element.GetComponentCount(),
+					ShaderDataTypeToOpenGLBaseType(element.type),
+					element.normalized ? GL_TRUE : GL_FALSE,
+					layout.GetStride(),
+					(const void*)element.offset
+				);
+				vertexBufferIndex++;
+				break;
+			}
+			case ShaderDataType::Bool:
+			case ShaderDataType::Int:
+			case ShaderDataType::Int2:
+			case ShaderDataType::Int3:
+			case ShaderDataType::Int4:
+			{
+				glEnableVertexAttribArray(vertexBufferIndex);
+				glVertexAttribIPointer(
+					vertexBufferIndex,
+					element.GetComponentCount(),
+					ShaderDataTypeToOpenGLBaseType(element.type),
+					layout.GetStride(),
+					(const void*)element.offset
+				);
+				vertexBufferIndex++;
+				break;
+			}
+			case ShaderDataType::Mat3:
+			case ShaderDataType::Mat4:
+			{
+				uint8_t count = element.GetComponentCount();
+				for (uint8_t i = 0; i < count; i++) {
+					glEnableVertexAttribArray(vertexBufferIndex);
+					glVertexAttribPointer(
+						vertexBufferIndex,
+						count,
+						ShaderDataTypeToOpenGLBaseType(element.type),
+						element.normalized ? GL_TRUE : GL_FALSE,
+						layout.GetStride(),
+						(const void*)(element.offset + sizeof(float) * count * i)
+					);
+					glVertexAttribDivisor(vertexBufferIndex, 1);
+					vertexBufferIndex++;
+				}
+				break;
+			}
+			default:
+				CRISP_CORE_ASSERT(false, "Unknown ShaderDataType.");
+			}
 		}
 
 		vertexBuffers.push_back(vertexBuffer);

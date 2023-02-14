@@ -11,7 +11,7 @@ namespace Crisp {
 		inline static void SetClearColor(const glm::vec4& color) { rendererAPI->SetClearColor(color); }
 		inline static void Clear() { rendererAPI->Clear(); }
 
-		inline static void DrawIndexed(const Ref<VertexArray>& vertexArray) { rendererAPI->DrawIndexed(vertexArray); }
+		inline static void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0) { rendererAPI->DrawIndexed(vertexArray, indexCount); }
 	private:
 		static RendererAPI* rendererAPI;
 	};

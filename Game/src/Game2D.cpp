@@ -21,6 +21,8 @@ void Game2D::OnDetach() {
 void Game2D::OnUpdate() {
 	CRISP_PROFILE_FUNCTION();
 
+	Crisp::Renderer::ResetStatistics();
+
 	{
 		CRISP_PROFILE_SCOPE("CameraController-Update");
 		// Camera movement
@@ -54,9 +56,13 @@ void Game2D::OnUpdate() {
 }
 
 void Game2D::OnImGuiRender() {
-	//ImGui::Begin("Test");
-	//ImGui::Text("Testing box");
-	//ImGui::End();
+	ImGui::Begin("Statistics");
+	ImGui::Text("Rendering Stats:");
+	ImGui::Text("Draw Calls: %d", Crisp::Renderer::GetStats().DrawCalls);
+	ImGui::Text("Quad Count: %d", Crisp::Renderer::GetStats().QuadCount);
+	ImGui::Text("Vertex Count: %d", Crisp::Renderer::GetStats().GetTotalVertexCount());
+	ImGui::Text("Index Count: %d", Crisp::Renderer::GetStats().GetTotalIndexCount());
+	ImGui::End();
 }
 
 void Game2D::OnEvent(const SDL_Event* e) {

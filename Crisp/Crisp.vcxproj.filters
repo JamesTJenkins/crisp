@@ -13,6 +13,9 @@
     <Filter Include="src\Crisp\Core">
       <UniqueIdentifier>{D54F07DF-C11D-FBE4-AAB1-6B0B961ED749}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Crisp\Debug">
+      <UniqueIdentifier>{93A5FDBF-FF30-6B84-0842-EE78744CC784}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Crisp\ImGui">
       <UniqueIdentifier>{47105CC0-B39B-C984-BCAC-4C7928B72585}</UniqueIdentifier>
     </Filter>
@@ -96,6 +99,9 @@
     <ClInclude Include="src\Crisp\Core\MouseButtonCodes.h">
       <Filter>src\Crisp\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crisp\Core\Random.h">
+      <Filter>src\Crisp\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Crisp\Core\Time.h">
       <Filter>src\Crisp\Core</Filter>
     </ClInclude>
@@ -104,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="src\Crisp\Core\glm_common.h">
       <Filter>src\Crisp\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Debug\Instrumentor.h">
+      <Filter>src\Crisp\Debug</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\ImGui\imguiLayer.h">
       <Filter>src\Crisp\ImGui</Filter>
@@ -1386,8 +1395,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crisp\Debug\Instrumentor.h" />
-    <ClInclude Include="src\Crisp\Core\Random.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crisp\Components\Camera.cpp">

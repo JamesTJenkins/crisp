@@ -60,6 +60,10 @@ namespace Crisp {
 		UploadUniformInt(name, value);
 	}
 
+	void OpenGLShader::SetUniformIntArray(const std::string& name, int* values, uint32_t count) {
+		UploadUniformIntArray(name, values, count);
+	}
+
 	void OpenGLShader::SetUniformMat4(const std::string& name, const glm::mat4& value) {
 		UploadUniformMat4(name, value);
 	}
@@ -82,6 +86,10 @@ namespace Crisp {
 
 	void OpenGLShader::UploadUniformInt(const std::string& name, int value) {
 		glUniform1i(GetUniformLocation(name), value);
+	}
+
+	void OpenGLShader::UploadUniformIntArray(const std::string& name, int* values, uint32_t count) {
+		glUniform1iv(GetUniformLocation(name), count, values);
 	}
 
 	void OpenGLShader::UploadUniformFloat(const std::string& name, float value) {
