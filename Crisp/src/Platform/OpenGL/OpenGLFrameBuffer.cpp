@@ -5,14 +5,20 @@
 
 namespace Crisp {
 	OpenGLFrameBuffer::OpenGLFrameBuffer(const FrameBufferProperties& properties) : properties(properties) {
+		CRISP_PROFILE_FUNCTION();
+
 		Invalidate();
 	}
 
 	OpenGLFrameBuffer::~OpenGLFrameBuffer() {
+		CRISP_PROFILE_FUNCTION();
+
 		glDeleteFramebuffers(1, &rendererID);
 	}
 
 	void OpenGLFrameBuffer::Invalidate() {
+		CRISP_PROFILE_FUNCTION();
+
 		glCreateFramebuffers(1, &rendererID);
 		glBindFramebuffer(GL_FRAMEBUFFER, rendererID);
 
@@ -36,10 +42,14 @@ namespace Crisp {
 	}
 
 	void OpenGLFrameBuffer::Bind() {
+		CRISP_PROFILE_FUNCTION();
+
 		glBindFramebuffer(GL_FRAMEBUFFER, rendererID);
 	}
 
 	void OpenGLFrameBuffer::Unbind() {
+		CRISP_PROFILE_FUNCTION();
+
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 }

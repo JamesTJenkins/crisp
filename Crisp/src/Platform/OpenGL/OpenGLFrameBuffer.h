@@ -7,6 +7,9 @@ namespace Crisp {
 		OpenGLFrameBuffer(const FrameBufferProperties& properties);
 		virtual ~OpenGLFrameBuffer();
 
+		OpenGLFrameBuffer(const OpenGLFrameBuffer& other) = delete;				// Copy construct
+		OpenGLFrameBuffer& operator=(const OpenGLFrameBuffer& other) = delete;	// Copy assign
+
 		void Invalidate();
 
 		virtual void Bind() override;
