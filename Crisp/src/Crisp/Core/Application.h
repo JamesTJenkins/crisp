@@ -11,6 +11,7 @@ namespace Crisp {
 		virtual ~Application();
 
 		void Run();
+		void Quit();
 
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* overlay);

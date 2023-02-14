@@ -87,6 +87,10 @@ namespace Crisp {
 		}
 	}
 
+	void Application::Quit() {
+		running = false;
+	}
+
 	void Application::PushLayer(Layer* layer) {
 		CRISP_PROFILE_FUNCTION();
 
