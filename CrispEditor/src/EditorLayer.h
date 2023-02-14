@@ -19,11 +19,12 @@ namespace Crisp {
 
 		virtual void OnEvent(const SDL_Event* e) override;
 	private:
+		Ref<FrameBuffer> framebuffer;
 		Ref<VertexArray> vertexArray;
 		Ref<Shader> colorShader;
-		Ref<FrameBuffer> framebuffer;
 		Ref<Texture2D> texture;
 		glm::vec4 color;
+		glm::vec2 sceneViewportSize;
 
 		Transform camTransform;
 		Transform quadTransform;

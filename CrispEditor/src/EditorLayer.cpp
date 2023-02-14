@@ -118,9 +118,16 @@ namespace Crisp {
             ImGui::EndMenuBar();
         }
 
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Scene");
-        ImGui::Image((void*)framebuffer->GetColorAttachmentRendererID(), ImVec2{ 1280, 720 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+        ImVec2 viewportSize = ImGui::GetContentRegionAvail();
+        if (sceneViewportSize != *((glm::vec2*)&viewportSize)) {
+            framebuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+            sceneViewportSize = { viewportSize.x, viewportSize.y };
+        }
+        ImGui::Image((void*)framebuffer->GetColorAttachmentRendererID(), viewportSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
         ImGui::End();
+        ImGui::PopStyleVar();
 
         ImGui::Begin("Statistics");
         ImGui::Text("Rendering Stats:");

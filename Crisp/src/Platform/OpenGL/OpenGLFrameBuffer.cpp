@@ -14,11 +14,21 @@ namespace Crisp {
 		CRISP_PROFILE_FUNCTION();
 
 		glDeleteFramebuffers(1, &rendererID);
+		glDeleteTextures(1, &colorAttachment);
+		glDeleteTextures(1, &depthAttachment);
 	}
 
 	void OpenGLFrameBuffer::Invalidate() {
 		CRISP_PROFILE_FUNCTION();
 
+		// Delete any pre existing framebuffers
+		if (rendererID) {
+			glDeleteFramebuffers(1, &rendererID);
+			glDeleteTextures(1, &colorAttachment);
+			glDeleteTextures(1, &depthAttachment);
+		}
+
+		// Recreate framebuffers
 		glCreateFramebuffers(1, &rendererID);
 		glBindFramebuffer(GL_FRAMEBUFFER, rendererID);
 
@@ -51,5 +61,13 @@ namespace Crisp {
 		CRISP_PROFILE_FUNCTION();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	void OpenGLFrameBuffer::Resize(uint32_t width, uint32_t height) {
+		CRISP_PROFILE_FUNCTION();
+
+		properties.width = width;
+		properties.height = height;
+		Invalidate();
 	}
 }
