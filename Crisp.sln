@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game", "Game\Game.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Crisp", "Crisp\Crisp.vcxproj", "{06BBFB0C-72CF-23BE-3B51-C71DA72420EF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CrispEditor", "CrispEditor\CrispEditor.vcxproj", "{4D7DBADD-B932-33D3-4227-2DAAAEDB29D7}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{53E47842-3FC8-3998-A828-34EB942B241A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLAD", "Crisp\vendor\GLAD\GLAD.vcxproj", "{5D4A857C-4981-860D-F26D-6C10DE83020F}"
@@ -34,6 +36,12 @@ Global
 		{06BBFB0C-72CF-23BE-3B51-C71DA72420EF}.Distribution|x64.Build.0 = Distribution|x64
 		{06BBFB0C-72CF-23BE-3B51-C71DA72420EF}.Release|x64.ActiveCfg = Release|x64
 		{06BBFB0C-72CF-23BE-3B51-C71DA72420EF}.Release|x64.Build.0 = Release|x64
+		{4D7DBADD-B932-33D3-4227-2DAAAEDB29D7}.Debug|x64.ActiveCfg = Debug|x64
+		{4D7DBADD-B932-33D3-4227-2DAAAEDB29D7}.Debug|x64.Build.0 = Debug|x64
+		{4D7DBADD-B932-33D3-4227-2DAAAEDB29D7}.Distribution|x64.ActiveCfg = Distribution|x64
+		{4D7DBADD-B932-33D3-4227-2DAAAEDB29D7}.Distribution|x64.Build.0 = Distribution|x64
+		{4D7DBADD-B932-33D3-4227-2DAAAEDB29D7}.Release|x64.ActiveCfg = Release|x64
+		{4D7DBADD-B932-33D3-4227-2DAAAEDB29D7}.Release|x64.Build.0 = Release|x64
 		{5D4A857C-4981-860D-F26D-6C10DE83020F}.Debug|x64.ActiveCfg = Debug|x64
 		{5D4A857C-4981-860D-F26D-6C10DE83020F}.Debug|x64.Build.0 = Debug|x64
 		{5D4A857C-4981-860D-F26D-6C10DE83020F}.Distribution|x64.ActiveCfg = Distribution|x64

@@ -91,6 +91,61 @@ workspace "Crisp"
 			runtime "Release"
 			optimize "On"
 	
+	project "CrispEditor"
+		location "CrispEditor"
+		kind "ConsoleApp"
+		language "C++"
+		cppdialect "C++20"
+		staticruntime "on"
+		
+		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+		objdir ("build/" .. outputdir .. "/%{prj.name}")
+		
+		files {
+			"%{prj.name}/src/**.h",
+			"%{prj.name}/src/**.hpp",
+			"%{prj.name}/src/**.c",
+			"%{prj.name}/src/**.cpp"
+		}
+		
+		includedirs {
+			"Crisp/vendor/spdlog/include",
+			"Crisp/vendor/SDL2/include",
+			"Crisp/vendor/glm",
+			"Crisp/src",
+			"Crisp/vendor",
+		}
+		
+		links {
+			"Crisp",
+			"SDL",
+			"SDLmain"
+		}
+
+		ignoredefaultlibraries { "msvcrtd.lib" }
+
+		-- Window Build Settings --
+		
+		filter "system:windows"
+			systemversion "latest"
+			
+		-- Configuration Settings --
+			
+		filter "configurations:Debug"
+			defines "CRISP_DEBUG"
+			runtime "Debug"
+			symbols "On"
+			
+		filter "configurations:Release"
+			defines "CRISP_RELEASE"
+			runtime "Release"
+			optimize "On"
+			
+		filter "configurations:Distribution"
+			defines "CRISP_DISTRIBUTION"
+			runtime "Release"
+			optimize "On"
+
 	project "Game"
 		location "Game"
 		kind "ConsoleApp"
@@ -105,7 +160,8 @@ workspace "Crisp"
 			"%{prj.name}/src/**.h",
 			"%{prj.name}/src/**.hpp",
 			"%{prj.name}/src/**.c",
-			"%{prj.name}/src/**.cpp"
+			"%{prj.name}/src/**.cpp",
+			"%{prj.name}/assets/shaders/**.glsl"
 		}
 		
 		includedirs {

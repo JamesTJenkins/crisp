@@ -144,6 +144,10 @@
     <ClCompile Include="src\GameApp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\shaders\FlatColor.glsl" />
+    <None Include="assets\shaders\texture.glsl" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Crisp\Crisp.vcxproj">
       <Project>{06BBFB0C-72CF-23BE-3B51-C71DA72420EF}</Project>
     </ProjectReference>
@@ -153,10 +157,6 @@
     <ProjectReference Include="..\Crisp\vendor\SDL2\VisualC\SDLmain\SDLmain.vcxproj">
       <Project>{EDD01C9D-59B0-9B38-62C8-260FCE26029A}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\shaders\FlatColor.glsl" />
-    <None Include="assets\shaders\texture.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

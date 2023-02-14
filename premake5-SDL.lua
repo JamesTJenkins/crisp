@@ -44,7 +44,8 @@ project "SDL"
 		}
 
         postbuildcommands {
-		    ("{COPY} %{cfg.buildtarget.relpath} \"%{cfg.buildtarget.relpath}/../../Game/\"")
+		    ("{COPY} %{cfg.buildtarget.relpath} \"%{cfg.buildtarget.relpath}/../../Game/\""),
+		    ("{COPY} %{cfg.buildtarget.relpath} \"%{cfg.buildtarget.relpath}/../../CrispEditor/\"")
 		}
 
 		files {

@@ -138,8 +138,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h" />
-    <ClInclude Include="src\Crisp\Renderer\FrameBuffer.h" />
     <ClInclude Include="src\Crisp.h" />
     <ClInclude Include="src\Crisp\Components\Camera.h" />
     <ClInclude Include="src\Crisp\Components\OrthographicCamera.h" />
@@ -161,6 +159,7 @@
     <ClInclude Include="src\Crisp\Debug\Instrumentor.h" />
     <ClInclude Include="src\Crisp\ImGui\imguiLayer.h" />
     <ClInclude Include="src\Crisp\Renderer\Buffer.h" />
+    <ClInclude Include="src\Crisp\Renderer\FrameBuffer.h" />
     <ClInclude Include="src\Crisp\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Crisp\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Crisp\Renderer\Renderer.h" />
@@ -172,6 +171,7 @@
     <ClInclude Include="src\CrispPCH.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRenderAPI.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h" />
@@ -589,8 +589,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />
-    <ClCompile Include="src\Crisp\Renderer\FrameBuffer.cpp" />
     <ClCompile Include="src\Crisp\Components\Camera.cpp" />
     <ClCompile Include="src\Crisp\Components\OrthographicCamera.cpp" />
     <ClCompile Include="src\Crisp\Components\PerspectiveCamera.cpp" />
@@ -603,6 +601,7 @@
     <ClCompile Include="src\Crisp\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Crisp\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Crisp\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Crisp\Renderer\FrameBuffer.cpp" />
     <ClCompile Include="src\Crisp\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Crisp\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Crisp\Renderer\RendererAPI.cpp" />
@@ -615,6 +614,7 @@
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRenderAPI.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
