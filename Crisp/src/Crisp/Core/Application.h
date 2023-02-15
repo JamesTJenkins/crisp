@@ -19,6 +19,7 @@ namespace Crisp {
 		void PopOverlay(Layer* overlay);
 
 		inline static Application& Get() { return *instance; }
+		ImGuiLayer* GetImGuiLayer() { return imguiLayer; }
 
 		inline Window& GetWindow() { return *window; }
 	private:

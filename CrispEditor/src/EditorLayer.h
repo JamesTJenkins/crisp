@@ -25,6 +25,7 @@ namespace Crisp {
 		Ref<Texture2D> texture;
 		glm::vec4 color;
 		glm::vec2 sceneViewportSize;
+		bool viewportFocused = false;
 
 		Transform camTransform;
 		Transform quadTransform;

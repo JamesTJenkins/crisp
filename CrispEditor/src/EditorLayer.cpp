@@ -40,7 +40,9 @@ namespace Crisp {
             if (Input::IsKeyPressed(CRISP_DOWN))
                 moveDir.y -= 1;
 
-            cam->GetTransform()->SetPosition(cam->GetTransform()->GetPosition() + moveDir * (float)(Time::deltaTime * 0.001));
+            // Only allow movement if the viewport is focused
+            if (viewportFocused)
+                cam->GetTransform()->SetPosition(cam->GetTransform()->GetPosition() + moveDir * (float)(Time::deltaTime * 0.001));
         }
         {
             CRISP_PROFILE_SCOPE("Renderer Draw");
@@ -120,6 +122,7 @@ namespace Crisp {
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Scene");
+        viewportFocused = ImGui::IsWindowFocused();
         ImVec2 viewportSize = ImGui::GetContentRegionAvail();
         if (sceneViewportSize != *((glm::vec2*)&viewportSize)) {
             framebuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
