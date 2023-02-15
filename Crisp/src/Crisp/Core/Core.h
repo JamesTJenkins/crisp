@@ -14,13 +14,12 @@
 #endif
 
 #ifdef CRISP_DEBUG
-	// TODO: fix assertions
-	//#define CRISP_ENABLE_ASSERTS
+	#define CRISP_ENABLE_ASSERTS
 #endif
 
 #ifdef CRISP_ENABLE_ASSERTS
-	#define CRISP_ASSERT(x, ...) { if(!(x)) { CRISP_ERROR("Assertion Failed: {0}", __VA__ARGS__); __debugbreak(); } }
-	#define CRISP_CORE_ASSERT(x, ...) { if(!(x)) { CRISP_CORE_ERROR("Assertion Failed: {0}", __VA__ARGS__); __debugbreak(); } }
+	#define CRISP_ASSERT(x, ...) { if(!(x)) { CRISP_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define CRISP_CORE_ASSERT(x, ...) { if(!(x)) { CRISP_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 #else
 	#define CRISP_ASSERT(x, ...)
 	#define CRISP_CORE_ASSERT(x, ...)
