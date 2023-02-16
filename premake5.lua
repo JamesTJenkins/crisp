@@ -52,6 +52,7 @@ workspace "Crisp"
 			"%{prj.name}/vendor/imgui",
 			"%{prj.name}/vendor/stb_image",
 			"%{prj.name}/vendor/glm",
+			"%{prj.name}/vendor/entt/include",
 		}
 
 		defines {
@@ -112,6 +113,7 @@ workspace "Crisp"
 			"Crisp/vendor/spdlog/include",
 			"Crisp/vendor/SDL2/include",
 			"Crisp/vendor/glm",
+			"Crisp/vendor/entt/include",
 			"Crisp/src",
 			"Crisp/vendor",
 		}
@@ -168,6 +170,7 @@ workspace "Crisp"
 			"Crisp/vendor/spdlog/include",
 			"Crisp/vendor/SDL2/include",
 			"Crisp/vendor/glm",
+			"Crisp/vendor/entt/include",
 			"Crisp/src",
 			"Crisp/vendor",
 		}

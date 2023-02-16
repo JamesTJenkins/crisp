@@ -7,6 +7,7 @@
 #include "Crisp/Core/Log.h"
 #include "Crisp/Core/Time.h"
 #include "Crisp/Core/Random.h"
+#include "Crisp/Scene/Scene.h"
 
 // LAYERS
 #include "Crisp/Core/Layer.h"
@@ -26,6 +27,8 @@
 #include "Crisp/Renderer/Texture.h"
 #include "Crisp/Renderer/VertexArray.h"
 
-// COMPONENTS
+// Scene
+#include "Crisp/Scene/Entity.h"
 #include "Crisp/Components/Transform.h"
 #include "Crisp/Components/Camera.h"
+#include "Crisp/Components/SpriteRenderer.h"

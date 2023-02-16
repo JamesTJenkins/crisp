@@ -23,13 +23,14 @@ namespace Crisp {
 		Ref<VertexArray> vertexArray;
 		Ref<Shader> colorShader;
 		Ref<Texture2D> texture;
-		glm::vec4 color;
+		Ref<Scene> activeScene;
+
 		glm::vec2 sceneViewportSize;
 		bool viewportFocused = false;
 
+		Entity quad;
+
 		Transform camTransform;
-		Transform quadTransform;
-		Transform quad1Transform;
 		Camera* cam;
 	};
 }

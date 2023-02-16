@@ -1,8 +1,9 @@
 #include "EditorLayer.h"
 #include <imgui/imgui.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Crisp {
-    EditorLayer::EditorLayer() : Layer("EditorLayer"), camTransform(glm::vec3(0, 0, 0)), quadTransform(glm::vec3(0, 0, -1), glm::quat(), glm::vec3(0.5f, 0.5f, 0.5f)), quad1Transform(glm::vec3(0, 0, -1)), cam(Camera::CreateOrthographicCamera(&camTransform, 1280, 720, -1, 1)), color(0, 1, 1, 1) {}
+    EditorLayer::EditorLayer() : Layer("EditorLayer"), camTransform(glm::vec3(0, 0, 0)), cam(Camera::CreateOrthographicCamera(&camTransform, 1280, 720, -1, 1)) {}
 
     EditorLayer::~EditorLayer() {}
 
@@ -16,6 +17,10 @@ namespace Crisp {
         props.width = 1280;
         props.height = 720;
         framebuffer = FrameBuffer::Create(props);
+
+        activeScene = CreateRef<Scene>();
+        quad = activeScene->CreateEntity("New Quad");
+        quad.AddComponent<SpriteRenderer>();
     }
 
     void EditorLayer::OnDetach() {
@@ -27,36 +32,29 @@ namespace Crisp {
 
         Renderer::ResetStatistics();
 
-        {
-            CRISP_PROFILE_SCOPE("CameraController-Update");
-            // Camera movement
-            glm::vec3 moveDir(0, 0, 0);
-            if (Input::IsKeyPressed(CRISP_LEFT))
-                moveDir.x += 1;
-            if (Input::IsKeyPressed(CRISP_RIGHT))
-                moveDir.x -= 1;
-            if (Input::IsKeyPressed(CRISP_UP))
-                moveDir.y += 1;
-            if (Input::IsKeyPressed(CRISP_DOWN))
-                moveDir.y -= 1;
+        // TEMP
+        glm::vec3 moveDir(0, 0, 0);
+        if (Input::IsKeyPressed(CRISP_LEFT))
+            moveDir.x += 1;
+        if (Input::IsKeyPressed(CRISP_RIGHT))
+            moveDir.x -= 1;
+        if (Input::IsKeyPressed(CRISP_UP))
+            moveDir.y += 1;
+        if (Input::IsKeyPressed(CRISP_DOWN))
+            moveDir.y -= 1;
+        
+        // Only allow movement if the viewport is focused
+        if (viewportFocused)
+            cam->GetTransform()->SetPosition(cam->GetTransform()->GetPosition() + moveDir * (float)(Time::deltaTime * 0.001));
+        // TEMP
 
-            // Only allow movement if the viewport is focused
-            if (viewportFocused)
-                cam->GetTransform()->SetPosition(cam->GetTransform()->GetPosition() + moveDir * (float)(Time::deltaTime * 0.001));
-        }
         {
             CRISP_PROFILE_SCOPE("Renderer Draw");
             framebuffer->Bind();
             RenderCommand::Clear();
 
             Renderer::BeginScene();
-            Renderer::DrawQuad(quadTransform.GetLocalToWorldMatrix(), texture);
-            Renderer::DrawQuad(quad1Transform.GetLocalToWorldMatrix(), { 1,1,1,1 });
-
-            //colorShader->Bind();
-            //std::dynamic_pointer_cast<OpenGLShader>(colorShader)->UploadUniformVec4("u_Color", color);
-            //Renderer::Submit(colorShader, vertexArray);
-
+            activeScene->OnUpdate();
             Renderer::EndScene();
             framebuffer->Unbind();
         }
@@ -138,6 +136,13 @@ namespace Crisp {
         ImGui::Text("Quad Count: %d", Renderer::GetStats().QuadCount);
         ImGui::Text("Vertex Count: %d", Renderer::GetStats().GetTotalVertexCount());
         ImGui::Text("Index Count: %d", Renderer::GetStats().GetTotalIndexCount());
+
+        ImGui::Separator();
+        ImGui::Text("%s", quad.name.c_str());
+        auto& color = quad.GetComponent<SpriteRenderer>().color;
+        ImGui::ColorEdit4("Color: ", glm::value_ptr(color));
+        ImGui::Separator();
+
         ImGui::End();
 
         ImGui::End();	// DOCKSPACE
