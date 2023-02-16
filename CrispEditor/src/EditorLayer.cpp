@@ -3,7 +3,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 namespace Crisp {
-    EditorLayer::EditorLayer() : Layer("EditorLayer"), camTransform(glm::vec3(0, 0, 0)), cam(Camera::CreateOrthographicCamera(&camTransform, 1280, 720, -1, 1)) {}
+    EditorLayer::EditorLayer() : Layer("EditorLayer") {}
 
     EditorLayer::~EditorLayer() {}
 
@@ -19,8 +19,11 @@ namespace Crisp {
         framebuffer = FrameBuffer::Create(props);
 
         activeScene = CreateRef<Scene>();
-        quad = activeScene->CreateEntity("New Quad");
-        quad.AddComponent<SpriteRenderer>();
+        camEntity = activeScene->CreateEntity("New Cam");
+        cam = &camEntity.AddComponent<Camera>(&camEntity.GetComponent<Transform>());
+        cam->SetOrthographicCamera(1280, 720);
+        quadEntity = activeScene->CreateEntity("New Quad");
+        quadEntity.AddComponent<SpriteRenderer>();
     }
 
     void EditorLayer::OnDetach() {
@@ -138,8 +141,8 @@ namespace Crisp {
         ImGui::Text("Index Count: %d", Renderer::GetStats().GetTotalIndexCount());
 
         ImGui::Separator();
-        ImGui::Text("%s", quad.name.c_str());
-        auto& color = quad.GetComponent<SpriteRenderer>().color;
+        ImGui::Text("%s", quadEntity.name.c_str());
+        auto& color = quadEntity.GetComponent<SpriteRenderer>().color;
         ImGui::ColorEdit4("Color: ", glm::value_ptr(color));
         ImGui::Separator();
 

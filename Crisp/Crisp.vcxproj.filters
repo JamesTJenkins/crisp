@@ -63,12 +63,6 @@
     <ClInclude Include="src\Crisp\Components\Camera.h">
       <Filter>src\Crisp\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crisp\Components\OrthographicCamera.h">
-      <Filter>src\Crisp\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Crisp\Components\PerspectiveCamera.h">
-      <Filter>src\Crisp\Components</Filter>
-    </ClInclude>
     <ClInclude Include="src\Crisp\Components\Transform.h">
       <Filter>src\Crisp\Components</Filter>
     </ClInclude>
@@ -1410,12 +1404,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crisp\Components\Camera.cpp">
-      <Filter>src\Crisp\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Crisp\Components\OrthographicCamera.cpp">
-      <Filter>src\Crisp\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Crisp\Components\PerspectiveCamera.cpp">
       <Filter>src\Crisp\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Crisp\Components\Transform.cpp">

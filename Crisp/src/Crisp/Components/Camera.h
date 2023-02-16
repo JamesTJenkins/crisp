@@ -4,23 +4,41 @@
 namespace Crisp {
     class Camera {
     public:
-        virtual ~Camera() {}
+        Camera(Transform* transform);
+        ~Camera();
 
-        virtual void RecreateCamera() = 0;
+        void RecreateCamera();
 
-        virtual glm::mat4 GetProjectionMatrix() const = 0;
-        virtual glm::mat4 GetViewMatrix() const = 0;
-        virtual glm::mat4 GetViewProjectionMatrix() const = 0;
+        glm::mat4 GetProjectionMatrix() const;
+        glm::mat4 GetViewMatrix() const;
+        glm::mat4 GetViewProjectionMatrix() const;
 
-        inline virtual Transform* GetTransform() const = 0;
+        inline Transform* GetTransform() const { return transformComponent; }
 
         // Main camera reference (Gets the camera that is currently rendering to screen)
         inline static Camera* GetMainCamera() { return mainCamera; }
         inline static void SetMainCamera(Camera* value) { mainCamera = value; }
 
-        static Camera* CreatePerspectiveCamera(Transform* transform, const float aspect, const float fov = 60, const float nearPlane = 0.1f, const float farPlane = 1000, const bool isMainCamera = true);
-        static Camera* CreateOrthographicCamera(Transform* transform, const float width, const float height, const float nearPlane = 0.1f, const float farPlane = 1000, const bool isMainCamera = true);
+        void SetPerspectiveCamera(const float aspect, const float fov = 60, const float nearPlane = 0.1f, const float farPlane = 1000, const bool isMainCamera = true);
+        void SetOrthographicCamera(const float width, const float height, const float nearPlane = 0.1f, const float farPlane = 1000, const bool isMainCamera = true);
     private:
+        // General camera
+        bool isOrthographic;
+        glm::mat4 projectionMatrix;
+        Transform* transformComponent;
+
+        float nearPlane;
+        float farPlane;
+    private:
+        // Orthographic
+        float width;
+        float height;
+    private:
+        // Perspective
+        float aspect;
+        float fov;
+    private:
+        // TODO: Move to scene
         inline static Camera* mainCamera;
     };
 }

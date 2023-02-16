@@ -28,9 +28,9 @@ namespace Crisp {
 		glm::vec2 sceneViewportSize;
 		bool viewportFocused = false;
 
-		Entity quad;
+		Entity camEntity;
+		Entity quadEntity;
 
-		Transform camTransform;
 		Camera* cam;
 	};
 }
