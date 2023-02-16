@@ -31,10 +31,12 @@ namespace Crisp {
 			return scene->registry.any_of<T>(entityHandle); 
 		}
 
+		operator bool() const { return entityHandle != entt::null; }
+	public:
 		std::string name;
 		std::string tag;
 	private:
-		entt::entity entityHandle;
+		entt::entity entityHandle = entt::null;
 		Scene* scene = nullptr;
 	};
 }
