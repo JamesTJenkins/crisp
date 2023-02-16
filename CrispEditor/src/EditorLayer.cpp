@@ -35,8 +35,6 @@ namespace Crisp {
     void EditorLayer::OnUpdate() {
         CRISP_PROFILE_FUNCTION();
 
-        Renderer::ResetStatistics();
-
         // TEMP
         glm::vec3 moveDir(0, 0, 0);
         if (Input::IsKeyPressed(CRISP_LEFT))
@@ -64,6 +62,11 @@ namespace Crisp {
             Renderer::EndScene();
             sceneViewFramebuffer->Unbind();
         }
+
+        // This needs to be after scene render loop otherwise it will give
+        // stats for rendering both scene and game view
+        Renderer::ResetStatistics();
+
         {
             CRISP_PROFILE_SCOPE("Renderer Draw");
 
