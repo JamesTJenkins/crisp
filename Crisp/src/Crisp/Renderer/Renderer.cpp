@@ -147,18 +147,6 @@ namespace Crisp {
         storage.stats.DrawCalls++;
     }
 
-    void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4& transform) {
-        CRISP_PROFILE_FUNCTION();
-
-        shader->Bind();
-        // TEMP
-        shader->SetUniformMat4("u_ViewProjection", sceneData->viewProjectionMatrix);
-        shader->SetUniformMat4("u_Transform", transform);
-        // TEMP
-        vertexArray->Bind();
-        RenderCommand::DrawIndexed(vertexArray);
-    }
-
     void Renderer::DrawQuad(const glm::mat4& transform, const glm::vec4& color) {
         CRISP_PROFILE_FUNCTION();
 
