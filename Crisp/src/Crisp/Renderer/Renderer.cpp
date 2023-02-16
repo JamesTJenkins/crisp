@@ -1,8 +1,6 @@
 #include "CrispPCH.h"
 #include "Renderer.h"
 
-#include "Crisp/Components/Camera.h"
-
 #include "VertexArray.h"
 
 // TODO: CLEANUP THIS
@@ -117,10 +115,10 @@ namespace Crisp {
         RenderCommand::SetViewport(0, 0, width, height);
     }
 
-    void Renderer::BeginScene() {
+    void Renderer::BeginScene(const Camera& camera) {
         CRISP_PROFILE_FUNCTION();
 
-        sceneData->viewProjectionMatrix = Camera::GetMainCamera()->GetViewProjectionMatrix();
+        sceneData->viewProjectionMatrix = camera.GetViewProjectionMatrix();
         storage.textureShader->Bind();
         storage.textureShader->SetUniformMat4("u_ViewProjection", sceneData->viewProjectionMatrix);
 

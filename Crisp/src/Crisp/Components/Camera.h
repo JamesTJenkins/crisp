@@ -4,8 +4,9 @@
 namespace Crisp {
     class Camera {
     public:
+        Camera() = default;
         Camera(Transform* transform);
-        ~Camera();
+        virtual ~Camera();
 
         void RecreateCamera();
 
@@ -13,6 +14,7 @@ namespace Crisp {
         glm::mat4 GetViewMatrix() const;
         glm::mat4 GetViewProjectionMatrix() const;
 
+        inline void SetTransform(Transform* value) { transformComponent = value; }
         inline Transform* GetTransform() const { return transformComponent; }
 
         // Main camera reference (Gets the camera that is currently rendering to screen)

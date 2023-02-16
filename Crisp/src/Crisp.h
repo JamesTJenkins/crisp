@@ -29,6 +29,7 @@
 
 // Scene
 #include "Crisp/Scene/Entity.h"
+#include "Crisp/Scene/SceneCamera.h"
 #include "Crisp/Components/Transform.h"
 #include "Crisp/Components/Camera.h"
 #include "Crisp/Components/SpriteRenderer.h"

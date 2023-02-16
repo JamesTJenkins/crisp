@@ -170,6 +170,7 @@
     <ClInclude Include="src\CrispPCH.h" />
     <ClInclude Include="src\Crisp\Scene\Entity.h" />
     <ClInclude Include="src\Crisp\Scene\Scene.h" />
+    <ClInclude Include="src\Crisp\Scene\SceneCamera.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h" />
@@ -613,6 +614,7 @@
     </ClCompile>
     <ClCompile Include="src\Crisp\Scene\Entity.cpp" />
     <ClCompile Include="src\Crisp\Scene\Scene.cpp" />
+    <ClCompile Include="src\Crisp\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />

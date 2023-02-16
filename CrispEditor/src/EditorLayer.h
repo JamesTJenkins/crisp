@@ -19,18 +19,22 @@ namespace Crisp {
 
 		virtual void OnEvent(const SDL_Event* e) override;
 	private:
-		Ref<FrameBuffer> framebuffer;
+		Ref<FrameBuffer> gameViewFramebuffer;
+		Ref<FrameBuffer> sceneViewFramebuffer;
+
 		Ref<VertexArray> vertexArray;
 		Ref<Shader> colorShader;
 		Ref<Texture2D> texture;
 		Ref<Scene> activeScene;
 
 		glm::vec2 sceneViewportSize;
-		bool viewportFocused = false;
+		glm::vec2 gameViewportSize;
+		bool sceneViewportFocused = false;
+		bool gameViewportFocused = false;
 
 		Entity camEntity;
 		Entity quadEntity;
 
-		Camera* cam;
+		SceneCamera sceneCam;
 	};
 }

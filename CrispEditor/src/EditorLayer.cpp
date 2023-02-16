@@ -16,14 +16,16 @@ namespace Crisp {
         FrameBufferProperties props;
         props.width = 1280;
         props.height = 720;
-        framebuffer = FrameBuffer::Create(props);
+        gameViewFramebuffer = FrameBuffer::Create(props);
+        sceneViewFramebuffer = FrameBuffer::Create(props);
 
         activeScene = CreateRef<Scene>();
         camEntity = activeScene->CreateEntity("New Cam");
-        cam = &camEntity.AddComponent<Camera>(&camEntity.GetComponent<Transform>());
-        cam->SetOrthographicCamera(1280, 720);
+        camEntity.AddComponent<Camera>(&camEntity.GetComponent<Transform>()).SetOrthographicCamera(1280, 720);
         quadEntity = activeScene->CreateEntity("New Quad");
         quadEntity.AddComponent<SpriteRenderer>();
+
+        sceneCam.SetOrthographicCamera(1280, 720, 0.1f, 1000.0f, false);
     }
 
     void EditorLayer::OnDetach() {
@@ -45,21 +47,33 @@ namespace Crisp {
             moveDir.y += 1;
         if (Input::IsKeyPressed(CRISP_DOWN))
             moveDir.y -= 1;
-        
+
         // Only allow movement if the viewport is focused
-        if (viewportFocused)
-            cam->GetTransform()->SetPosition(cam->GetTransform()->GetPosition() + moveDir * (float)(Time::deltaTime * 0.001));
+        if (sceneViewportFocused)
+            sceneCam.GetTransform()->SetPosition(sceneCam.GetTransform()->GetPosition() + moveDir * (float)(Time::deltaTime * 0.001));
         // TEMP
 
         {
-            CRISP_PROFILE_SCOPE("Renderer Draw");
-            framebuffer->Bind();
-            RenderCommand::Clear();
+            CRISP_PROFILE_SCOPE("Scene Renderer Draw");
 
-            Renderer::BeginScene();
+            // Scene camera
+            sceneViewFramebuffer->Bind();
+            RenderCommand::Clear();
+            Renderer::BeginScene(sceneCam);
             activeScene->OnUpdate();
             Renderer::EndScene();
-            framebuffer->Unbind();
+            sceneViewFramebuffer->Unbind();
+        }
+        {
+            CRISP_PROFILE_SCOPE("Renderer Draw");
+
+            // Game view camera
+            gameViewFramebuffer->Bind();
+            RenderCommand::Clear();
+            Renderer::BeginScene(*(Camera::GetMainCamera()));
+            activeScene->OnUpdate();
+            Renderer::EndScene();
+            gameViewFramebuffer->Unbind();
         }
     }
 
@@ -123,13 +137,25 @@ namespace Crisp {
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Scene");
-        viewportFocused = ImGui::IsWindowFocused();
+        sceneViewportFocused = ImGui::IsWindowFocused();
         ImVec2 viewportSize = ImGui::GetContentRegionAvail();
         if (sceneViewportSize != *((glm::vec2*)&viewportSize)) {
-            framebuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+            sceneViewFramebuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
             sceneViewportSize = { viewportSize.x, viewportSize.y };
         }
-        ImGui::Image((void*)framebuffer->GetColorAttachmentRendererID(), viewportSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+        ImGui::Image((void*)sceneViewFramebuffer->GetColorAttachmentRendererID(), viewportSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+        ImGui::End();
+        ImGui::PopStyleVar();
+
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+        ImGui::Begin("Game");
+        gameViewportFocused = ImGui::IsWindowFocused();
+        viewportSize = ImGui::GetContentRegionAvail();
+        if (gameViewportSize != *((glm::vec2*)&viewportSize)) {
+            gameViewFramebuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+            gameViewportSize = { viewportSize.x, viewportSize.y };
+        }
+        ImGui::Image((void*)gameViewFramebuffer->GetColorAttachmentRendererID(), viewportSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
         ImGui::End();
         ImGui::PopStyleVar();
 

@@ -1401,6 +1401,7 @@
     <ClInclude Include="src\Crisp\Scene\Scene.h" />
     <ClInclude Include="src\Crisp\Components\SpriteRenderer.h" />
     <ClInclude Include="src\Crisp\Scene\Entity.h" />
+    <ClInclude Include="src\Crisp\Scene\SceneCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crisp\Components\Camera.cpp">
@@ -1492,5 +1493,6 @@
     </ClCompile>
     <ClCompile Include="src\Crisp\Scene\Scene.cpp" />
     <ClCompile Include="src\Crisp\Scene\Entity.cpp" />
+    <ClCompile Include="src\Crisp\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>
