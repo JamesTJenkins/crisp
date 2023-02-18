@@ -19,6 +19,10 @@ namespace Crisp {
 			Entity entity{ entityID, context.get() };
 			DrawEntityNode(entity);
 		});
+
+		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+			selectionContext = {};
+
 		ImGui::End();
 	}
 

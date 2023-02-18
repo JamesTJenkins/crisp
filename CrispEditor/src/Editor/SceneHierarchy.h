@@ -1,8 +1,5 @@
 #pragma once
-#include "Crisp/Core/Core.h"
-#include "Crisp/Core/Log.h"
-#include "Crisp/Scene/Scene.h"
-#include "Crisp/Scene/Entity.h"
+#include "Crisp.h"
 
 namespace Crisp {
 	class SceneHierarchy {
@@ -13,10 +10,11 @@ namespace Crisp {
 		void SetContext(const Ref<Scene>& scene);
 
 		void OnImGuiRender();
+	public:
+		Entity selectionContext;
 	private:
 		void DrawEntityNode(Entity entity);
 	private:
 		Ref<Scene> context;
-		Entity selectionContext;
 	};
 }
