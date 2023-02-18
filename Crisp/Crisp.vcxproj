@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="src\Crisp.h" />
     <ClInclude Include="src\Crisp\Components\Camera.h" />
+    <ClInclude Include="src\Crisp\Components\ScriptableObject.h" />
     <ClInclude Include="src\Crisp\Components\SpriteRenderer.h" />
     <ClInclude Include="src\Crisp\Components\Transform.h" />
     <ClInclude Include="src\Crisp\Core\Application.h" />

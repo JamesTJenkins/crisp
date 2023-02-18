@@ -2,6 +2,10 @@
 #include <imgui/imgui.h>
 #include <glm/gtc/type_ptr.hpp>
 
+// TEST
+#include "Test.h"
+// TEST
+
 namespace Crisp {
     EditorLayer::EditorLayer() : Layer("EditorLayer") {}
 
@@ -26,6 +30,10 @@ namespace Crisp {
         quadEntity.AddComponent<SpriteRenderer>();
 
         sceneCam.SetOrthographicCamera(1280, 720, 0.1f, 1000.0f, false);
+
+        // TEST
+        activeScene->CreateEntity("Test").AddComponent<NativeScript>().Bind<Test>();
+        // TEST
     }
 
     void EditorLayer::OnDetach() {
@@ -35,21 +43,9 @@ namespace Crisp {
     void EditorLayer::OnUpdate() {
         CRISP_PROFILE_FUNCTION();
 
-        // TEMP
-        glm::vec3 moveDir(0, 0, 0);
-        if (Input::IsKeyPressed(CRISP_LEFT))
-            moveDir.x += 1;
-        if (Input::IsKeyPressed(CRISP_RIGHT))
-            moveDir.x -= 1;
-        if (Input::IsKeyPressed(CRISP_UP))
-            moveDir.y += 1;
-        if (Input::IsKeyPressed(CRISP_DOWN))
-            moveDir.y -= 1;
-
         // Only allow movement if the viewport is focused
         if (sceneViewportFocused)
-            sceneCam.GetTransform()->SetPosition(sceneCam.GetTransform()->GetPosition() + moveDir * (float)(Time::deltaTime * 0.001));
-        // TEMP
+            sceneCam.OnUpdate();
 
         {
             CRISP_PROFILE_SCOPE("Scene Renderer Draw");

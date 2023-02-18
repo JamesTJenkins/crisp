@@ -1402,6 +1402,7 @@
     <ClInclude Include="src\Crisp\Components\SpriteRenderer.h" />
     <ClInclude Include="src\Crisp\Scene\Entity.h" />
     <ClInclude Include="src\Crisp\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Crisp\Components\ScriptableObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crisp\Components\Camera.cpp">

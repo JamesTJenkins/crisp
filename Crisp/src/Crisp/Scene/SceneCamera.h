@@ -6,6 +6,8 @@ namespace Crisp {
 	public:
 		SceneCamera();
 		virtual ~SceneCamera() = default;
+
+		void OnUpdate();
 	private:
 		Transform transform;
 	};
