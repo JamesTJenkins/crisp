@@ -5,7 +5,7 @@ namespace Crisp {
 	class Entity {
 	public:
 		Entity() = default;
-		Entity(entt::entity handle, Scene* scene, const std::string& name = "", const std::string& tag = "Default");
+		Entity(entt::entity handle, Scene* scene);
 		Entity(const Entity& other) = default;
 
 		template<typename T, typename... Args>
@@ -32,9 +32,10 @@ namespace Crisp {
 		}
 
 		operator bool() const { return entityHandle != entt::null; }
-	public:
-		std::string name;
-		std::string tag;
+		operator uint32_t() const { return (uint32_t)entityHandle; }	// entt::entity identifier is a uint32_t this just makes life easier
+		
+		bool operator==(const Entity& other) const { return entityHandle == other.entityHandle && scene == other.scene; }
+		bool operator!=(const Entity& other) const { return !(*this == other); }
 	private:
 		entt::entity entityHandle = entt::null;
 		Scene* scene = nullptr;

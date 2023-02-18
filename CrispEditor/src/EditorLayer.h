@@ -2,6 +2,8 @@
 #include "Crisp.h"
 #include <SDL.h>
 
+#include "Editor/SceneHierarchy.h"
+
 namespace Crisp {
 	class EditorLayer : public Layer {
 	public:
@@ -36,5 +38,8 @@ namespace Crisp {
 		Entity quadEntity;
 
 		SceneCamera sceneCam;
+
+		// Editor
+		SceneHierarchy hierarchy;
 	};
 }

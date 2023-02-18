@@ -1,8 +1,10 @@
 #include "CrispPCH.h"
 #include "Scene.h"
 
-#include "Entity.h"
 #include "Crisp/Renderer/Renderer.h"
+
+#include "Entity.h"
+#include "Crisp/Components/EntityProperties.h"
 #include "Crisp/Components/ScriptableObject.h"
 #include "Crisp/Components/Transform.h"
 #include "Crisp/Components/SpriteRenderer.h"
@@ -12,8 +14,9 @@ namespace Crisp {
 
 	Scene::~Scene() {}
 
-	Entity Scene::CreateEntity(const std::string& name) {
-		Entity entity = { registry.create(), this, name };
+	Entity Scene::CreateEntity(const std::string& name, const std::string& tag) {
+		Entity entity = { registry.create(), this };
+		entity.AddComponent<EntityProperties>(name, tag);
 		entity.AddComponent<Transform>();
 		return entity;
 	}
@@ -33,9 +36,8 @@ namespace Crisp {
 		});
 
 		// RENDER
-		auto view = registry.view<Transform, SpriteRenderer>();
-		for (auto [entity, transform, sprite] : view.each()) {
+		registry.view<Transform, SpriteRenderer>().each([=](auto entity, Transform& transform, SpriteRenderer& sprite) {
 			Renderer::DrawQuad(transform.GetLocalToWorldMatrix(), sprite.color);
-		}
+		});
 	}
 }

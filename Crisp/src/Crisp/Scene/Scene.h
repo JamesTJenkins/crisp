@@ -8,12 +8,13 @@ namespace Crisp {
 		Scene();
 		~Scene();
 
-		Entity CreateEntity(const std::string& name = "");
+		Entity CreateEntity(const std::string& name = "New Entity", const std::string& tag = "Default");
 
 		void OnUpdate();
 	private:
 		entt::registry registry;
 
 		friend class Entity;
+		friend class SceneHierarchy;
 	};
 }

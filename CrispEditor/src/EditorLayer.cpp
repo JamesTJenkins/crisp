@@ -3,7 +3,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 // TEST
-#include "Test.h"
+//#include "Test.h"
 // TEST
 
 namespace Crisp {
@@ -31,8 +31,10 @@ namespace Crisp {
 
         sceneCam.SetOrthographicCamera(1280, 720, 0.1f, 1000.0f, false);
 
+        hierarchy.SetContext(activeScene);
+
         // TEST
-        activeScene->CreateEntity("Test").AddComponent<NativeScript>().Bind<Test>();
+        //activeScene->CreateEntity("Test").AddComponent<NativeScript>().Bind<Test>();
         // TEST
     }
 
@@ -134,6 +136,8 @@ namespace Crisp {
             ImGui::EndMenuBar();
         }
 
+        hierarchy.OnImGuiRender();
+
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Scene");
         sceneViewportFocused = ImGui::IsWindowFocused();
@@ -166,7 +170,7 @@ namespace Crisp {
         ImGui::Text("Index Count: %d", Renderer::GetStats().GetTotalIndexCount());
 
         ImGui::Separator();
-        ImGui::Text("%s", quadEntity.name.c_str());
+        ImGui::Text("%s", quadEntity.GetComponent<EntityProperties>().name.c_str());
         auto& color = quadEntity.GetComponent<SpriteRenderer>().color;
         ImGui::ColorEdit4("Color: ", glm::value_ptr(color));
         ImGui::Separator();
