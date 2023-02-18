@@ -20,7 +20,7 @@ namespace Crisp {
     }
 
     glm::vec3 Transform::QuatToEuler(glm::quat quaternion) {
-        return glm::eulerAngles(quaternion);
+        return glm::degrees(glm::eulerAngles(quaternion));
     }
 
     void Transform::SetPosition(glm::vec3 position) { this->position = position; }
