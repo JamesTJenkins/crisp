@@ -24,14 +24,15 @@ namespace Crisp {
         sceneViewFramebuffer = FrameBuffer::Create(props);
 
         activeScene = CreateRef<Scene>();
-        camEntity = activeScene->CreateEntity("New Cam");
+        Entity camEntity = activeScene->CreateEntity("New Cam");
         camEntity.AddComponent<Camera>(&camEntity.GetComponent<Transform>()).SetOrthographicCamera(1280, 720);
-        quadEntity = activeScene->CreateEntity("New Quad");
+        Entity quadEntity = activeScene->CreateEntity("New Quad");
         quadEntity.AddComponent<SpriteRenderer>();
 
         sceneCam.SetOrthographicCamera(1280, 720, 0.1f, 1000.0f, false);
 
         hierarchy.SetContext(activeScene);
+        properties.SetLinkedHierarchy(&hierarchy);
 
         // TEST
         //activeScene->CreateEntity("Test").AddComponent<NativeScript>().Bind<Test>();
@@ -137,6 +138,7 @@ namespace Crisp {
         }
 
         hierarchy.OnImGuiRender();
+        properties.OnImGuiRender();
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Scene");
@@ -168,12 +170,6 @@ namespace Crisp {
         ImGui::Text("Quad Count: %d", Renderer::GetStats().QuadCount);
         ImGui::Text("Vertex Count: %d", Renderer::GetStats().GetTotalVertexCount());
         ImGui::Text("Index Count: %d", Renderer::GetStats().GetTotalIndexCount());
-
-        ImGui::Separator();
-        ImGui::Text("%s", quadEntity.GetComponent<EntityProperties>().name.c_str());
-        auto& color = quadEntity.GetComponent<SpriteRenderer>().color;
-        ImGui::ColorEdit4("Color: ", glm::value_ptr(color));
-        ImGui::Separator();
 
         ImGui::End();
 

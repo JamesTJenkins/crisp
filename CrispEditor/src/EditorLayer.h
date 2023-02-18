@@ -3,6 +3,7 @@
 #include <SDL.h>
 
 #include "Editor/SceneHierarchy.h"
+#include "Editor/SceneProperties.h"
 
 namespace Crisp {
 	class EditorLayer : public Layer {
@@ -34,12 +35,10 @@ namespace Crisp {
 		bool sceneViewportFocused = false;
 		bool gameViewportFocused = false;
 
-		Entity camEntity;
-		Entity quadEntity;
-
 		SceneCamera sceneCam;
 
 		// Editor
 		SceneHierarchy hierarchy;
+		SceneProperties properties;
 	};
 }

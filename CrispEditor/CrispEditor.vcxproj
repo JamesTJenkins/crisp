@@ -137,11 +137,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Editor\SceneProperties.h" />
     <ClInclude Include="src\Editor\SceneHierarchy.h" />
     <ClInclude Include="src\EditorLayer.h" />
     <ClInclude Include="src\Test.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Editor\SceneProperties.cpp" />
     <ClCompile Include="src\Editor\SceneHierarchy.cpp" />
     <ClCompile Include="src\CrispEditorApp.cpp" />
     <ClCompile Include="src\EditorLayer.cpp" />
