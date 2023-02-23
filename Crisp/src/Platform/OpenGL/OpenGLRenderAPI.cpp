@@ -76,7 +76,7 @@ namespace Crisp {
 	}
 
 	void OpenGLRendererAPI::SetClearColor(const glm::vec4& color) {
-		glClearColor(color.a, color.b, color.g, color.a);
+		glClearColor(color.r, color.g, color.b, color.a);
 	}
 
 	void OpenGLRendererAPI::Clear() {
