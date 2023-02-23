@@ -45,7 +45,9 @@ namespace Crisp {
 		ImGui_ImplOpenGL3_Init("#version 460");
 
 		// Fonts
-		io.Fonts->AddFontDefault();
+		//io.Fonts->AddFontDefault();
+		io.FontDefault = io.Fonts->AddFontFromFileTTF("assets/fonts/roboto/Roboto-Regular.ttf", 16);
+		io.Fonts->AddFontFromFileTTF("assets/fonts/roboto/Roboto-Bold.ttf", 16);
 	}
 
 	void ImGuiLayer::OnDetach() {
