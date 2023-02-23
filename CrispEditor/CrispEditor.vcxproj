@@ -159,6 +159,27 @@
       <Project>{EDD01C9D-59B0-9B38-62C8-260FCE26029A}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="assets\fonts\Roboto\LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\Roboto\Roboto-Black.ttf" />
+    <Font Include="assets\fonts\Roboto\Roboto-BlackItalic.ttf" />
+    <Font Include="assets\fonts\Roboto\Roboto-Bold.ttf" />
+    <Font Include="assets\fonts\Roboto\Roboto-BoldItalic.ttf" />
+    <Font Include="assets\fonts\Roboto\Roboto-Italic.ttf" />
+    <Font Include="assets\fonts\Roboto\Roboto-Light.ttf" />
+    <Font Include="assets\fonts\Roboto\Roboto-LightItalic.ttf" />
+    <Font Include="assets\fonts\Roboto\Roboto-Medium.ttf" />
+    <Font Include="assets\fonts\Roboto\Roboto-MediumItalic.ttf" />
+    <Font Include="assets\fonts\Roboto\Roboto-Regular.ttf" />
+    <Font Include="assets\fonts\Roboto\Roboto-Thin.ttf" />
+    <Font Include="assets\fonts\Roboto\Roboto-ThinItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\FlatColor.glsl" />
+    <None Include="assets\shaders\texture.glsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
