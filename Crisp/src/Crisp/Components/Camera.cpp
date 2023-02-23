@@ -8,21 +8,33 @@ namespace Crisp {
 
     Camera::~Camera() {}
 
+    bool Camera::IsEqual(const Camera& other) const {
+        return type == other.type &&
+            projectionMatrix == other.projectionMatrix &&
+            transformComponent == other.transformComponent &&
+            width == other.width &&
+            height == other.height &&
+            aspect == other.aspect &&
+            size == other.size &&
+            orthographicNearPlane == other.orthographicNearPlane &&
+            orthographicFarPlane == other.orthographicFarPlane &&
+            fov == other.fov &&
+            perspectiveNearPlane == other.perspectiveNearPlane &&
+            perspectiveFarPlane == other.perspectiveFarPlane;
+    }
+
     void Camera::RecreateCamera() {
         CRISP_PROFILE_FUNCTION();
 
-        if (isOrthographic) {
-            float aspect = width / height;
+        if (type == Orthographic) {
+            float left = -size * aspect * 0.5f;
+            float right = size * aspect * 0.5f;
+            float bottom = -size * 0.5f;
+            float top = size * 0.5f;
 
-            float camWidth = 1.0f;
-            float bottom = -camWidth;
-            float top = camWidth;
-            float left = bottom * aspect;
-            float right = top * aspect;
-
-            projectionMatrix = glm::ortho(left, right, bottom, top, nearPlane, farPlane);
+            projectionMatrix = glm::ortho(left, right, bottom, top, orthographicNearPlane, orthographicFarPlane);
         } else {
-            glm::perspective(fov, aspect, nearPlane, farPlane);
+            projectionMatrix = glm::perspective(glm::radians(fov), aspect, perspectiveNearPlane, perspectiveFarPlane);
         }
     }
 
@@ -38,24 +50,59 @@ namespace Crisp {
         return projectionMatrix * GetViewMatrix();
     }
 
-    void Camera::SetPerspectiveCamera(const float _aspect, const float _fov, const float _nearPlane, const float _farPlane, const bool isMainCamera) {
-        aspect = _aspect;
+    void Camera::SetViewportSize(uint32_t _width, uint32_t _height) {
+        width = _width;
+        height = _height;
+        aspect = (float)_width / (float)_height;
+        RecreateCamera();
+    }
+
+    void Camera::SetPerspectiveCamera(const float _width, const float _height, const float _fov, const float _nearPlane, const float _farPlane, const bool isMainCamera) {
+        width = _width;
+        height = _height;
+        aspect = width / height;
         fov = _fov;
-        nearPlane = _nearPlane;
-        farPlane = _farPlane;
-        isOrthographic = false;
+        perspectiveNearPlane = _nearPlane;
+        perspectiveFarPlane = _farPlane;
+        type = Perspective;
 
         RecreateCamera();
         if (isMainCamera)
             SetMainCamera(this);
     }
 
+    Camera::Camera(const Camera& other) : type(other.type), projectionMatrix(other.projectionMatrix), transformComponent(other.transformComponent), 
+        width(other.width), height(other.height), aspect(other.aspect),
+        size(other.size), orthographicNearPlane(other.orthographicNearPlane), orthographicFarPlane(other.orthographicFarPlane),
+        fov(other.fov), perspectiveNearPlane(other.perspectiveNearPlane), perspectiveFarPlane(other.perspectiveNearPlane) {}
+
+    Camera& Camera::operator=(const Camera& other) {
+        if (this == &other)
+            return *this;
+
+        type = other.type;
+        projectionMatrix = other.projectionMatrix;
+        transformComponent = other.transformComponent;
+        width = other.width;
+        height = other.height;
+        aspect = other.aspect;
+        size = other.size;
+        orthographicNearPlane = other.orthographicNearPlane;
+        orthographicFarPlane = other.orthographicFarPlane;
+        fov = other.fov;
+        perspectiveNearPlane = other.perspectiveNearPlane;
+        perspectiveFarPlane = other.perspectiveNearPlane;
+
+        return *this;
+    }
+
     void Camera::SetOrthographicCamera(const float _width, const float _height, const float _nearPlane, const float _farPlane, const bool isMainCamera) {
         width = _width;
         height = _height;
-        nearPlane = _nearPlane;
-        farPlane = _farPlane;
-        isOrthographic = true;
+        aspect = width / height;
+        orthographicNearPlane = _nearPlane;
+        orthographicFarPlane = _farPlane;
+        type = Orthographic;
 
         RecreateCamera();
         if (isMainCamera)

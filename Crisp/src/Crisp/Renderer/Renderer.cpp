@@ -115,9 +115,20 @@ namespace Crisp {
         RenderCommand::SetViewport(0, 0, width, height);
     }
 
-    void Renderer::BeginScene(const Camera& camera) {
+    void Renderer::BeginScene() {
         CRISP_PROFILE_FUNCTION();
 
+        sceneData->viewProjectionMatrix = Camera::GetMainCamera()->GetViewProjectionMatrix();
+        storage.textureShader->Bind();
+        storage.textureShader->SetUniformMat4("u_ViewProjection", sceneData->viewProjectionMatrix);
+
+        storage.quadIndexCount = 0;
+        storage.quadVertexBufferPtr = storage.quadVertexBufferBase;
+
+        storage.textureSlotIndex = 1;
+    }
+
+    void Renderer::BeginScene(const Camera& camera) {
         sceneData->viewProjectionMatrix = camera.GetViewProjectionMatrix();
         storage.textureShader->Bind();
         storage.textureShader->SetUniformMat4("u_ViewProjection", sceneData->viewProjectionMatrix);

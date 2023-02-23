@@ -12,6 +12,7 @@ namespace Crisp {
 		static void Shutdown();
 		static void OnWindowResize(uint32_t width, uint32_t height);
 
+		static void BeginScene();
 		static void BeginScene(const Camera& camera);
 		static void EndScene();
 		static void Flush();

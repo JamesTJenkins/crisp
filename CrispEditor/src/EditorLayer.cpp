@@ -27,6 +27,7 @@ namespace Crisp {
         Entity camEntity = activeScene->CreateEntity("New Cam");
         camEntity.AddComponent<Camera>(&camEntity.GetComponent<Transform>()).SetOrthographicCamera(1280, 720);
         Entity quadEntity = activeScene->CreateEntity("New Quad");
+        quadEntity.GetComponent<Transform>().SetPosition({ 0,0,-1 });
         quadEntity.AddComponent<SpriteRenderer>();
 
         sceneCam.SetOrthographicCamera(1280, 720, 0.1f, 1000.0f, false);
@@ -72,7 +73,7 @@ namespace Crisp {
             // Game view camera
             gameViewFramebuffer->Bind();
             RenderCommand::Clear();
-            Renderer::BeginScene(*(Camera::GetMainCamera()));
+            Renderer::BeginScene();
             activeScene->OnUpdate();
             Renderer::EndScene();
             gameViewFramebuffer->Unbind();
@@ -145,7 +146,7 @@ namespace Crisp {
         sceneViewportFocused = ImGui::IsWindowFocused();
         ImVec2 viewportSize = ImGui::GetContentRegionAvail();
         if (sceneViewportSize != *((glm::vec2*)&viewportSize)) {
-            sceneViewFramebuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+            sceneCam.SetViewportSize(viewportSize.x, viewportSize.y);
             sceneViewportSize = { viewportSize.x, viewportSize.y };
         }
         ImGui::Image((void*)sceneViewFramebuffer->GetColorAttachmentRendererID(), viewportSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
@@ -157,7 +158,7 @@ namespace Crisp {
         gameViewportFocused = ImGui::IsWindowFocused();
         viewportSize = ImGui::GetContentRegionAvail();
         if (gameViewportSize != *((glm::vec2*)&viewportSize)) {
-            gameViewFramebuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+            Camera::GetMainCamera()->SetViewportSize(viewportSize.x, viewportSize.y);
             gameViewportSize = { viewportSize.x, viewportSize.y };
         }
         ImGui::Image((void*)gameViewFramebuffer->GetColorAttachmentRendererID(), viewportSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });

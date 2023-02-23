@@ -4,41 +4,79 @@
 namespace Crisp {
     class Camera {
     public:
+        enum ProjectionType { Perspective = 0, Orthographic = 1 };
+    public:
+        // BOTH
         Camera() = default;
         Camera(Transform* transform);
         virtual ~Camera();
+
+        bool IsEqual(const Camera& other) const;
 
         void RecreateCamera();
 
         glm::mat4 GetProjectionMatrix() const;
         glm::mat4 GetViewMatrix() const;
         glm::mat4 GetViewProjectionMatrix() const;
+        
+        ProjectionType GetProjectionType() const { return type; }
+        void SetProjectionType(ProjectionType value) { type = value; RecreateCamera(); };
+
+        void SetViewportSize(uint32_t width, uint32_t height);
 
         inline void SetTransform(Transform* value) { transformComponent = value; }
         inline Transform* GetTransform() const { return transformComponent; }
 
-        // Main camera reference (Gets the camera that is currently rendering to screen)
         inline static Camera* GetMainCamera() { return mainCamera; }
         inline static void SetMainCamera(Camera* value) { mainCamera = value; }
 
-        void SetPerspectiveCamera(const float aspect, const float fov = 60, const float nearPlane = 0.1f, const float farPlane = 1000, const bool isMainCamera = true);
-        void SetOrthographicCamera(const float width, const float height, const float nearPlane = 0.1f, const float farPlane = 1000, const bool isMainCamera = true);
+        // ORTHOGRAPHIC
+        void SetOrthographicCamera(const float width, const float height, const float nearPlane = -1, const float farPlane = 1, const bool isMainCamera = true);
+        
+        float GetOrthographicSize() const { return size; }
+        void SetOrthographicSize(float value) { size = value; RecreateCamera(); }
+
+        float GetOrthographicNearPlane() const { return orthographicNearPlane; }
+        void SetOrthographicNearPlane(float value) { orthographicNearPlane = value; RecreateCamera(); }
+
+        float GetOrthographicFarPlane() const { return orthographicFarPlane; }
+        void SetOrthographicFarPlane(float value) { orthographicFarPlane = value; RecreateCamera(); }
+
+        // PERSPECTIVE
+        void SetPerspectiveCamera(const float width, const float height, const float fov = 60, const float nearPlane = 0.1f, const float farPlane = 1000, const bool isMainCamera = true);
+
+        float GetPerspectiveFOV() const { return fov; }
+        void SetPerspectiveFOV(float value) { fov = value; RecreateCamera(); }
+
+        float GetPerspectiveNearPlane() const { return perspectiveNearPlane; }
+        void SetPerspectiveNearPlane(float value) { perspectiveNearPlane = value; RecreateCamera(); }
+
+        float GetPerspectiveFarPlane() const { return perspectiveFarPlane; }
+        void SetPerspectiveFarPlane(float value) { perspectiveFarPlane = value; RecreateCamera(); }
+    public:
+        Camera(const Camera& other);				// Copy construct
+        Camera& operator=(const Camera& other);	    // Copy assign
+
+        bool operator==(const Camera& other) const { return typeid(*this) == typeid(other) && IsEqual(other); }
     private:
         // General camera
-        bool isOrthographic;
+        ProjectionType type;
         glm::mat4 projectionMatrix;
         Transform* transformComponent;
 
-        float nearPlane;
-        float farPlane;
-    private:
-        // Orthographic
         float width;
         float height;
+        float aspect;
+    private:
+        // Orthographic
+        float size = 10;
+        float orthographicNearPlane = -1;
+        float orthographicFarPlane = 1;
     private:
         // Perspective
-        float aspect;
-        float fov;
+        float fov = 60;
+        float perspectiveNearPlane = 0.1f;
+        float perspectiveFarPlane = 1000;
     private:
         // TODO: Move to scene
         inline static Camera* mainCamera;
