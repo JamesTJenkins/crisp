@@ -14,7 +14,7 @@ namespace Crisp {
     void EditorLayer::OnAttach() {
         CRISP_PROFILE_FUNCTION();
 
-        RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 0.1f });
+        RenderCommand::SetClearColor({ 0.0f, 0.0f, 0.0f, 1.0f });
         texture = Texture2D::Create("assets/textures/bacon.png");
 
         FrameBufferProperties props;
