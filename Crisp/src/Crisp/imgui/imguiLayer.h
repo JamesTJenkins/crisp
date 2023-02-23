@@ -18,6 +18,8 @@ namespace Crisp {
 
 		void Begin();
 		void End();
+	private:
+		void SetDarkThemeColors();
 	};
 }
 
