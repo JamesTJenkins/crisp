@@ -36,7 +36,7 @@ namespace Crisp {
 
 	void SceneHierarchy::DrawEntityNode(Entity entity) {
 		auto& properties = entity.GetComponent<EntityProperties>();
-		ImGuiTreeNodeFlags flags = ((selectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
+		ImGuiTreeNodeFlags flags = ((selectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
 		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, properties.name.c_str());
 		
 		if (ImGui::IsItemClicked()) {
@@ -51,6 +51,10 @@ namespace Crisp {
 		}
 
 		if (opened) {
+			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
+			//opened = ImGui::TreeNodeEx((void*)9817239, flags, properties.name.c_str());	// TEST CHILD
+			//if (opened)
+			//	ImGui::TreePop();
 			ImGui::TreePop();
 		}
 
