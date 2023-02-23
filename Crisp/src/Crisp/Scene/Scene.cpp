@@ -21,6 +21,10 @@ namespace Crisp {
 		return entity;
 	}
 
+	void Scene::Destroy(Entity entity) {
+		registry.destroy(entity);
+	}
+
 	void Scene::OnUpdate() {
 		// SCRIPT ONUPDATE
 		// TODO: Make this only happen when playing the game

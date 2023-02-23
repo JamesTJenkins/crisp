@@ -9,6 +9,7 @@ namespace Crisp {
 		~Scene();
 
 		Entity CreateEntity(const std::string& name = "New Entity", const std::string& tag = "Default");
+		void Destroy(Entity entity);
 
 		void OnUpdate();
 	private:

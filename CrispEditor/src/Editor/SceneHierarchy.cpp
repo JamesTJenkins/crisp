@@ -15,13 +15,21 @@ namespace Crisp {
 
 	void SceneHierarchy::OnImGuiRender() {
 		ImGui::Begin("Hierarchy");
+
+		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+			selectionContext = {};
+
+		if (ImGui::BeginPopupContextWindow(0, 1)) {
+			if (ImGui::MenuItem("Create Empty"))
+				context->CreateEntity("Empty");
+
+			ImGui::EndPopup();
+		}
+
 		context->registry.each([&](auto entityID) {
 			Entity entity{ entityID, context.get() };
 			DrawEntityNode(entity);
 		});
-
-		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
-			selectionContext = {};
 
 		ImGui::End();
 	}
@@ -35,8 +43,22 @@ namespace Crisp {
 			selectionContext = entity;
 		}
 
+		bool entityDeleted = false;
+		if (ImGui::BeginPopupContextItem()) {
+			if (ImGui::MenuItem("Delete Entity"))
+				entityDeleted = true;
+			ImGui::EndPopup();
+		}
+
 		if (opened) {
 			ImGui::TreePop();
+		}
+
+		// Delay entity deletion to the end
+		if (entityDeleted) {
+			if (selectionContext == entity)
+				selectionContext = {};
+			context->Destroy(entity);
 		}
 	}
 }
