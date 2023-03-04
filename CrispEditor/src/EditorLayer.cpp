@@ -2,6 +2,8 @@
 #include <imgui/imgui.h>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Crisp/Scene/SceneSerializer.h"
+
 // TEST
 //#include "Test.h"
 // TEST
@@ -24,16 +26,23 @@ namespace Crisp {
         sceneViewFramebuffer = FrameBuffer::Create(props);
 
         activeScene = CreateRef<Scene>();
+        hierarchy.SetContext(activeScene);
+        properties.SetLinkedHierarchy(&hierarchy);
+        sceneCam.SetOrthographicCamera(1280, 720, 0.1f, 1000.0f, false);
+
+        SceneSerializer serializer(activeScene);
+        serializer.Deserialize("assets/scenes/test.crisp");
+
+        /*
         Entity camEntity = activeScene->CreateEntity("New Cam");
         camEntity.AddComponent<Camera>(&camEntity.GetComponent<Transform>()).SetOrthographicCamera(1280, 720);
         Entity quadEntity = activeScene->CreateEntity("New Quad");
         quadEntity.GetComponent<Transform>().SetPosition({ 0,0,-1 });
         quadEntity.AddComponent<SpriteRenderer>();
 
-        sceneCam.SetOrthographicCamera(1280, 720, 0.1f, 1000.0f, false);
-
-        hierarchy.SetContext(activeScene);
-        properties.SetLinkedHierarchy(&hierarchy);
+        SceneSerializer serializer(activeScene);
+        serializer.Serialize("assets/scenes/test.crisp");
+        */
 
         // TEST
         //activeScene->CreateEntity("Test").AddComponent<NativeScript>().Bind<Test>();

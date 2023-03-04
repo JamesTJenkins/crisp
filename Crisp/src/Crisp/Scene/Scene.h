@@ -16,6 +16,7 @@ namespace Crisp {
 		entt::registry registry;
 
 		friend class Entity;
+		friend class SceneSerializer;
 		friend class SceneHierarchy;
 	};
 }

@@ -78,8 +78,8 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CRISP_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Crisp\vendor\spdlog\include;..\Crisp\vendor\SDL2\include;..\Crisp\vendor\glm;..\Crisp\vendor\entt\include;..\Crisp\src;..\Crisp\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;CRISP_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Crisp\vendor\spdlog\include;..\Crisp\vendor\SDL2\include;..\Crisp\vendor\glm;..\Crisp\vendor\entt\include;..\Crisp\vendor\yaml-cpp\include;..\Crisp\src;..\Crisp\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -96,8 +96,8 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CRISP_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Crisp\vendor\spdlog\include;..\Crisp\vendor\SDL2\include;..\Crisp\vendor\glm;..\Crisp\vendor\entt\include;..\Crisp\src;..\Crisp\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;CRISP_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Crisp\vendor\spdlog\include;..\Crisp\vendor\SDL2\include;..\Crisp\vendor\glm;..\Crisp\vendor\entt\include;..\Crisp\vendor\yaml-cpp\include;..\Crisp\src;..\Crisp\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -118,8 +118,8 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CRISP_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Crisp\vendor\spdlog\include;..\Crisp\vendor\SDL2\include;..\Crisp\vendor\glm;..\Crisp\vendor\entt\include;..\Crisp\src;..\Crisp\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;CRISP_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Crisp\vendor\spdlog\include;..\Crisp\vendor\SDL2\include;..\Crisp\vendor\glm;..\Crisp\vendor\entt\include;..\Crisp\vendor\yaml-cpp\include;..\Crisp\src;..\Crisp\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -137,15 +137,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Editor\SceneProperties.h" />
     <ClInclude Include="src\Editor\SceneHierarchy.h" />
+    <ClInclude Include="src\Editor\SceneProperties.h" />
     <ClInclude Include="src\EditorLayer.h" />
     <ClInclude Include="src\Test.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Editor\SceneProperties.cpp" />
-    <ClCompile Include="src\Editor\SceneHierarchy.cpp" />
     <ClCompile Include="src\CrispEditorApp.cpp" />
+    <ClCompile Include="src\Editor\SceneHierarchy.cpp" />
+    <ClCompile Include="src\Editor\SceneProperties.cpp" />
     <ClCompile Include="src\EditorLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -158,27 +158,9 @@
     <ProjectReference Include="..\Crisp\vendor\SDL2\VisualC\SDLmain\SDLmain.vcxproj">
       <Project>{EDD01C9D-59B0-9B38-62C8-260FCE26029A}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="assets\fonts\Roboto\LICENSE.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="assets\fonts\Roboto\Roboto-Black.ttf" />
-    <Font Include="assets\fonts\Roboto\Roboto-BlackItalic.ttf" />
-    <Font Include="assets\fonts\Roboto\Roboto-Bold.ttf" />
-    <Font Include="assets\fonts\Roboto\Roboto-BoldItalic.ttf" />
-    <Font Include="assets\fonts\Roboto\Roboto-Italic.ttf" />
-    <Font Include="assets\fonts\Roboto\Roboto-Light.ttf" />
-    <Font Include="assets\fonts\Roboto\Roboto-LightItalic.ttf" />
-    <Font Include="assets\fonts\Roboto\Roboto-Medium.ttf" />
-    <Font Include="assets\fonts\Roboto\Roboto-MediumItalic.ttf" />
-    <Font Include="assets\fonts\Roboto\Roboto-Regular.ttf" />
-    <Font Include="assets\fonts\Roboto\Roboto-Thin.ttf" />
-    <Font Include="assets\fonts\Roboto\Roboto-ThinItalic.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\shaders\FlatColor.glsl" />
-    <None Include="assets\shaders\texture.glsl" />
+    <ProjectReference Include="..\Crisp\vendor\yaml-cpp\yaml-cpp.vcxproj">
+      <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

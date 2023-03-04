@@ -17,6 +17,7 @@ workspace "Crisp"
 		include "premake5-SDLmain.lua"
 		include "premake5-GLAD.lua"
 		include "premake5-imgui.lua"
+		include "premake5-yaml-cpp.lua"
 	group ""
 
 	project "Crisp"
@@ -53,17 +54,23 @@ workspace "Crisp"
 			"%{prj.name}/vendor/stb_image",
 			"%{prj.name}/vendor/glm",
 			"%{prj.name}/vendor/entt/include",
+			"%{prj.name}/vendor/yaml-cpp/include",
 		}
 
 		defines {
 			"_CRT_SECURE_NO_WARNINGS",
+			"GLM_FORCE_RADIANS",
+			"GLM_FORCE_DEPTH_ZERO_TO_ONE",
+			"GLM_LEFT_HANDED",
+			"YAML_CPP_STATIC_DEFINE",
 		}
 
 		links {
 			"SDL",
 			"SDLmain",
 			"GLAD",
-			"imgui"
+			"imgui",
+			"yaml-cpp"
 		}
 
 		flags {
@@ -114,14 +121,20 @@ workspace "Crisp"
 			"Crisp/vendor/SDL2/include",
 			"Crisp/vendor/glm",
 			"Crisp/vendor/entt/include",
+			"Crisp/vendor/yaml-cpp/include",
 			"Crisp/src",
 			"Crisp/vendor",
 		}
 		
+		defines {
+			"YAML_CPP_STATIC_DEFINE",
+		}
+
 		links {
 			"Crisp",
 			"SDL",
-			"SDLmain"
+			"SDLmain",
+			"yaml-cpp"
 		}
 
 		ignoredefaultlibraries { "msvcrtd.lib" }

@@ -22,6 +22,9 @@
     <Filter Include="src\Crisp\Renderer">
       <UniqueIdentifier>{A3E50C7C-8FC9-CDD1-F829-C824E42CB853}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Crisp\Scene">
+      <UniqueIdentifier>{3A080CC1-A693-7985-AFA4-FC791BAFD585}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
@@ -61,6 +64,15 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\Components\Camera.h">
+      <Filter>src\Crisp\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Components\EntityProperties.h">
+      <Filter>src\Crisp\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Components\ScriptableObject.h">
+      <Filter>src\Crisp\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Components\SpriteRenderer.h">
       <Filter>src\Crisp\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\Components\Transform.h">
@@ -140,6 +152,18 @@
     </ClInclude>
     <ClInclude Include="src\Crisp\Renderer\VertexArray.h">
       <Filter>src\Crisp\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Scene\Entity.h">
+      <Filter>src\Crisp\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Scene\Scene.h">
+      <Filter>src\Crisp\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Scene\SceneCamera.h">
+      <Filter>src\Crisp\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Scene\SceneSerializer.h">
+      <Filter>src\Crisp\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\CrispPCH.h">
       <Filter>src</Filter>
@@ -1398,12 +1422,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crisp\Scene\Scene.h" />
-    <ClInclude Include="src\Crisp\Components\SpriteRenderer.h" />
-    <ClInclude Include="src\Crisp\Scene\Entity.h" />
-    <ClInclude Include="src\Crisp\Scene\SceneCamera.h" />
-    <ClInclude Include="src\Crisp\Components\ScriptableObject.h" />
-    <ClInclude Include="src\Crisp\Components\EntityProperties.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crisp\Components\Camera.cpp">
@@ -1460,6 +1478,18 @@
     <ClCompile Include="src\Crisp\Renderer\VertexArray.cpp">
       <Filter>src\Crisp\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Crisp\Scene\Entity.cpp">
+      <Filter>src\Crisp\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crisp\Scene\Scene.cpp">
+      <Filter>src\Crisp\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crisp\Scene\SceneCamera.cpp">
+      <Filter>src\Crisp\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crisp\Scene\SceneSerializer.cpp">
+      <Filter>src\Crisp\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\CrispPCH.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -1493,8 +1523,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Crisp\Scene\Scene.cpp" />
-    <ClCompile Include="src\Crisp\Scene\Entity.cpp" />
-    <ClCompile Include="src\Crisp\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

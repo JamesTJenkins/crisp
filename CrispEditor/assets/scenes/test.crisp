@@ -1,0 +1,31 @@
+Scene: Untitled
+Entities:
+  - Entity: 123812398123
+    EntityProperties:
+      Name: New Quad
+      Tag: Default
+    Transform:
+      Position: [0, 0, -1]
+      Rotation: [0, 0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRenderer:
+      Color: [1, 1, 1, 1]
+  - Entity: 123812398123
+    EntityProperties:
+      Name: New Cam
+      Tag: Default
+    Transform:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0, 0]
+      Scale: [1, 1, 1]
+    Camera:
+      IsMainCamera: true
+      ProjectionType: 1
+      Width: 1280
+      Height: 720
+      OrthographicSize: 10
+      OrthographicNearPlane: -1
+      OrthographicFarPlane: 1
+      PerspectiveFOV: 60
+      PerspectiveNearPlane: 0.100000001
+      PerspectiveFarPlane: 1000

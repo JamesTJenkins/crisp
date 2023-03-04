@@ -10,3 +10,6 @@
 [submodule "Crisp/vendor/glm"]
 	path = Crisp/vendor/glm
 	url = https://github.com/g-truc/glm
+[submodule "Crisp/vendor/yaml-cpp"]
+	path = Crisp/vendor/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp
