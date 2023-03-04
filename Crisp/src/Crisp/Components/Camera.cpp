@@ -96,10 +96,11 @@ namespace Crisp {
         return *this;
     }
 
-    void Camera::SetOrthographicCamera(const float _width, const float _height, const float _nearPlane, const float _farPlane, const bool isMainCamera) {
+    void Camera::SetOrthographicCamera(const float _width, const float _height, const float _size, const float _nearPlane, const float _farPlane, const bool isMainCamera) {
         width = _width;
         height = _height;
         aspect = width / height;
+        size = _size;
         orthographicNearPlane = _nearPlane;
         orthographicFarPlane = _farPlane;
         type = Orthographic;

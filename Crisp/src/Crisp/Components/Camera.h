@@ -24,6 +24,9 @@ namespace Crisp {
 
         void SetViewportSize(uint32_t width, uint32_t height);
 
+        float GetCameraWidth() const { return width; }
+        float GetCameraHeight() const { return height; }
+
         inline void SetTransform(Transform* value) { transformComponent = value; }
         inline Transform* GetTransform() const { return transformComponent; }
 
@@ -31,7 +34,7 @@ namespace Crisp {
         inline static void SetMainCamera(Camera* value) { mainCamera = value; }
 
         // ORTHOGRAPHIC
-        void SetOrthographicCamera(const float width, const float height, const float nearPlane = -1, const float farPlane = 1, const bool isMainCamera = true);
+        void SetOrthographicCamera(const float width, const float height, const float size = 10, const float nearPlane = -1, const float farPlane = 1, const bool isMainCamera = true);
         
         float GetOrthographicSize() const { return size; }
         void SetOrthographicSize(float value) { size = value; RecreateCamera(); }
