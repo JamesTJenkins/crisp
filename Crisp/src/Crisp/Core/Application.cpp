@@ -38,6 +38,7 @@ namespace Crisp {
 			CRISP_PROFILE_SCOPE("Run loop");
 
 			time.OnUpdate();
+			Input::OnUpdate();
 
 			SDL_Event e;
 			while (SDL_PollEvent(&e)) {
@@ -65,8 +66,6 @@ namespace Crisp {
 						layer->OnEvent(&e);
 				}
 			}
-
-			Input::OnUpdate();
 
 			{
 				CRISP_PROFILE_SCOPE("LayerStack OnUpdate");
