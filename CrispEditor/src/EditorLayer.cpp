@@ -3,6 +3,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Crisp/Scene/SceneSerializer.h"
+#include "Crisp/Utils/PlatformUtils.h"
 
 // TEST
 //#include "Test.h"
@@ -28,12 +29,12 @@ namespace Crisp {
         activeScene = CreateRef<Scene>();
         hierarchy.SetContext(activeScene);
         properties.SetLinkedHierarchy(&hierarchy);
-        sceneCam.SetOrthographicCamera(1280, 720, 0.1f, 1000.0f, false);
+        sceneCam.SetOrthographicCamera(1280, 720, 10, -1, 1, false);
 
+        /*
         SceneSerializer serializer(activeScene);
         serializer.Deserialize("assets/scenes/test.crisp");
 
-        /*
         Entity camEntity = activeScene->CreateEntity("New Cam");
         camEntity.AddComponent<Camera>(&camEntity.GetComponent<Transform>()).SetOrthographicCamera(1280, 720);
         Entity quadEntity = activeScene->CreateEntity("New Quad");
@@ -82,9 +83,11 @@ namespace Crisp {
             // Game view camera
             gameViewFramebuffer->Bind();
             RenderCommand::Clear();
-            Renderer::BeginScene();
-            activeScene->OnUpdate();
-            Renderer::EndScene();
+            if (Camera::GetMainCamera() != nullptr) {
+                Renderer::BeginScene();
+                activeScene->OnUpdate();
+                Renderer::EndScene();
+            }
             gameViewFramebuffer->Unbind();
         }
     }
@@ -139,6 +142,18 @@ namespace Crisp {
 
         if (ImGui::BeginMenuBar()) {
             if (ImGui::BeginMenu("File")) {
+                if (ImGui::MenuItem("New Scene", "Ctrl+N")) {
+                    NewScene();
+                }
+
+                if (ImGui::MenuItem("Open Scene", "Ctrl+O")) {
+                    OpenScene();
+                }
+
+                if (ImGui::MenuItem("Save Scene", "Ctrl+S")) {
+                    SaveSceneAs();
+                }
+
                 if (ImGui::MenuItem("Exit"))
                     Application::Get().Quit();
                 ImGui::EndMenu();
@@ -164,11 +179,13 @@ namespace Crisp {
 
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Game");
-        gameViewportFocused = ImGui::IsWindowFocused();
-        viewportSize = ImGui::GetContentRegionAvail();
-        if (gameViewportSize != *((glm::vec2*)&viewportSize)) {
-            Camera::GetMainCamera()->SetViewportSize(viewportSize.x, viewportSize.y);
-            gameViewportSize = { viewportSize.x, viewportSize.y };
+        if (Camera::GetMainCamera() != nullptr) {
+            gameViewportFocused = ImGui::IsWindowFocused();
+            viewportSize = ImGui::GetContentRegionAvail();
+            if (gameViewportSize != *((glm::vec2*)&viewportSize)) {
+                Camera::GetMainCamera()->SetViewportSize(viewportSize.x, viewportSize.y);
+                gameViewportSize = { viewportSize.x, viewportSize.y };
+            }
         }
         ImGui::Image((void*)gameViewFramebuffer->GetColorAttachmentRendererID(), viewportSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
         ImGui::End();
@@ -188,5 +205,42 @@ namespace Crisp {
 
     void EditorLayer::OnEvent(const SDL_Event* e) {
 
+        // NEW, OPEN, SAVE scene hotkeys
+        if (Input::IsKeyPressed(CRISP_LCTRL) || Input::IsKeyPressed(CRISP_RCTRL)) {
+            if (Input::IsKeyPressed(CRISP_N))
+                NewScene();
+            else if (Input::IsKeyPressed(CRISP_O))
+                OpenScene();
+            else if (Input::IsKeyPressed(CRISP_S))
+                SaveSceneAs();
+        }
+    }
+
+    void EditorLayer::NewScene() {
+        activeScene = CreateRef<Scene>();
+        // Setting these to 0 will force a reset to occur for both viewports 
+        gameViewportSize.x = 0;
+        sceneViewportSize.x = 0;
+        // There is no main camera on scene reset
+        Camera::SetMainCamera(nullptr);
+
+        hierarchy.SetContext(activeScene);
+    }
+
+    void EditorLayer::OpenScene() {
+        std::string filepath = FileDialog::OpenFile("Crisp Scene (*.crisp)\0*.crisp\0");
+        if (!filepath.empty()) {
+            NewScene();
+            SceneSerializer serializer(activeScene);
+            serializer.Deserialize(filepath);
+        }
+    }
+
+    void EditorLayer::SaveSceneAs() {
+        std::string filepath = FileDialog::SaveFile("Crisp Scene (*.crisp)\0*.crisp\0");
+        if (!filepath.empty()) {
+            SceneSerializer serializer(activeScene);
+            serializer.Serialize(filepath);
+        }
     }
 }

@@ -22,6 +22,10 @@ namespace Crisp {
 
 		virtual void OnEvent(const SDL_Event* e) override;
 	private:
+		void NewScene();
+		void OpenScene();
+		void SaveSceneAs();
+	private:
 		Ref<FrameBuffer> gameViewFramebuffer;
 		Ref<FrameBuffer> sceneViewFramebuffer;
 

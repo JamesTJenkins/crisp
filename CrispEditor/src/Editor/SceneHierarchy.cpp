@@ -11,6 +11,7 @@ namespace Crisp {
 
 	void SceneHierarchy::SetContext(const Ref<Scene>& scene) {
 		context = scene;
+		selectionContext = {};
 	}
 
 	void SceneHierarchy::OnImGuiRender() {
