@@ -38,10 +38,12 @@ namespace Crisp {
 			CRISP_PROFILE_SCOPE("Run loop");
 
 			time.OnUpdate();
-			Input::OnUpdate();
+			Input::OnUpdate();	// Updates keyboard and mouse button inputs
 
 			SDL_Event e;
 			while (SDL_PollEvent(&e)) {
+				Input::OnEvent(&e);	// Updates rest
+
 				{
 					CRISP_PROFILE_SCOPE("Window Polling");
 
