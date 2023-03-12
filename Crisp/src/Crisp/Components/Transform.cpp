@@ -38,7 +38,7 @@ namespace Crisp {
     glm::vec3 Transform::Forward() const { return rotation * glm::vec4(0.0f, 0.0f, 1.0f, 0.0f); }
     glm::vec3 Transform::Backward() const { return rotation * glm::vec4(0.0f, 0.0f, -1.0f, 0.0f); }
 
-    const glm::mat4 Transform::GetLocalToWorldMatrix() {
+    glm::mat4 Transform::GetLocalToWorldMatrix() const {
         glm::mat4 translationMatrix = glm::translate(position);
         glm::mat4 rotationMatrix = glm::mat4_cast(rotation);
         glm::mat4 scaleMatrix = glm::scale(scale);
@@ -46,7 +46,7 @@ namespace Crisp {
         return glm::mat4(translationMatrix * rotationMatrix * scaleMatrix);
     }
 
-    const glm::mat4 Transform::GetWorldToLocalMatrix() {
+    glm::mat4 Transform::GetWorldToLocalMatrix() const {
         glm::mat4 translationMatrix = glm::translate(-position);
         // glm::mat4 rotationMatrix = glm::mat4_cast(-rotation);
         glm::mat4 rotationMatrix = glm::mat4_cast(glm::inverse(rotation));

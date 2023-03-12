@@ -14,7 +14,7 @@ namespace Crisp {
         keystate = SDL_GetKeyboardState(NULL);
 
         lastMouseState = mouseState;
-        mouseState = SDL_GetRelativeMouseState(&x, &y);
+        mouseState = SDL_GetMouseState(&x, &y);
         Uint32 result = lastMouseState ^ mouseState;
         mouseDownState = mouseState & result;
         mouseUpState = ~mouseState & result;

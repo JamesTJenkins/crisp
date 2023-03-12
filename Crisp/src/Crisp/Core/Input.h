@@ -45,7 +45,7 @@ namespace Crisp {
 		static Input* instance;
 	private:
 		const Uint8* keystate;
-		
+
 		int x, y;
 		int relativeMouseX, relativeMouseY;
 		int mouseWheelX, mouseWheelY;
