@@ -5,6 +5,7 @@
 #include "Crisp/Core/Application.h"
 #include "backends/imgui_impl_opengl3.h"
 #include "backends/imgui_impl_sdl.h"
+#include "ImGuizmo.h"
 
 namespace Crisp {
 	ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") {
@@ -74,6 +75,7 @@ namespace Crisp {
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplSDL2_NewFrame();
 		ImGui::NewFrame();
+		ImGuizmo::BeginFrame();
 	}
 
 	void ImGuiLayer::End() {

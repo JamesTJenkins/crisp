@@ -12,6 +12,7 @@ namespace Crisp {
 		void Destroy(Entity entity);
 
 		void OnUpdate();
+		void OnUpdateEditor();
 	private:
 		entt::registry registry;
 

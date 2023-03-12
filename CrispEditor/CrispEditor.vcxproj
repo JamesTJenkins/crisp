@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;CRISP_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Crisp\vendor\spdlog\include;..\Crisp\vendor\SDL2\include;..\Crisp\vendor\glm;..\Crisp\vendor\entt\include;..\Crisp\vendor\yaml-cpp\include;..\Crisp\src;..\Crisp\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Crisp\vendor\spdlog\include;..\Crisp\vendor\SDL2\include;..\Crisp\vendor\glm;..\Crisp\vendor\entt\include;..\Crisp\vendor\yaml-cpp\include;..\Crisp\vendor\ImGuizmo;..\Crisp\src;..\Crisp\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -97,7 +97,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;CRISP_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Crisp\vendor\spdlog\include;..\Crisp\vendor\SDL2\include;..\Crisp\vendor\glm;..\Crisp\vendor\entt\include;..\Crisp\vendor\yaml-cpp\include;..\Crisp\src;..\Crisp\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Crisp\vendor\spdlog\include;..\Crisp\vendor\SDL2\include;..\Crisp\vendor\glm;..\Crisp\vendor\entt\include;..\Crisp\vendor\yaml-cpp\include;..\Crisp\vendor\ImGuizmo;..\Crisp\src;..\Crisp\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -119,7 +119,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;CRISP_DISTRIBUTION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Crisp\vendor\spdlog\include;..\Crisp\vendor\SDL2\include;..\Crisp\vendor\glm;..\Crisp\vendor\entt\include;..\Crisp\vendor\yaml-cpp\include;..\Crisp\src;..\Crisp\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Crisp\vendor\spdlog\include;..\Crisp\vendor\SDL2\include;..\Crisp\vendor\glm;..\Crisp\vendor\entt\include;..\Crisp\vendor\yaml-cpp\include;..\Crisp\vendor\ImGuizmo;..\Crisp\src;..\Crisp\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -137,16 +137,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Editor\GameWindow.h" />
+    <ClInclude Include="src\Editor\SceneWindow.h" />
     <ClInclude Include="src\Editor\SceneHierarchy.h" />
     <ClInclude Include="src\Editor\SceneProperties.h" />
     <ClInclude Include="src\EditorLayer.h" />
-    <ClInclude Include="src\Test.h" />
+    <ClInclude Include="src\Editor\StatisticsPanel.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Editor\GameWindow.cpp" />
+    <ClCompile Include="src\Editor\SceneWindow.cpp" />
     <ClCompile Include="src\CrispEditorApp.cpp" />
     <ClCompile Include="src\Editor\SceneHierarchy.cpp" />
     <ClCompile Include="src\Editor\SceneProperties.cpp" />
     <ClCompile Include="src\EditorLayer.cpp" />
+    <ClCompile Include="src\Editor\StatisticsPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Crisp\Crisp.vcxproj">
@@ -160,6 +165,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Crisp\vendor\yaml-cpp\yaml-cpp.vcxproj">
       <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Crisp\vendor\ImGuizmo\imguizmo.vcxproj">
+      <Project>{76AD0322-627A-5E2D-8B93-4CD577BF93BB}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

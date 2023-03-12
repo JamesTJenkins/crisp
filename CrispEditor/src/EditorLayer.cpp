@@ -1,246 +1,163 @@
 #include "EditorLayer.h"
 #include <imgui/imgui.h>
-#include <glm/gtc/type_ptr.hpp>
 
 #include "Crisp/Scene/SceneSerializer.h"
 #include "Crisp/Utils/PlatformUtils.h"
 
-// TEST
-//#include "Test.h"
-// TEST
-
 namespace Crisp {
-    EditorLayer::EditorLayer() : Layer("EditorLayer") {}
+	EditorLayer::EditorLayer() : Layer("EditorLayer"), sceneWindow(&hierarchy) {}
 
-    EditorLayer::~EditorLayer() {}
+	EditorLayer::~EditorLayer() {}
 
-    void EditorLayer::OnAttach() {
-        CRISP_PROFILE_FUNCTION();
+	void EditorLayer::OnAttach() {
+		CRISP_PROFILE_FUNCTION();
 
-        RenderCommand::SetClearColor({ 0.0f, 0.0f, 0.0f, 1.0f });
-        texture = Texture2D::Create("assets/textures/bacon.png");
+		RenderCommand::SetClearColor({ 0.0f, 0.0f, 0.0f, 1.0f });
+		texture = Texture2D::Create("assets/textures/bacon.png");
 
-        FrameBufferProperties props;
-        props.width = 1280;
-        props.height = 720;
-        gameViewFramebuffer = FrameBuffer::Create(props);
-        sceneViewFramebuffer = FrameBuffer::Create(props);
+		activeScene = CreateRef<Scene>();
+		hierarchy.SetContext(activeScene);
+		sceneWindow.SetContext(activeScene);
+		gameWindow.SetContext(activeScene);
+		properties.SetLinkedHierarchy(&hierarchy);
+	}
 
-        activeScene = CreateRef<Scene>();
-        hierarchy.SetContext(activeScene);
-        properties.SetLinkedHierarchy(&hierarchy);
-        sceneCam.SetOrthographicCamera(1280, 720, 10, -1, 1, false);
+	void EditorLayer::OnDetach() {
+		CRISP_PROFILE_FUNCTION();
+	}
 
-        /*
-        SceneSerializer serializer(activeScene);
-        serializer.Deserialize("assets/scenes/test.crisp");
+	void EditorLayer::OnUpdate() {
+		CRISP_PROFILE_FUNCTION();
 
-        Entity camEntity = activeScene->CreateEntity("New Cam");
-        camEntity.AddComponent<Camera>(&camEntity.GetComponent<Transform>()).SetOrthographicCamera(1280, 720);
-        Entity quadEntity = activeScene->CreateEntity("New Quad");
-        quadEntity.GetComponent<Transform>().SetPosition({ 0,0,-1 });
-        quadEntity.AddComponent<SpriteRenderer>();
+		// NEW, OPEN, SAVE scene hotkeys
+		if (Input::IsKeyPressed(CRISP_LCTRL) || Input::IsKeyPressed(CRISP_RCTRL)) {
+			if (Input::IsKeyPressed(CRISP_N))
+				NewScene();
+			else if (Input::IsKeyPressed(CRISP_O))
+				OpenScene();
+			else if (Input::IsKeyPressed(CRISP_S))
+				SaveSceneAs();
+		}
 
-        SceneSerializer serializer(activeScene);
-        serializer.Serialize("assets/scenes/test.crisp");
-        */
+		sceneWindow.OnEditorUpdate();
+		sceneWindow.SceneWindowDraw();
 
-        // TEST
-        //activeScene->CreateEntity("Test").AddComponent<NativeScript>().Bind<Test>();
-        // TEST
-    }
+		// This needs to be after scene render loop otherwise it will give
+		// stats for rendering both scene and game view
+		Renderer::ResetStatistics();
 
-    void EditorLayer::OnDetach() {
-        CRISP_PROFILE_FUNCTION();
-    }
+		gameWindow.GameWindowDraw();
+	}
 
-    void EditorLayer::OnUpdate() {
-        CRISP_PROFILE_FUNCTION();
+	// TODO: Move code to seperate windows and tidy this up
+	void EditorLayer::OnImGuiRender() {
+		static bool dockspaceOpen = true;
+		static bool opt_fullscreen = true;
+		static bool opt_padding = false;
+		static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
-        // Only allow movement if the viewport is focused
-        if (sceneViewportFocused)
-            sceneCam.OnUpdate();
+		// We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
+		// because it would be confusing to have two docking targets within each others.
+		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+		if (opt_fullscreen) {
+			const ImGuiViewport* viewport = ImGui::GetMainViewport();
+			ImGui::SetNextWindowPos(viewport->WorkPos);
+			ImGui::SetNextWindowSize(viewport->WorkSize);
+			ImGui::SetNextWindowViewport(viewport->ID);
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+			window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+			window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+		} else {
+			dockspace_flags &= ~ImGuiDockNodeFlags_PassthruCentralNode;
+		}
 
-        {
-            CRISP_PROFILE_SCOPE("Scene Renderer Draw");
+		// When using ImGuiDockNodeFlags_PassthruCentralNode, DockSpace() will render our background
+		// and handle the pass-thru hole, so we ask Begin() to not render a background.
+		if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
+			window_flags |= ImGuiWindowFlags_NoBackground;
 
-            // Scene camera
-            sceneViewFramebuffer->Bind();
-            RenderCommand::Clear();
-            Renderer::BeginScene(sceneCam);
-            activeScene->OnUpdate();
-            Renderer::EndScene();
-            sceneViewFramebuffer->Unbind();
-        }
+		// Important: note that we proceed even if Begin() returns false (aka window is collapsed).
+		// This is because we want to keep our DockSpace() active. If a DockSpace() is inactive,
+		// all active windows docked into it will lose their parent and become undocked.
+		// We cannot preserve the docking relationship between an active window and an inactive docking, otherwise
+		// any change of dockspace/settings would lead to windows being stuck in limbo and never being visible.
+		if (!opt_padding)
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+		ImGui::Begin("Crisp Dockspace", &dockspaceOpen, window_flags);
+		if (!opt_padding)
+			ImGui::PopStyleVar();
 
-        // This needs to be after scene render loop otherwise it will give
-        // stats for rendering both scene and game view
-        Renderer::ResetStatistics();
+		if (opt_fullscreen)
+			ImGui::PopStyleVar(2);
 
-        {
-            CRISP_PROFILE_SCOPE("Renderer Draw");
+		// Submit the DockSpace
+		ImGuiIO& io = ImGui::GetIO();
+		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
+			ImGuiID dockspace_id = ImGui::GetID("Dockspace");
+			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+		}
 
-            // Game view camera
-            gameViewFramebuffer->Bind();
-            RenderCommand::Clear();
-            if (Camera::GetMainCamera() != nullptr) {
-                Renderer::BeginScene();
-                activeScene->OnUpdate();
-                Renderer::EndScene();
-            }
-            gameViewFramebuffer->Unbind();
-        }
-    }
+		if (ImGui::BeginMenuBar()) {
+			if (ImGui::BeginMenu("File")) {
+				if (ImGui::MenuItem("New Scene", "Ctrl+N")) {
+					NewScene();
+				}
 
-    void EditorLayer::OnImGuiRender() {
-        static bool dockspaceOpen = true;
-        static bool opt_fullscreen = true;
-        static bool opt_padding = false;
-        static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
+				if (ImGui::MenuItem("Open Scene", "Ctrl+O")) {
+					OpenScene();
+				}
 
-        // We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
-        // because it would be confusing to have two docking targets within each others.
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
-        if (opt_fullscreen) {
-            const ImGuiViewport* viewport = ImGui::GetMainViewport();
-            ImGui::SetNextWindowPos(viewport->WorkPos);
-            ImGui::SetNextWindowSize(viewport->WorkSize);
-            ImGui::SetNextWindowViewport(viewport->ID);
-            ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-            ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-            window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-            window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
-        } else {
-            dockspace_flags &= ~ImGuiDockNodeFlags_PassthruCentralNode;
-        }
+				if (ImGui::MenuItem("Save Scene", "Ctrl+S")) {
+					SaveSceneAs();
+				}
 
-        // When using ImGuiDockNodeFlags_PassthruCentralNode, DockSpace() will render our background
-        // and handle the pass-thru hole, so we ask Begin() to not render a background.
-        if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
-            window_flags |= ImGuiWindowFlags_NoBackground;
+				if (ImGui::MenuItem("Exit"))
+					Application::Get().Quit();
+				ImGui::EndMenu();
+			}
 
-        // Important: note that we proceed even if Begin() returns false (aka window is collapsed).
-        // This is because we want to keep our DockSpace() active. If a DockSpace() is inactive,
-        // all active windows docked into it will lose their parent and become undocked.
-        // We cannot preserve the docking relationship between an active window and an inactive docking, otherwise
-        // any change of dockspace/settings would lead to windows being stuck in limbo and never being visible.
-        if (!opt_padding)
-            ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-        ImGui::Begin("Crisp Dockspace", &dockspaceOpen, window_flags);
-        if (!opt_padding)
-            ImGui::PopStyleVar();
+			ImGui::EndMenuBar();
+		}
 
-        if (opt_fullscreen)
-            ImGui::PopStyleVar(2);
+		hierarchy.OnImGuiRender();
+		properties.OnImGuiRender();
+		sceneWindow.OnImGuiRender();
+		gameWindow.OnImGuiRender();
+		stats.OnImGuiRender();
 
-        // Submit the DockSpace
-        ImGuiIO& io = ImGui::GetIO();
-        if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
-            ImGuiID dockspace_id = ImGui::GetID("Dockspace");
-            ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
-        }
+		ImGui::End();	// DOCKSPACE
+	}
 
-        if (ImGui::BeginMenuBar()) {
-            if (ImGui::BeginMenu("File")) {
-                if (ImGui::MenuItem("New Scene", "Ctrl+N")) {
-                    NewScene();
-                }
+	void EditorLayer::OnEvent(const SDL_Event* e) {}
 
-                if (ImGui::MenuItem("Open Scene", "Ctrl+O")) {
-                    OpenScene();
-                }
+	void EditorLayer::NewScene() {
+		activeScene = CreateRef<Scene>();
+		// Setting these to 0 will force a reset to occur for both viewports 
+		gameWindow.gameViewportSize.x = 0;
+		sceneWindow.sceneViewportSize.x = 0;
+		// There is no main camera on scene reset
+		Camera::SetMainCamera(nullptr);
 
-                if (ImGui::MenuItem("Save Scene", "Ctrl+S")) {
-                    SaveSceneAs();
-                }
+		hierarchy.SetContext(activeScene);
+		sceneWindow.SetContext(activeScene);
+		gameWindow.SetContext(activeScene);
+	}
 
-                if (ImGui::MenuItem("Exit"))
-                    Application::Get().Quit();
-                ImGui::EndMenu();
-            }
+	void EditorLayer::OpenScene() {
+		std::string filepath = FileDialog::OpenFile("Crisp Scene (*.crisp)\0*.crisp\0");
+		if (!filepath.empty()) {
+			NewScene();
+			SceneSerializer serializer(activeScene);
+			serializer.Deserialize(filepath);
+		}
+	}
 
-            ImGui::EndMenuBar();
-        }
-
-        hierarchy.OnImGuiRender();
-        properties.OnImGuiRender();
-
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-        ImGui::Begin("Scene");
-        sceneViewportFocused = ImGui::IsWindowFocused();
-        ImVec2 viewportSize = ImGui::GetContentRegionAvail();
-        if (sceneViewportSize != *((glm::vec2*)&viewportSize)) {
-            sceneCam.SetViewportSize(viewportSize.x, viewportSize.y);
-            sceneViewportSize = { viewportSize.x, viewportSize.y };
-        }
-        ImGui::Image((void*)sceneViewFramebuffer->GetColorAttachmentRendererID(), viewportSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
-        ImGui::End();
-        ImGui::PopStyleVar();
-
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-        ImGui::Begin("Game");
-        if (Camera::GetMainCamera() != nullptr) {
-            gameViewportFocused = ImGui::IsWindowFocused();
-            viewportSize = ImGui::GetContentRegionAvail();
-            if (gameViewportSize != *((glm::vec2*)&viewportSize)) {
-                Camera::GetMainCamera()->SetViewportSize(viewportSize.x, viewportSize.y);
-                gameViewportSize = { viewportSize.x, viewportSize.y };
-            }
-        }
-        ImGui::Image((void*)gameViewFramebuffer->GetColorAttachmentRendererID(), viewportSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
-        ImGui::End();
-        ImGui::PopStyleVar();
-
-        ImGui::Begin("Statistics");
-        ImGui::Text("Rendering Stats:");
-        ImGui::Text("Draw Calls: %d", Renderer::GetStats().DrawCalls);
-        ImGui::Text("Quad Count: %d", Renderer::GetStats().QuadCount);
-        ImGui::Text("Vertex Count: %d", Renderer::GetStats().GetTotalVertexCount());
-        ImGui::Text("Index Count: %d", Renderer::GetStats().GetTotalIndexCount());
-
-        ImGui::End();
-
-        ImGui::End();	// DOCKSPACE
-    }
-
-    void EditorLayer::OnEvent(const SDL_Event* e) {
-
-        // NEW, OPEN, SAVE scene hotkeys
-        if (Input::IsKeyPressed(CRISP_LCTRL) || Input::IsKeyPressed(CRISP_RCTRL)) {
-            if (Input::IsKeyPressed(CRISP_N))
-                NewScene();
-            else if (Input::IsKeyPressed(CRISP_O))
-                OpenScene();
-            else if (Input::IsKeyPressed(CRISP_S))
-                SaveSceneAs();
-        }
-    }
-
-    void EditorLayer::NewScene() {
-        activeScene = CreateRef<Scene>();
-        // Setting these to 0 will force a reset to occur for both viewports 
-        gameViewportSize.x = 0;
-        sceneViewportSize.x = 0;
-        // There is no main camera on scene reset
-        Camera::SetMainCamera(nullptr);
-
-        hierarchy.SetContext(activeScene);
-    }
-
-    void EditorLayer::OpenScene() {
-        std::string filepath = FileDialog::OpenFile("Crisp Scene (*.crisp)\0*.crisp\0");
-        if (!filepath.empty()) {
-            NewScene();
-            SceneSerializer serializer(activeScene);
-            serializer.Deserialize(filepath);
-        }
-    }
-
-    void EditorLayer::SaveSceneAs() {
-        std::string filepath = FileDialog::SaveFile("Crisp Scene (*.crisp)\0*.crisp\0");
-        if (!filepath.empty()) {
-            SceneSerializer serializer(activeScene);
-            serializer.Serialize(filepath);
-        }
-    }
+	void EditorLayer::SaveSceneAs() {
+		std::string filepath = FileDialog::SaveFile("Crisp Scene (*.crisp)\0*.crisp\0");
+		if (!filepath.empty()) {
+			SceneSerializer serializer(activeScene);
+			serializer.Serialize(filepath);
+		}
+	}
 }

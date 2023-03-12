@@ -13,3 +13,6 @@
 [submodule "Crisp/vendor/yaml-cpp"]
 	path = Crisp/vendor/yaml-cpp
 	url = https://github.com/jbeder/yaml-cpp
+[submodule "Crisp/vendor/ImGuizmo"]
+	path = Crisp/vendor/ImGuizmo
+	url = https://github.com/CedricGuillemet/ImGuizmo

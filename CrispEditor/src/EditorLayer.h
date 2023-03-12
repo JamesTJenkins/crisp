@@ -4,6 +4,9 @@
 
 #include "Editor/SceneHierarchy.h"
 #include "Editor/SceneProperties.h"
+#include "Editor/StatisticsPanel.h"
+#include "Editor/SceneWindow.h"
+#include "Editor/GameWindow.h"
 
 namespace Crisp {
 	class EditorLayer : public Layer {
@@ -26,23 +29,16 @@ namespace Crisp {
 		void OpenScene();
 		void SaveSceneAs();
 	private:
-		Ref<FrameBuffer> gameViewFramebuffer;
-		Ref<FrameBuffer> sceneViewFramebuffer;
-
 		Ref<VertexArray> vertexArray;
 		Ref<Shader> colorShader;
 		Ref<Texture2D> texture;
 		Ref<Scene> activeScene;
 
-		glm::vec2 sceneViewportSize;
-		glm::vec2 gameViewportSize;
-		bool sceneViewportFocused = false;
-		bool gameViewportFocused = false;
-
-		SceneCamera sceneCam;
-
 		// Editor
+		SceneWindow sceneWindow;
+		GameWindow gameWindow;
 		SceneHierarchy hierarchy;
 		SceneProperties properties;
+		StatisticsPanel stats;
 	};
 }

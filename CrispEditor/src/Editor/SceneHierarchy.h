@@ -10,6 +10,9 @@ namespace Crisp {
 		void SetContext(const Ref<Scene>& scene);
 
 		void OnImGuiRender();
+	
+		// TODO: Remove this once proper mouse picking implementation added
+		Entity GetSelectedEntity() const { return selectionContext; }
 	public:
 		Entity selectionContext;
 	private:

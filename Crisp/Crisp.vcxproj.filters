@@ -25,6 +25,9 @@
     <Filter Include="src\Crisp\Scene">
       <UniqueIdentifier>{3A080CC1-A693-7985-AFA4-FC791BAFD585}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Crisp\Utils">
+      <UniqueIdentifier>{7D9C39C1-E927-A785-F238-2A7A5E430386}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
@@ -87,7 +90,7 @@
     <ClInclude Include="src\Crisp\Core\EntryPoint.h">
       <Filter>src\Crisp\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crisp\Core\Input.h">
+    <ClInclude Include="src\Crisp\Core\Input_OLD.h">
       <Filter>src\Crisp\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\Core\Keycodes.h">
@@ -165,6 +168,9 @@
     <ClInclude Include="src\Crisp\Scene\SceneSerializer.h">
       <Filter>src\Crisp\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Crisp\Utils\PlatformUtils.h">
+      <Filter>src\Crisp\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="src\CrispPCH.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -189,7 +195,7 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\Windows\WindowsInput.h">
+    <ClInclude Include="src\Platform\Windows\WindowsInputOLD.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
@@ -1422,7 +1428,8 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crisp\Utils\PlatformUtils.h" />
+    <ClInclude Include="src\Crisp\Math\Math.h" />
+    <ClInclude Include="src\Crisp\Core\Input.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crisp\Components\Camera.cpp">
@@ -1515,7 +1522,10 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
+    <ClCompile Include="src\Platform\Windows\WindowsInputOLD.cpp">
+      <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
@@ -1524,6 +1534,7 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
+    <ClCompile Include="src\Crisp\Math\Math.cpp" />
+    <ClCompile Include="src\Crisp\Core\Input.cpp" />
   </ItemGroup>
 </Project>
