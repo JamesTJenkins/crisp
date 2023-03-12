@@ -30,4 +30,7 @@
     <ClCompile Include="src\Editor\SceneWindow.cpp" />
     <ClCompile Include="src\Editor\GameWindow.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini" />
+  </ItemGroup>
 </Project>
