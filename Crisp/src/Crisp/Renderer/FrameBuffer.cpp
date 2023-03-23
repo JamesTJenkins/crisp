@@ -17,4 +17,13 @@ namespace Crisp {
 		CRISP_CORE_ASSERT(false, "Unknown renderer API.");
 		return nullptr;
 	}
+
+	bool FrameBuffer::IsDepthFormat(FrameBufferTextureFormat format) {
+		switch (format) {
+		case FrameBufferTextureFormat::DEPTH24STENCIL8:
+			return true;
+		}
+
+		return false;
+	}
 }

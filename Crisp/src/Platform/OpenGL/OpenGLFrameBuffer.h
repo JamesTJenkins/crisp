@@ -17,11 +17,16 @@ namespace Crisp {
 
 		virtual void Resize(uint32_t width, uint32_t height) override;
 
-		virtual uint32_t GetColorAttachmentRendererID() const override { return colorAttachment; }
+		virtual uint32_t GetColorAttachmentRendererID(uint32_t index = 0) const override { CRISP_CORE_ASSERT("Index is out of bounds", index < colorAttachments.size()); return colorAttachments[index]; }
 		virtual const FrameBufferProperties& GetProperties() const override { return properties; }
 	private:
 		uint32_t rendererID = 0;
-		uint32_t colorAttachment = 0, depthAttachment = 0;
 		FrameBufferProperties properties;
+
+		std::vector<FrameBufferTextureProperties> colorAttachmentProperties;
+		FrameBufferTextureProperties depthAttachmentProperties = FrameBufferTextureFormat::None;
+	
+		std::vector<uint32_t> colorAttachments;
+		uint32_t depthAttachment = 0;
 	};
 }

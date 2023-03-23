@@ -9,6 +9,7 @@
 namespace Crisp {
 	SceneWindow::SceneWindow(SceneHierarchy* hierarchy) : hierarchy(hierarchy) {
 		FrameBufferProperties props;
+		props.attachment = { FrameBufferTextureFormat::RGBA8, FrameBufferTextureFormat::DEPTH24STENCIL8 };
 		props.width = 1280;
 		props.height = 720;
 		sceneViewFramebuffer = FrameBuffer::Create(props);
