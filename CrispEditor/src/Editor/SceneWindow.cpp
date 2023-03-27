@@ -52,7 +52,6 @@ namespace Crisp {
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
 		ImGui::Begin("Scene");
-		auto viewportOffset = ImGui::GetCursorPos();
 		sceneViewportFocused = ImGui::IsWindowFocused() && ImGui::IsWindowHovered();
 		ImVec2 viewportSize = ImGui::GetContentRegionAvail();
 		if (sceneViewportSize != *((glm::vec2*)&viewportSize)) {
@@ -62,13 +61,11 @@ namespace Crisp {
 		}
 		ImGui::Image((void*)sceneViewFramebuffer->GetColorAttachmentRendererID(), viewportSize, ImVec2{0, 1}, ImVec2{1, 0});
 		
-		ImVec2 minBound = ImGui::GetWindowPos();
-		minBound.x += viewportOffset.x;
-		minBound.y += viewportOffset.y;
-
-		ImVec2 maxBound = { minBound.x + viewportSize.x, minBound.y + viewportSize.y };
-		viewportBounds[0] = { minBound.x, minBound.y };
-		viewportBounds[1] = { maxBound.x, maxBound.y };
+		ImVec2 offset = ImGui::GetWindowPos();
+		ImVec2 minRegion = ImGui::GetWindowContentRegionMin();
+		ImVec2 maxRegion = ImGui::GetWindowContentRegionMax();
+		viewportBounds[0] = { minRegion.x + offset.x, minRegion.y + offset.y };
+		viewportBounds[1] = { maxRegion.x + offset.x, maxRegion.y + offset.y };
 
 		// Gizmos
 		Entity selected = GetSelectedEntity();
@@ -80,7 +77,7 @@ namespace Crisp {
 				ImGuizmo::SetOrthographic(false);
 
 			ImGuizmo::SetDrawlist();
-			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, (float)ImGui::GetWindowWidth(), (float)ImGui::GetWindowHeight());
+			ImGuizmo::SetRect(viewportBounds[0].x, viewportBounds[0].y, viewportBounds[1].x - viewportBounds[0].x, viewportBounds[1].y - viewportBounds[0].y);
 			glm::mat4 transform = component.GetLocalToWorldMatrix();
 
 			// Snapping
@@ -90,7 +87,8 @@ namespace Crisp {
 				snapAmount = 15.0f; // ROTATION
 			float snapAmounts[3] = { snapAmount, snapAmount, snapAmount };
 
-			ImGuizmo::Manipulate(glm::value_ptr(sceneCam.GetViewMatrix()),
+			ImGuizmo::Manipulate(
+				glm::value_ptr(sceneCam.GetViewMatrix()),
 				glm::value_ptr(sceneCam.GetProjectionMatrix()),
 				(ImGuizmo::OPERATION)gizmoType,
 				ImGuizmo::LOCAL,

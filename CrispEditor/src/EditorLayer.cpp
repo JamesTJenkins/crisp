@@ -102,20 +102,20 @@ namespace Crisp {
 				if (ImGui::MenuItem("New Scene", "Ctrl+N")) {
 					NewScene();
 				}
-
+		
 				if (ImGui::MenuItem("Open Scene", "Ctrl+O")) {
 					OpenScene();
 				}
-
+		
 				if (ImGui::MenuItem("Save Scene", "Ctrl+S")) {
 					SaveSceneAs();
 				}
-
+		
 				if (ImGui::MenuItem("Exit"))
 					Application::Get().Quit();
 				ImGui::EndMenu();
 			}
-
+		
 			ImGui::EndMenuBar();
 		}
 
