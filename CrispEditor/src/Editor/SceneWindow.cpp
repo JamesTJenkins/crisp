@@ -9,7 +9,7 @@
 namespace Crisp {
 	SceneWindow::SceneWindow(SceneHierarchy* hierarchy) : hierarchy(hierarchy) {
 		FrameBufferProperties props;
-		props.attachment = { FrameBufferTextureFormat::RGBA8, FrameBufferTextureFormat::DEPTH24STENCIL8 };
+		props.attachment = { FrameBufferTextureFormat::RGBA8, FrameBufferTextureFormat::RINT, FrameBufferTextureFormat::DEPTH24STENCIL8 };
 		props.width = 1280;
 		props.height = 720;
 		sceneViewFramebuffer = FrameBuffer::Create(props);
@@ -51,14 +51,27 @@ namespace Crisp {
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
 		ImGui::Begin("Scene");
+		auto viewportOffset = ImGui::GetCursorPos();
 		sceneViewportFocused = ImGui::IsWindowFocused() && ImGui::IsWindowHovered();
 		ImVec2 viewportSize = ImGui::GetContentRegionAvail();
+		//if (sceneViewportFocused)
+			//CRISP_CORE_INFO("view {0}, {1}", viewportSize.x, viewportSize.y);
 		if (sceneViewportSize != *((glm::vec2*)&viewportSize)) {
+			sceneViewFramebuffer->Resize(viewportSize.x, viewportSize.y);
 			sceneCam.SetViewportSize(viewportSize.x, viewportSize.y);
 			sceneViewportSize = { viewportSize.x, viewportSize.y };
 		}
-		ImGui::Image((void*)sceneViewFramebuffer->GetColorAttachmentRendererID(), viewportSize, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+		ImGui::Image((void*)sceneViewFramebuffer->GetColorAttachmentRendererID(), viewportSize, ImVec2{0, 1}, ImVec2{1, 0});
 		
+		//auto windowSize = ImGui::GetWindowSize();
+		ImVec2 minBound = ImGui::GetWindowPos();
+		minBound.x += viewportOffset.x;
+		minBound.y += viewportOffset.y;
+
+		ImVec2 maxBound = { minBound.x + viewportSize.x, minBound.y + viewportSize.y };
+		viewportBounds[0] = { minBound.x, minBound.y };
+		viewportBounds[1] = { maxBound.x, maxBound.y };
+
 		// Gizmos
 		Entity selected = hierarchy->selectionContext;
 		if (selected && gizmoType != -1) {
@@ -110,6 +123,22 @@ namespace Crisp {
 		Renderer::BeginScene(sceneCam);
 		context->OnUpdateEditor();
 		Renderer::EndScene();
+
+		auto [mx, my] = ImGui::GetMousePos();
+		mx -= viewportBounds[0].x;
+		my -= viewportBounds[0].y;
+		glm::vec2 viewportSize = viewportBounds[1] - viewportBounds[0];
+		my = viewportSize.y - my;
+
+		int mouseX = (int)mx;
+		int mouseY = (int)my;
+
+		if (sceneViewportFocused && mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y) {
+			int pixelData = sceneViewFramebuffer->ReadPixel(1, mouseX, mouseY);
+			CRISP_CORE_INFO("{0}", pixelData);
+			//CRISP_CORE_INFO("mouse {0} : {1}", mouseX, mouseY);
+		}
+
 		sceneViewFramebuffer->Unbind();
 	}
 }

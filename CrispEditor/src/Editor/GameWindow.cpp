@@ -4,7 +4,7 @@
 namespace Crisp {
 	GameWindow::GameWindow() {
 		FrameBufferProperties props;
-		props.attachment = { FrameBufferTextureFormat::RGBA8, FrameBufferTextureFormat::DEPTH24STENCIL8 };
+		props.attachment = { FrameBufferTextureFormat::RGBA8, FrameBufferTextureFormat::RINT, FrameBufferTextureFormat::DEPTH24STENCIL8 };
 		props.width = 1280;
 		props.height = 720;
 		gameViewFramebuffer = FrameBuffer::Create(props);
@@ -21,6 +21,7 @@ namespace Crisp {
 		ImVec2 viewportSize = ImGui::GetContentRegionAvail();
 		if (Camera::GetMainCamera() != nullptr) {
 			if (gameViewportSize != *((glm::vec2*)&viewportSize)) {
+				gameViewFramebuffer->Resize(viewportSize.x, viewportSize.y);
 				Camera::GetMainCamera()->SetViewportSize(viewportSize.x, viewportSize.y);
 				gameViewportSize = { viewportSize.x, viewportSize.y };
 			}

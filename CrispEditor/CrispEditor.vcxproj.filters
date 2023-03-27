@@ -6,31 +6,40 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Editor\GameWindow.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
     <ClInclude Include="src\Editor\SceneHierarchy.h">
       <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="src\Editor\SceneProperties.h">
       <Filter>Editor</Filter>
     </ClInclude>
+    <ClInclude Include="src\Editor\SceneWindow.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Editor\StatisticsPanel.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
     <ClInclude Include="src\EditorLayer.h" />
-    <ClInclude Include="src\Editor\StatisticsPanel.h" />
-    <ClInclude Include="src\Editor\SceneWindow.h" />
-    <ClInclude Include="src\Editor\GameWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CrispEditorApp.cpp" />
+    <ClCompile Include="src\Editor\GameWindow.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
     <ClCompile Include="src\Editor\SceneHierarchy.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
     <ClCompile Include="src\Editor\SceneProperties.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
+    <ClCompile Include="src\Editor\SceneWindow.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor\StatisticsPanel.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
     <ClCompile Include="src\EditorLayer.cpp" />
-    <ClCompile Include="src\Editor\StatisticsPanel.cpp" />
-    <ClCompile Include="src\Editor\SceneWindow.cpp" />
-    <ClCompile Include="src\Editor\GameWindow.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="imgui.ini" />
   </ItemGroup>
 </Project>

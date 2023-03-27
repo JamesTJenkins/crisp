@@ -19,6 +19,9 @@
     <Filter Include="src\Crisp\ImGui">
       <UniqueIdentifier>{47105CC0-B39B-C984-BCAC-4C7928B72585}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Crisp\Math">
+      <UniqueIdentifier>{56900CDF-425E-00E5-2BF2-700B175FDC49}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Crisp\Renderer">
       <UniqueIdentifier>{A3E50C7C-8FC9-CDD1-F829-C824E42CB853}</UniqueIdentifier>
     </Filter>
@@ -90,7 +93,7 @@
     <ClInclude Include="src\Crisp\Core\EntryPoint.h">
       <Filter>src\Crisp\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crisp\Core\Input_OLD.h">
+    <ClInclude Include="src\Crisp\Core\Input.h">
       <Filter>src\Crisp\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\Core\Keycodes.h">
@@ -125,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="src\Crisp\ImGui\imguiLayer.h">
       <Filter>src\Crisp\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Crisp\Math\Math.h">
+      <Filter>src\Crisp\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Crisp\Renderer\Buffer.h">
       <Filter>src\Crisp\Renderer</Filter>
@@ -194,9 +200,6 @@
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>src\Platform\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\Windows\WindowsInputOLD.h">
-      <Filter>src\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>src\Platform\Windows</Filter>
@@ -1428,8 +1431,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Crisp\Math\Math.h" />
-    <ClInclude Include="src\Crisp\Core\Input.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Crisp\Components\Camera.cpp">
@@ -1439,6 +1440,9 @@
       <Filter>src\Crisp\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Crisp\Core\Application.cpp">
+      <Filter>src\Crisp\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crisp\Core\Input.cpp">
       <Filter>src\Crisp\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Crisp\Core\Layer.cpp">
@@ -1456,8 +1460,11 @@
     <ClCompile Include="src\Crisp\ImGui\ImGuiBuild.cpp">
       <Filter>src\Crisp\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Crisp\ImGui\ImGuiLayer.cpp">
+    <ClCompile Include="src\Crisp\ImGui\imguiLayer.cpp">
       <Filter>src\Crisp\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Crisp\Math\Math.cpp">
+      <Filter>src\Crisp\Math</Filter>
     </ClCompile>
     <ClCompile Include="src\Crisp\Renderer\Buffer.cpp">
       <Filter>src\Crisp\Renderer</Filter>
@@ -1522,9 +1529,6 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Windows\WindowsInputOLD.cpp">
-      <Filter>src\Platform\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
@@ -1534,7 +1538,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Crisp\Math\Math.cpp" />
-    <ClCompile Include="src\Crisp\Core\Input.cpp" />
   </ItemGroup>
 </Project>

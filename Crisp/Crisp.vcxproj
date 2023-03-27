@@ -138,7 +138,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Crisp\Core\Input.h" />
     <ClInclude Include="src\Crisp.h" />
     <ClInclude Include="src\Crisp\Components\Camera.h" />
     <ClInclude Include="src\Crisp\Components\EntityProperties.h" />
@@ -148,6 +147,7 @@
     <ClInclude Include="src\Crisp\Core\Application.h" />
     <ClInclude Include="src\Crisp\Core\Core.h" />
     <ClInclude Include="src\Crisp\Core\EntryPoint.h" />
+    <ClInclude Include="src\Crisp\Core\Input.h" />
     <ClInclude Include="src\Crisp\Core\Keycodes.h" />
     <ClInclude Include="src\Crisp\Core\Layer.h" />
     <ClInclude Include="src\Crisp\Core\LayerStack.h" />
@@ -595,16 +595,16 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Crisp\Core\Input.cpp" />
     <ClCompile Include="src\Crisp\Components\Camera.cpp" />
     <ClCompile Include="src\Crisp\Components\Transform.cpp" />
     <ClCompile Include="src\Crisp\Core\Application.cpp" />
+    <ClCompile Include="src\Crisp\Core\Input.cpp" />
     <ClCompile Include="src\Crisp\Core\Layer.cpp" />
     <ClCompile Include="src\Crisp\Core\LayerStack.cpp" />
     <ClCompile Include="src\Crisp\Core\Log.cpp" />
     <ClCompile Include="src\Crisp\Core\Time.cpp" />
     <ClCompile Include="src\Crisp\ImGui\ImGuiBuild.cpp" />
-    <ClCompile Include="src\Crisp\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Crisp\ImGui\imguiLayer.cpp" />
     <ClCompile Include="src\Crisp\Math\Math.cpp" />
     <ClCompile Include="src\Crisp\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Crisp\Renderer\FrameBuffer.cpp" />

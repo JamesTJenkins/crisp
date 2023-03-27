@@ -25,6 +25,7 @@ void main() {
 #version 460 core
 			
 layout(location = 0) out vec4 color;
+layout(location = 1) out int id;
 
 in vec4 v_Color;
 in vec2 v_Texcoords;
@@ -40,4 +41,5 @@ void main() {
 	//vec2 newCoords = u_Tiling * fract(v_Texcoords);
 	//color = textureGrad(u_Texture[int(v_TextureIndex), newCoords, dx, dy) * u_Color;
 	color = texture(u_Textures[int(v_TextureIndex)], v_Texcoords) * v_Color;
+	id = 50;
 }

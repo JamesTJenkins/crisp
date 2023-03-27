@@ -138,20 +138,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Editor\GameWindow.h" />
-    <ClInclude Include="src\Editor\SceneWindow.h" />
     <ClInclude Include="src\Editor\SceneHierarchy.h" />
     <ClInclude Include="src\Editor\SceneProperties.h" />
-    <ClInclude Include="src\EditorLayer.h" />
+    <ClInclude Include="src\Editor\SceneWindow.h" />
     <ClInclude Include="src\Editor\StatisticsPanel.h" />
+    <ClInclude Include="src\EditorLayer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Editor\GameWindow.cpp" />
-    <ClCompile Include="src\Editor\SceneWindow.cpp" />
     <ClCompile Include="src\CrispEditorApp.cpp" />
+    <ClCompile Include="src\Editor\GameWindow.cpp" />
     <ClCompile Include="src\Editor\SceneHierarchy.cpp" />
     <ClCompile Include="src\Editor\SceneProperties.cpp" />
-    <ClCompile Include="src\EditorLayer.cpp" />
+    <ClCompile Include="src\Editor\SceneWindow.cpp" />
     <ClCompile Include="src\Editor\StatisticsPanel.cpp" />
+    <ClCompile Include="src\EditorLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Crisp\Crisp.vcxproj">
@@ -169,9 +169,6 @@
     <ProjectReference Include="..\Crisp\vendor\ImGuizmo\imguizmo.vcxproj">
       <Project>{76AD0322-627A-5E2D-8B93-4CD577BF93BB}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="imgui.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

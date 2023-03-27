@@ -16,12 +16,12 @@ namespace Crisp {
 		glBindTexture(TextureTarget(multisampled), id);
 	}
 
-	static void AttachColorTexture(uint32_t id, int samples, GLenum format, uint32_t width, uint32_t height, int index) {
+	static void AttachColorTexture(uint32_t id, int samples, GLenum internalFormat, GLenum format, uint32_t width, uint32_t height, int index) {
 		bool multisampled = samples > 1;
 		if (multisampled) {
-			glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, format, width, height, GL_FALSE);
+			glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, internalFormat, width, height, GL_FALSE);
 		} else {
-			glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+			glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, nullptr);
 
 			// TODO: sort this out properly from framebuffer properties
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -99,7 +99,10 @@ namespace Crisp {
 				BindTexture(multisample, colorAttachments[i]);
 				switch (colorAttachmentProperties[i].TextureFormat) {
 				case FrameBufferTextureFormat::RGBA8:
-					AttachColorTexture(colorAttachments[i], properties.samples, GL_RGBA8, properties.width, properties.height, i);
+					AttachColorTexture(colorAttachments[i], properties.samples, GL_RGBA8, GL_RGBA, properties.width, properties.height, i);
+					break;
+				case FrameBufferTextureFormat::RINT:
+					AttachColorTexture(colorAttachments[i], properties.samples, GL_R32I, GL_RED_INTEGER, properties.width, properties.height, i);
 					break;
 				}
 			}
@@ -133,6 +136,7 @@ namespace Crisp {
 		CRISP_PROFILE_FUNCTION();
 
 		glBindFramebuffer(GL_FRAMEBUFFER, rendererID);
+		glViewport(0, 0, properties.width, properties.height);
 	}
 
 	void OpenGLFrameBuffer::Unbind() {
@@ -144,8 +148,23 @@ namespace Crisp {
 	void OpenGLFrameBuffer::Resize(uint32_t width, uint32_t height) {
 		CRISP_PROFILE_FUNCTION();
 
+		if (width == 0 || height == 0) {
+			CRISP_CORE_WARN("Attempted to resize framebuffer to {0}, {1}", width, height);
+			return;
+		}
+
 		properties.width = width;
 		properties.height = height;
 		Invalidate();
+	}
+
+	int OpenGLFrameBuffer::ReadPixel(uint32_t attachmentIndex, int x, int y) {
+		CRISP_CORE_ASSERT("Attachment index is out of bounds.", attachmentIndex < colorAttachments.size());
+
+		int pixelData;
+		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
+		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+
+		return pixelData;
 	}
 }
