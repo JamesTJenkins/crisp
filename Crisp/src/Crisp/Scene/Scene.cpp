@@ -41,14 +41,14 @@ namespace Crisp {
 
 		// RENDER
 		registry.view<Transform, SpriteRenderer>().each([=](auto entity, Transform& transform, SpriteRenderer& sprite) {
-			Renderer::DrawQuad(transform.GetLocalToWorldMatrix(), sprite.color);
+			Renderer::DrawSprite(transform.GetLocalToWorldMatrix(), sprite, (int)entity);
 		});
 	}
 
 	void Scene::OnUpdateEditor() {
 		// RENDER
 		registry.view<Transform, SpriteRenderer>().each([=](auto entity, Transform& transform, SpriteRenderer& sprite) {
-			Renderer::DrawQuad(transform.GetLocalToWorldMatrix(), sprite.color);
+			Renderer::DrawSprite(transform.GetLocalToWorldMatrix(), sprite, (int)entity);
 		});
 	}
 }

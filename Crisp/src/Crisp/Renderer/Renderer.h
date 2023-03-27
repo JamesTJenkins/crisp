@@ -4,6 +4,7 @@
 #include "Crisp/Renderer/Texture.h"
 #include "Crisp/Renderer/SubTexture.h"
 #include "Crisp/Components/Camera.h"
+#include "Crisp/Components/SpriteRenderer.h"
 
 namespace Crisp {
 	class Renderer {
@@ -20,11 +21,12 @@ namespace Crisp {
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
 		// Primitives
-
-		static void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
-		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture);
+		static void DrawQuad(const glm::mat4& transform, const glm::vec4& color, int entityID = -1);
+		static void DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, int entityID = -1);
 		static void DrawQuad(const glm::mat4& transform, const Ref<SubTexture2D>& subTexture);
 		
+		static void DrawSprite(const glm::mat4& transform, SpriteRenderer& src, int entityID);
+
 		// Stats
 		struct Statistics {
 			uint32_t DrawCalls = 0;

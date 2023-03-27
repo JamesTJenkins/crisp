@@ -8,12 +8,16 @@
 namespace Crisp {
     Scope<Renderer::SceneData> Renderer::sceneData = CreateScope<Renderer::SceneData>();
 
-    // TEMP
+    // Could do runtime and editor version
     struct QuadVertex {
         glm::vec3 Position;
         glm::vec4 Color;
         glm::vec2 Texcoord;
+        glm::vec2 Tiling;
         float TextureIndex;
+
+        // Editor only
+        int EntityID;
     };
 
     struct RendererStorage {
@@ -57,7 +61,9 @@ namespace Crisp {
             { ShaderDataType::Vec3, "Position" },
             { ShaderDataType::Vec4, "Color" },
             { ShaderDataType::Vec2, "Texcoords" },
-            { ShaderDataType::Float, "TextureIndex" }
+            { ShaderDataType::Vec2, "Tiling"},
+            { ShaderDataType::Float, "TextureIndex" },
+            { ShaderDataType::Int, "EntityID"}
         });
         storage.quadVertexArray->AddVertexBuffer(storage.quadVertexBuffer);
 
@@ -156,50 +162,38 @@ namespace Crisp {
         storage.stats.DrawCalls++;
     }
 
-    void Renderer::DrawQuad(const glm::mat4& transform, const glm::vec4& color) {
+    void Renderer::DrawQuad(const glm::mat4& transform, const glm::vec4& color, int entityID) {
         CRISP_PROFILE_FUNCTION();
 
         if (storage.quadIndexCount >= storage.maxIndices)
             FlushAndReset();
 
         const float texture = 0.0f;
+        constexpr glm::vec2 texcoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f} };
 
-        storage.quadVertexBufferPtr->Position = transform * storage.QuadVertexPositions[0];
-        storage.quadVertexBufferPtr->Color = color;
-        storage.quadVertexBufferPtr->Texcoord = {  1.0f,  0.0f };
-        storage.quadVertexBufferPtr->TextureIndex = texture;
-        storage.quadVertexBufferPtr++;
-
-        storage.quadVertexBufferPtr->Position = transform * storage.QuadVertexPositions[1];
-        storage.quadVertexBufferPtr->Color = color;
-        storage.quadVertexBufferPtr->Texcoord = { 0.0f, 0.0f };
-        storage.quadVertexBufferPtr->TextureIndex = texture;
-        storage.quadVertexBufferPtr++;
-
-        storage.quadVertexBufferPtr->Position = transform * storage.QuadVertexPositions[2];
-        storage.quadVertexBufferPtr->Color = color;
-        storage.quadVertexBufferPtr->Texcoord = { 0.0f, 1.0f };
-        storage.quadVertexBufferPtr->TextureIndex = texture;
-        storage.quadVertexBufferPtr++;
-
-        storage.quadVertexBufferPtr->Position = transform * storage.QuadVertexPositions[3];
-        storage.quadVertexBufferPtr->Color = color;
-        storage.quadVertexBufferPtr->Texcoord = { 1.0f, 1.0f };
-        storage.quadVertexBufferPtr->TextureIndex = texture;
-        storage.quadVertexBufferPtr++;
+        for (size_t i = 0; i < 4; i++) {
+            storage.quadVertexBufferPtr->Position = transform * storage.QuadVertexPositions[i];
+            storage.quadVertexBufferPtr->Color = color;
+            storage.quadVertexBufferPtr->Texcoord = texcoords[i];
+            storage.quadVertexBufferPtr->Tiling = { 1, 1 };
+            storage.quadVertexBufferPtr->TextureIndex = texture;
+            storage.quadVertexBufferPtr->EntityID = entityID;
+            storage.quadVertexBufferPtr++;
+        }
 
         storage.quadIndexCount += 6;
     
         storage.stats.QuadCount++;
     }
 
-    void Renderer::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture) {
+    void Renderer::DrawQuad(const glm::mat4& transform, const Ref<Texture2D>& texture, int entityID) {
         CRISP_PROFILE_FUNCTION();
 
         if (storage.quadIndexCount >= storage.maxIndices)
             FlushAndReset();
 
         constexpr glm::vec4 color = { 1.0f,1.0f,1.0f,1.0f };
+        constexpr glm::vec2 texcoords[] = { {0.0f, 0.0f}, {1.0f, 0.0f}, {0.0f, 1.0f}, {1.0f, 1.0f} };
         float textureIndex = 0.0f;
 
         for (uint32_t i = 1; i < storage.textureSlotIndex; i++) {
@@ -216,29 +210,15 @@ namespace Crisp {
             storage.textureSlotIndex++;
         }
 
-        storage.quadVertexBufferPtr->Position = transform * storage.QuadVertexPositions[0];
-        storage.quadVertexBufferPtr->Color = color;
-        storage.quadVertexBufferPtr->Texcoord = { 1.0f,  0.0f };
-        storage.quadVertexBufferPtr->TextureIndex = textureIndex;
-        storage.quadVertexBufferPtr++;
-
-        storage.quadVertexBufferPtr->Position = transform * storage.QuadVertexPositions[1];
-        storage.quadVertexBufferPtr->Color = color;
-        storage.quadVertexBufferPtr->Texcoord = { 0.0f, 0.0f };
-        storage.quadVertexBufferPtr->TextureIndex = textureIndex;
-        storage.quadVertexBufferPtr++;
-
-        storage.quadVertexBufferPtr->Position = transform * storage.QuadVertexPositions[2];
-        storage.quadVertexBufferPtr->Color = color;
-        storage.quadVertexBufferPtr->Texcoord = { 0.0f, 1.0f };
-        storage.quadVertexBufferPtr->TextureIndex = textureIndex;
-        storage.quadVertexBufferPtr++;
-
-        storage.quadVertexBufferPtr->Position = transform * storage.QuadVertexPositions[3];
-        storage.quadVertexBufferPtr->Color = color;
-        storage.quadVertexBufferPtr->Texcoord = { 1.0f, 1.0f };
-        storage.quadVertexBufferPtr->TextureIndex = textureIndex;
-        storage.quadVertexBufferPtr++;
+        for (size_t i = 0; i < 4; i++) {
+            storage.quadVertexBufferPtr->Position = transform * storage.QuadVertexPositions[i];
+            storage.quadVertexBufferPtr->Color = color;
+            storage.quadVertexBufferPtr->Texcoord = texcoords[i];
+            storage.quadVertexBufferPtr->Tiling = { 1, 1 };
+            storage.quadVertexBufferPtr->TextureIndex = textureIndex;
+            storage.quadVertexBufferPtr->EntityID = entityID;
+            storage.quadVertexBufferPtr++;
+        }
 
         storage.quadIndexCount += 6;
 
@@ -275,13 +255,19 @@ namespace Crisp {
             storage.quadVertexBufferPtr->Position = transform * storage.QuadVertexPositions[i];
             storage.quadVertexBufferPtr->Color = color;
             storage.quadVertexBufferPtr->Texcoord = textureCoords[i];
+            storage.quadVertexBufferPtr->Tiling = { 1, 1 };
             storage.quadVertexBufferPtr->TextureIndex = textureIndex;
+            storage.quadVertexBufferPtr->EntityID = -1;
             storage.quadVertexBufferPtr++;
         }
 
         storage.quadIndexCount += 6;
 
         storage.stats.QuadCount++;
+    }
+
+    void Renderer::DrawSprite(const glm::mat4& transform, SpriteRenderer& src, int entityID) {
+        DrawQuad(transform, src.color, entityID);
     }
 
     Renderer::Statistics Renderer::GetStats() {

@@ -16,6 +16,16 @@ namespace Crisp {
 		glBindTexture(TextureTarget(multisampled), id);
 	}
 
+	static GLenum CrispTextureFormatToGL(FrameBufferTextureFormat format) {
+		switch (format) {
+		case FrameBufferTextureFormat::RGBA8:	return GL_RGBA8;
+		case FrameBufferTextureFormat::RINT:	return GL_RED_INTEGER;
+		}
+		
+		CRISP_CORE_ASSERT("Texture format not implemented", false);
+		return 0;
+	}
+
 	static void AttachColorTexture(uint32_t id, int samples, GLenum internalFormat, GLenum format, uint32_t width, uint32_t height, int index) {
 		bool multisampled = samples > 1;
 		if (multisampled) {
@@ -137,6 +147,9 @@ namespace Crisp {
 
 		glBindFramebuffer(GL_FRAMEBUFFER, rendererID);
 		glViewport(0, 0, properties.width, properties.height);
+
+		int v = -1;
+		glClearTexImage(colorAttachments[1], 0, GL_RED_INTEGER, GL_INT, &v);
 	}
 
 	void OpenGLFrameBuffer::Unbind() {
@@ -166,5 +179,12 @@ namespace Crisp {
 		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
 
 		return pixelData;
+	}
+
+	void OpenGLFrameBuffer::ClearAttachment(uint32_t attachmentIndex, int value) {
+		CRISP_CORE_ASSERT("Attachment index is out of bounds.", attachmentIndex < colorAttachments.size());
+
+		auto& properties = colorAttachmentProperties[attachmentIndex];
+		glClearTexImage(colorAttachments[attachmentIndex], 0, CrispTextureFormatToGL(properties.TextureFormat), GL_INT, &value);
 	}
 }
