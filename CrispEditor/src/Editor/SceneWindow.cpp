@@ -123,7 +123,7 @@ namespace Crisp {
 		context->OnUpdateEditor();
 		Renderer::EndScene();
 		
-		if (ImGui::IsMouseClicked(0) && sceneViewportFocused) {
+		if (ImGui::IsMouseClicked(0) && !ImGuizmo::IsUsing() && sceneViewportFocused) {
 			auto [mx, my] = ImGui::GetMousePos();
 			mx -= viewportBounds[0].x;
 			my -= viewportBounds[0].y;
