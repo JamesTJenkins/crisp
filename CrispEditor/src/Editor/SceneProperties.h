@@ -1,18 +1,13 @@
 #pragma once
-#include "SceneHierarchy.h"
+#include "Crisp/Scene/Entity.h"
 
 namespace Crisp {
 	class SceneProperties {
 	public:
-		SceneProperties() = default;
-		SceneProperties(SceneHierarchy* hierarchy);
-
-		void SetLinkedHierarchy(SceneHierarchy* hierarchy);
+		SceneProperties();
 
 		void OnImGuiRender();
 	private:
 		void DrawComponents(Entity entity);
-	private:
-		SceneHierarchy* hierarchy;
 	};
 }

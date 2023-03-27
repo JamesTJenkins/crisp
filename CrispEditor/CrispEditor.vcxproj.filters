@@ -22,6 +22,7 @@
       <Filter>Editor</Filter>
     </ClInclude>
     <ClInclude Include="src\EditorLayer.h" />
+    <ClInclude Include="src\Editor\MousePicker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CrispEditorApp.cpp" />
@@ -41,5 +42,6 @@
       <Filter>Editor</Filter>
     </ClCompile>
     <ClCompile Include="src\EditorLayer.cpp" />
+    <ClCompile Include="src\Editor\MousePicker.cpp" />
   </ItemGroup>
 </Project>

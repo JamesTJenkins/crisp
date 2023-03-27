@@ -1,11 +1,10 @@
 #pragma once
 #include "Crisp.h"
-#include "SceneHierarchy.h"
 
 namespace Crisp {
 	class SceneWindow {
 	public:
-		SceneWindow(SceneHierarchy* hierarchy);
+		SceneWindow();
 
 		void SetContext(const Ref<Scene>& scene);
 
@@ -21,12 +20,8 @@ namespace Crisp {
 		Ref<Scene> context;
 
 		bool sceneViewportFocused = false;
-		//glm::vec2 viewportSize = { 0.0f, 0.0f };
 		glm::vec2 viewportBounds[2];
 
 		int gizmoType = -1;
-
-		// TODO: sort this out properly
-		SceneHierarchy* hierarchy;
 	};
 }

@@ -138,6 +138,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Editor\GameWindow.h" />
+    <ClInclude Include="src\Editor\MousePicker.h" />
     <ClInclude Include="src\Editor\SceneHierarchy.h" />
     <ClInclude Include="src\Editor\SceneProperties.h" />
     <ClInclude Include="src\Editor\SceneWindow.h" />
@@ -147,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="src\CrispEditorApp.cpp" />
     <ClCompile Include="src\Editor\GameWindow.cpp" />
+    <ClCompile Include="src\Editor\MousePicker.cpp" />
     <ClCompile Include="src\Editor\SceneHierarchy.cpp" />
     <ClCompile Include="src\Editor\SceneProperties.cpp" />
     <ClCompile Include="src\Editor\SceneWindow.cpp" />

@@ -5,7 +5,7 @@
 #include "Crisp/Utils/PlatformUtils.h"
 
 namespace Crisp {
-	EditorLayer::EditorLayer() : Layer("EditorLayer"), sceneWindow(&hierarchy) {}
+	EditorLayer::EditorLayer() : Layer("EditorLayer") {}
 
 	EditorLayer::~EditorLayer() {}
 
@@ -19,7 +19,6 @@ namespace Crisp {
 		hierarchy.SetContext(activeScene);
 		sceneWindow.SetContext(activeScene);
 		gameWindow.SetContext(activeScene);
-		properties.SetLinkedHierarchy(&hierarchy);
 	}
 
 	void EditorLayer::OnDetach() {

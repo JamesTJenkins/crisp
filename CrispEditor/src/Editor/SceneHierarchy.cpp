@@ -3,6 +3,7 @@
 #include <imgui/imgui.h>
 
 #include "Crisp/Components/EntityProperties.h"
+#include "MousePicker.h"
 
 namespace Crisp {
 	SceneHierarchy::SceneHierarchy(const Ref<Scene>& scene) {
@@ -11,14 +12,14 @@ namespace Crisp {
 
 	void SceneHierarchy::SetContext(const Ref<Scene>& scene) {
 		context = scene;
-		selectionContext = {};
+		SetSelectedEntity({});
 	}
 
 	void SceneHierarchy::OnImGuiRender() {
 		ImGui::Begin("Hierarchy");
 
 		if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
-			selectionContext = {};
+			SetSelectedEntity({});
 
 		if (ImGui::BeginPopupContextWindow(0, 1)) {
 			if (ImGui::MenuItem("Create Empty"))
@@ -37,11 +38,11 @@ namespace Crisp {
 
 	void SceneHierarchy::DrawEntityNode(Entity entity) {
 		auto& properties = entity.GetComponent<EntityProperties>();
-		ImGuiTreeNodeFlags flags = ((selectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
+		ImGuiTreeNodeFlags flags = ((GetSelectedEntity() == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
 		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, properties.name.c_str());
 		
 		if (ImGui::IsItemClicked()) {
-			selectionContext = entity;
+			SetSelectedEntity(entity);
 		}
 
 		bool entityDeleted = false;
@@ -61,8 +62,8 @@ namespace Crisp {
 
 		// Delay entity deletion to the end
 		if (entityDeleted) {
-			if (selectionContext == entity)
-				selectionContext = {};
+			if (GetSelectedEntity() == entity)
+				SetSelectedEntity({});
 			context->Destroy(entity);
 		}
 	}

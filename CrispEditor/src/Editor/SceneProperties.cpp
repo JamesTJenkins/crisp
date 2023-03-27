@@ -3,16 +3,15 @@
 #include <imgui/imgui.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <imgui/imgui_internal.h>
+#include <string>
+
+#include "MousePicker.h"
+#include "Crisp/Components/EntityProperties.h"
+#include "Crisp/Components/Transform.h"
+#include "Crisp/Components/Camera.h"
+#include "Crisp/Components/SpriteRenderer.h"
 
 namespace Crisp {
-	SceneProperties::SceneProperties(SceneHierarchy* hierarchy) : hierarchy(hierarchy) {}
-
-	void SceneProperties::SetLinkedHierarchy(SceneHierarchy* _hierarchy) {
-		hierarchy = _hierarchy;
-	}
-
-	// ------------------- STATIC FUNCTIONS -------------------------------
-
 	static char buffer[256];
 
 	static void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 80.0f) {
@@ -121,12 +120,13 @@ namespace Crisp {
 		}
 	}
 
-	// ------------------- END OF STATIC FUNCTIONS -------------------------------
+	SceneProperties::SceneProperties() {}
 
 	void SceneProperties::OnImGuiRender() {
 		ImGui::Begin("Properties");
-		if (hierarchy->selectionContext) {
-			DrawComponents(hierarchy->selectionContext);
+		Entity entity = GetSelectedEntity();
+		if (entity) {
+			DrawComponents(entity);
 		}
 		ImGui::End();
 	}
@@ -234,13 +234,13 @@ namespace Crisp {
 
 		if (ImGui::BeginPopup("AddComponent")) {
 			if (ImGui::MenuItem("Camera")) {
-				Camera cam = hierarchy->selectionContext.AddComponent<Camera>();
-				cam.SetTransform(&hierarchy->selectionContext.GetComponent<Transform>());
+				Camera cam = entity.AddComponent<Camera>();
+				cam.SetTransform(&entity.GetComponent<Transform>());
 				ImGui::CloseCurrentPopup();
 			}
 
 			if (ImGui::MenuItem("Sprite Renderer")) {
-				hierarchy->selectionContext.AddComponent<SpriteRenderer>();
+				entity.AddComponent<SpriteRenderer>();
 				ImGui::CloseCurrentPopup();
 			}
 			ImGui::EndPopup();
